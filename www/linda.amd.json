@@ -1,0 +1,10 @@
+{
+    "paths": {
+        "linda-client": "lib/linda-client"
+    },
+    "shim": {
+	"linda-client": {
+	    "deps": ["socket.io"]
+	}
+    }
+}

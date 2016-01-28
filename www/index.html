@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Amber-Cordova</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Tariq Hamid" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <script type='text/javascript' src='the.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="css/3d.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+
+    <script type='text/javascript' src='swipesense.js'></script>
+
+
+    <style type="text/css">
+	    .big-sevenSeg
+	    {
+			padding: 0.5em;
+			height: 100px;
+			width: 100px;
+	    }
+
+    .med-sevenSegArray5
+	    {
+	        padding: 0.25em;
+	        height: 50px;
+	        width: 200px;
+	    }
+
+@media screen and (min-width : 768px){
+    html{ font-size : 120%;}
+}
+
+@media screen and (min-width : 1024px) {
+    html{ font-size : 100%};
+}
+
+    </style>
+
+  </head>
+
+  <body>
+
+
+    <article>
+     <h1>My First Amber Project with PhoneGap</h1>
+     <button onclick="smalltalk.Browser._open()">class browser</button>
+     <button id="sayHello">say hello</button>
+    </article>
+    <p><a href="#" onclick="showAlert(); return false;">Show alert with text from Amber</a></p>
+    <p id="deviceProperties">Loading device properties...</p>
+
+
+
+  <h1>HelloAmber</h1>
+  <p>This is a sample app. It contains some
+  <a href="parts.html">batteries included</a>
+  and should be
+  <a href="uninstall.html">cleaned up</a>
+  once you start developing your own  app / lib.</p>
+  <button id="amber-with">Hello from TagBrush >> with:</button>
+  <button id="silk-tag">Hello from Silk >> TAG:</button>
+  <button id="jquery-append">Hello from jQuery append</button>
+  <button id="play-track">play track</button>
+  <button id="pause-track">pause track</button>
+  <button id="show-image">showimage</button>
+  <button id="geo-location">geo location</button>
+  <button id="sayHello">say hello</button>
+  <ol id="output-list"></ol>
+
+
+
+  <div id="timers">
+    <p>Timer time(min)
+      <select data-bind="options: availableTimers,
+                       value: selectedTimer,
+                       optionsCaption: '-Please select-'"></select></p>
+  </div>
+  <div>
+    <input id="announce" type="radio" value="notify"  data-bind="checked: wantsAlert">Notification</input>
+    <input id="announce" type="radio" value="dialog"  data-bind="checked: wantsAlert">Dialog</input>
+  </div>
+  <button id="start">START</button>
+  <div><span data-bind="text: counter"></span>
+
+  </div>
+
+  <div class="exampleContainer">
+    <div id="sequence-indicator" data-bind="sevenSeg: { digits: 7, value: counter }" class="med-sevenSegArray5" style="width: 420px;"></div>
+  </div>
+
+
+
+  <script src="cordova.js"></script>
+<!--
+  <div id="picture-frame" style=""></div>
+
+  <div id="picture-frame2"></
+-->
+
+<!--
+  <script src="bower_components/TouchEmulator/touch-emulator.js"></script>
+  <script> TouchEmulator(); </script>
+-->
+
+  <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
+
+
+
+<!--
+  <div id="swipeBox" ontouchstart="touchStart(event,'swipeBox');"  ontouchend="touchEnd(event);" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);" style="position:relative;width:100%;height:100%;">
+    <p>Swipe the page with one finger to change the background color</p>
+    <p>LEFT = ORANGE</p>
+    <p>RIGHT = GREEN</p>
+    <p>UP = MAROON</p>
+    <p>DOWN = PURPLE</p>
+  </div>
+-->
+
+<!--
+<div id="swipeBox" style="position:relative;width:100%;height:100%;">
+-->
+<div id="swipeBox">
+  <p>Swipe the page with one finger to change the background color</p>
+  <p>LEFT = ORANGE</p>
+  <p>RIGHT = GREEN</p>
+  <p>UP = MAROON</p>
+  <p>DOWN = PURPLE</p>
+</div>
+
+
+
+<div><span></span></div>
+<br>
+<div><a href="fibWorker.html">フィボナッチ・ワーカー</a></div>
+<br>
+<div><a href="gyroWorker.html">ジャイロ・ワーカー</a></div><p/>
+<br>
+<div><a href="compass.html">コンパス</a></div><p/>
+<br>
+<ul id="output-list2"></ul>
+<div id="log"></div>
+
+
+  <script type='text/javascript'>
+
+      var media;
+      var amberCodova;
+
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      // this function replays the audio after it has finished/stopped
+      var loop = function (status) {
+          console.log('loop');
+          if (status === Media.MEDIA_STOPPED) {
+              media.play();
+         }
+      }
+
+      // event triggered when app goes into the background
+      document.addEventListener("pause", onPause, false);
+      function onPause() {
+          console.log('onPause');
+          media.pause();
+      }
+
+      // event triggered when app resumes in the foreground
+      document.addEventListener("resume", onResume, false);
+      function onResume() {
+          console.log('onResume');
+          media.play();
+      }
+
+      // this is Amber's "interface" to the Media object
+      function playNewTrack(track) {
+          console.log('playNewTrack');
+          media.stop();
+          media.release(); // IMPORTANT: must release the audio resources
+          media.src = track;
+          media.play();
+      }
+
+      // return the correct prefix string for Android
+      function prefix() {
+          if (device.platform == "Android") return "/android_asset/www/";
+          else return "";
+      }
+
+      function onDeviceReady() {
+
+          var dev_mode = true;
+/*
+          var clickevent = 'mousedown';
+          if ('ontouchstart' in document.documentElement)
+          {
+              // touch events are supported
+              clickevent = 'touchstart';
+          }
+
+          var el = document.getElementById('swipeBox');
+          el.addEventListener(clickevent, onClick);
+
+          function onClick(event)
+          {
+              alert('onClick ' + clickevent + ' ' + event);
+          }
+*/
+          /* ------------------------- */
+          var element = document.getElementById('deviceProperties');
+
+          element.innerHTML = 'Device Name: '     + device.name     + '<br />' +
+                              'Device PhoneGap: ' + device.phonegap + '<br />' +
+                              'Device Platform: ' + device.platform + '<br />' +
+                              'Device UUID: '     + device.uuid     + '<br />' +
+                              'Device Version: '  + device.version  + '<br />';
+          /* ------------------------- */
+
+
+          require(['app'], function (amber) {
+              amber.initialize({
+                //used for all new packages in IDE
+                'transport.defaultAmdNamespace': "amber-ambercordova"
+              });
+              if (dev_mode)
+                  require(["amber-ide-starter-dialog"], function (dlg) { dlg.start(); });
+              amberCodova = amber.globals.AmberCordova._start();
+
+              amberCodova._begin();
+
+              alert('amber.globals.Timer._start()');
+              amber.globals.Timer._start();
+
+              // Initialize the Media object, which can be reused in
+              // playNewTrack() from Amber.
+              // By default, we always loop the audio.
+              media = new Media("/android_asset/www/", null, null, loop);
+
+
+              // LindaClient
+              amber.globals.LindaClientApp._start();
+          });
+      }
+
+
+      // alert dialog dismissed
+      function alertDismissed() {
+          // do something
+      }
+
+      // Show another custom alert
+      function showAlert() {
+          alert(amberCodova._helloFromSmalltalk() + ' on: ' + device.name);
+      }
+
+
+  </script>
+  </body>
+
+</html>

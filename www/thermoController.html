@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	
+  <head>
+    <title>Thermo Controller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="tetha" />
+    <script type='text/javascript' src='the.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="css/3d.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+  </head>
+  <body>
+    <div></div>
+    <br>
+    <div id="url-panel">
+    <p>lindaサーバーURL: 
+    <select data-bind="options: availableServers,
+                       value: serverUrl,
+                       optionsCaption: '-選択してください-'"></select></p>
+    </div>
+    <br>
+    <div><button id="start">START</button>
+      <button id="thermoQuery">今何℃？</button></div>
+    <br>
+  <p><button id="airconOn">エアコン ON</button>
+    <button id="airconOff">エアコン OFF</button></p>
+  <br>
+  <table>
+	  <thead>
+		  <tr>
+			  <th>sensor</th><th>celsius</th><th>time</th>
+		  </tr>
+	  </thead>
+	  <tbody data-bind="foreach: workers">
+		  <tr>
+			  <td data-bind="text: sensor"></td>
+			  <td data-bind="text: celsius"></td>
+			  <td data-bind="text: time"></td>
+		  </tr>
+	  </tbody>
+  </table>
+  
+  <ul id="output-list"></ul>
+
+
+  <script type='text/javascript'>
+      require(['app'], function (amber) {
+          amber.initialize({
+            //used for all new packages in IDE
+            'transport.defaultAmdNamespace': "amber-lindaclient"
+          });
+
+          amber.globals.LindaThermoController._start();
+      });
+  </script>
+
+  
+
+  </body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Gyro Master</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
+    <meta name="author" content="tetha" />
+    <script type='text/javascript' src='the.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="css/3d.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+
+  </head>
+  <body>
+    <div></div>
+    <p>lindaサーバーURL: 
+    <select data-bind="options: availableServers,
+                       value: serverUrl,
+                       optionsCaption: '-選択してください-'"></select></p>
+
+    <button id="start">START</button>
+    <div id="data">
+<!-- 
+	  <p>tiltLR: <span data-bind="text: tiltLR"></span></p>
+	  <p>tiltFB: <span data-bind="text: tiltFB"></span></p>
+-->
+    </div>
+
+    <table>
+      <thead>
+	<tr>
+	  <th>handle</th><th>gX</th><th>gY</th><th>gZ</th>
+	</tr>
+      </thead>
+      <tbody data-bind="foreach: workers">
+	<tr>
+	  <td data-bind="text: handleName"></td>
+	  <td data-bind="text: gX"></td>
+	  <td data-bind="text: gY"></td>
+	  <td data-bind="text: gZ"></td>
+	</tr>
+      </tbody>
+    </table>
+  
+    <ul id="output-list"></ul>
+
+
+    <script type='text/javascript'>
+      require(['app'], function (amber) {
+          amber.initialize({
+            //used for all new packages in IDE
+            'transport.defaultAmdNamespace': "amber-lindaclient"
+          });
+          require(["amber-ide-starter-dialog"], function (dlg) { dlg.start(); });
+          amber.globals.LindaGyroMaster._start();
+      });
+    </script>
+  </body>
+
+</html>

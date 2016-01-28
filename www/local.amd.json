@@ -1,0 +1,6 @@
+{
+    "paths": {
+        "amber-ambercordova": "src",
+        "amber-timer": "src"
+    }
+}
