@@ -64,7 +64,7 @@ var self=this;
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
-$recv(window)._alert_("augmentPage");
+$recv(window)._alert_("Timer>>augmentPage");
 $1="#start"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["asJQuery"]=1;
@@ -78,7 +78,7 @@ return self._doAction();
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)});
 //>>excludeEnd("ctx");
 }));
-$recv("body"._asJQuery())._append_("<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>");
+$recv("#ko-timer"._asJQuery())._append_("<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>");
 $recv($recv(ko)._bindingHandlers())._at_put_("sevenSeg",self._sevenSegHandler());
 self._setupModel();
 return self;
@@ -88,7 +88,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x0awindow alert: 'augmentPage'.\x0a\x0a\x09'#start' asJQuery click: [self doAction].\x0a\x09'body' asJQuery append:\x0a\x09\x09'<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>'.\x0a\x0a\x09ko bindingHandlers at: #sevenSeg put: self sevenSegHandler.\x0a\x0a\x09self setupModel",
+source: "augmentPage\x0a\x0awindow alert: 'Timer>>augmentPage'.\x0a\x0a\x09'#start' asJQuery click: [self doAction].\x0a\x09'#ko-timer' asJQuery append:\x0a\x09\x09'<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>'.\x0a\x0a\x09ko bindingHandlers at: #sevenSeg put: self sevenSegHandler.\x0a\x0a\x09self setupModel",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["alert:", "click:", "asJQuery", "doAction", "append:", "at:put:", "bindingHandlers", "sevenSegHandler", "setupModel"]
@@ -404,7 +404,7 @@ $ctx1.sendIdx["observable:"]=2;
 //>>excludeEnd("ctx");
 $2=$globals.HashedCollection._newFromPairs_(["availableTimers",$3,"selectedTimer",$4,"counter",$5,"wantsAlert",$recv(ko)._observable_("notify")]);
 $recv($1)._addAll_($2);
-$recv(ko)._applyBindings_(self["@viewModel"]);
+$recv(ko)._applyBindings_value_(self["@viewModel"],$recv(document)._getElementById_("ko-timer"));
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"setupModel",{selected:selected},$globals.Timer)});
@@ -412,10 +412,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "setupModel\x0a\x0a\x09| selected |\x0a\x09selected := (ko observable: 25) .\x0a\x09viewModel := #{}.\x0a\x09viewModel addAll:\x0a\x09\x09#{\x0a\x09\x09\x09#availableTimers -> (ko observableArray: #(5 10 25)) .\x0a\x09\x09\x09#selectedTimer -> selected .\x0a\x09\x09\x09#counter -> (ko observable: selected value * 60) .\x0a\x09\x09\x09#wantsAlert -> (ko observable: #notify)\x0a\x09\x09}.\x0a\x09ko applyBindings: viewModel",
+source: "setupModel\x0a\x0a\x09| selected |\x0a\x09selected := (ko observable: 25) .\x0a\x09viewModel := #{}.\x0a\x09viewModel addAll:\x0a\x09\x09#{\x0a\x09\x09\x09#availableTimers -> (ko observableArray: #(5 10 25)) .\x0a\x09\x09\x09#selectedTimer -> selected .\x0a\x09\x09\x09#counter -> (ko observable: selected value * 60) .\x0a\x09\x09\x09#wantsAlert -> (ko observable: #notify)\x0a\x09\x09}.\x0a\x09ko applyBindings: viewModel value: (document getElementById: 'ko-timer').",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["observable:", "addAll:", "observableArray:", "*", "value", "applyBindings:"]
+messageSends: ["observable:", "addAll:", "observableArray:", "*", "value", "applyBindings:value:", "getElementById:"]
 }),
 $globals.Timer);
 

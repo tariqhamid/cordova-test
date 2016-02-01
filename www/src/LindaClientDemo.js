@@ -1151,7 +1151,7 @@ return self._startDemo();
 //>>excludeEnd("ctx");
 }));
 self._setupViewModel();
-$recv(ko)._applyBindings_(self["@viewModel"]);
+$recv(ko)._applyBindings_value_(self["@viewModel"],$recv(document)._getElementById_("ko-linda"));
 self._setupLindaClient();
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1160,10 +1160,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x0a\x09'#start' asJQuery click: [ self startDemo ].\x0a\x09self setupViewModel.\x0a\x09ko applyBindings: viewModel.\x0a\x09self setupLindaClient.",
+source: "augmentPage\x0a\x0a\x09'#start' asJQuery click: [ self startDemo ].\x0a\x09self setupViewModel.\x0a\x09ko applyBindings: viewModel value: (document getElementById: 'ko-linda').\x0a\x09self setupLindaClient.",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["click:", "asJQuery", "startDemo", "setupViewModel", "applyBindings:", "setupLindaClient"]
+messageSends: ["click:", "asJQuery", "startDemo", "setupViewModel", "applyBindings:value:", "getElementById:", "setupLindaClient"]
 }),
 $globals.LindaClientApp);
 
@@ -1182,7 +1182,7 @@ elem="<li>"._asJQuery();
 $ctx1.sendIdx["asJQuery"]=1;
 //>>excludeEnd("ctx");
 $recv(elem)._html_(aMsg);
-$recv("#output-list"._asJQuery())._prepend_(elem);
+$recv("#linda-output-list"._asJQuery())._prepend_(elem);
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"doJQueryPrepend:",{aMsg:aMsg,elem:elem},$globals.LindaClientApp)});
@@ -1190,7 +1190,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aMsg"],
-source: "doJQueryPrepend: aMsg\x0a\x09| elem|\x0a\x09elem := '<li>' asJQuery.\x0a\x09elem html: aMsg.\x0a\x09'#output-list' asJQuery prepend: elem",
+source: "doJQueryPrepend: aMsg\x0a\x09| elem|\x0a\x09elem := '<li>' asJQuery.\x0a\x09elem html: aMsg.\x0a\x09'#linda-output-list' asJQuery prepend: elem",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["asJQuery", "html:", "prepend:"]

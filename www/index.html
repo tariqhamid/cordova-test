@@ -72,25 +72,30 @@
   <ol id="output-list"></ol>
 
 
+  <div id="ko-timer">
+    <div id="timers">
+      <p>Timer time(min)
+        <select data-bind="options: availableTimers,
+                         value: selectedTimer,
+                         optionsCaption: '-Please select-'"></select></p>
+    </div>
+    <div>
+      <input id="announce" type="radio" value="notify"  data-bind="checked: wantsAlert">Notification</input>
+      <input id="announce" type="radio" value="dialog"  data-bind="checked: wantsAlert">Dialog</input>
+    </div>
+    <button id="start">START</button>
+    <div><span data-bind="text: counter"></span>
+    </div>
 
-  <div id="timers">
-    <p>Timer time(min)
-      <select data-bind="options: availableTimers,
-                       value: selectedTimer,
-                       optionsCaption: '-Please select-'"></select></p>
-  </div>
-  <div>
-    <input id="announce" type="radio" value="notify"  data-bind="checked: wantsAlert">Notification</input>
-    <input id="announce" type="radio" value="dialog"  data-bind="checked: wantsAlert">Dialog</input>
-  </div>
-  <button id="start">START</button>
-  <div><span data-bind="text: counter"></span>
+    <!--
+    <div class="exampleContainer">
+      <div id="sequence-indicator" data-bind="sevenSeg: { digits: 7, value: counter }" class="med-sevenSegArray5" style="width: 420px;"></div>
+    </div>
+    -->
 
-  </div>
+  </div> <!-- ko-timer -->
 
-  <div class="exampleContainer">
-    <div id="sequence-indicator" data-bind="sevenSeg: { digits: 7, value: counter }" class="med-sevenSegArray5" style="width: 420px;"></div>
-  </div>
+
 
 
 
@@ -123,26 +128,27 @@
 <!--
 <div id="swipeBox" style="position:relative;width:100%;height:100%;">
 -->
-<div id="swipeBox">
-  <p>Swipe the page with one finger to change the background color</p>
-  <p>LEFT = ORANGE</p>
-  <p>RIGHT = GREEN</p>
-  <p>UP = MAROON</p>
-  <p>DOWN = PURPLE</p>
-</div>
+  <div id="swipeBox">
+    <p>Swipe the page with one finger to change the background color</p>
+    <p>LEFT = ORANGE</p>
+    <p>RIGHT = GREEN</p>
+    <p>UP = MAROON</p>
+    <p>DOWN = PURPLE</p>
+  </div>
 
 
-
-<div><span></span></div>
-<br>
-<div><a href="fibWorker.html">フィボナッチ・ワーカー</a></div>
-<br>
-<div><a href="gyroWorker.html">ジャイロ・ワーカー</a></div><p/>
-<br>
-<div><a href="compass.html">コンパス</a></div><p/>
-<br>
-<ul id="output-list2"></ul>
-<div id="log"></div>
+  <div id="ko-linda">
+    <div><span></span></div>
+    <br>
+    <div><a href="fibWorker.html">フィボナッチ・ワーカー</a></div>
+    <br>
+    <div><a href="gyroWorker.html">ジャイロ・ワーカー</a></div><p/>
+    <br>
+    <div><a href="compass.html">コンパス</a></div><p/>
+    <br>
+    <ul id="linda-output-list"></ul>
+    <div id="log"></div>
+  </div>
 
 
   <script type='text/javascript'>
@@ -230,7 +236,7 @@
 
               amberCodova._begin();
 
-              alert('amber.globals.Timer._start()');
+
               amber.globals.Timer._start();
 
               // Initialize the Media object, which can be reused in
@@ -240,10 +246,12 @@
 
 
               // LindaClient
+              // LindaClientApp class >> start
+              //    self new augmentPage
               amber.globals.LindaClientApp._start();
           });
-      }
 
+      }
 
       // alert dialog dismissed
       function alertDismissed() {
@@ -254,6 +262,7 @@
       function showAlert() {
           alert(amberCodova._helloFromSmalltalk() + ' on: ' + device.name);
       }
+
 
 
   </script>

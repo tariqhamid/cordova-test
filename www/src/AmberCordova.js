@@ -24,7 +24,7 @@ function $OrderedCollection(){return $globals.OrderedCollection||(typeof Ordered
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1,$2,$3,$4,$5,$6,$7;
+var $1,$2,$3,$4,$5,$6,$7,$8;
 self["@images"]=$recv($OrderedCollection())._new();
 self["@cursor"]=(1);
 $recv(self["@images"])._add_("lotus_flower.png");
@@ -49,7 +49,12 @@ $1="#amber-with"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["asJQuery"]=1;
 //>>excludeEnd("ctx");
-$recv($1)._click_((function(){
+$recv($1)._css_($globals.HashedCollection._newFromPairs_(["background-color","SpringGreen "]));
+$2="#amber-with"._asJQuery();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["asJQuery"]=2;
+//>>excludeEnd("ctx");
+$recv($2)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
@@ -70,11 +75,11 @@ return self._doSilkTAG();
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)});
 //>>excludeEnd("ctx");
 }));
-$2="#jquery-append"._asJQuery();
+$3="#jquery-append"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=2;
+$ctx1.sendIdx["asJQuery"]=3;
 //>>excludeEnd("ctx");
-$recv($2)._click_((function(){
+$recv($3)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
@@ -86,11 +91,11 @@ return self._doJQueryAppend();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["click:"]=2;
 //>>excludeEnd("ctx");
-$3="#play-track"._asJQuery();
+$4="#play-track"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=3;
+$ctx1.sendIdx["asJQuery"]=4;
 //>>excludeEnd("ctx");
-$recv($3)._click_((function(){
+$recv($4)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
@@ -102,24 +107,24 @@ return self._doPlayNewTrack();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["click:"]=3;
 //>>excludeEnd("ctx");
-$4="#pause-track"._asJQuery();
+$5="#pause-track"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=4;
+$ctx1.sendIdx["asJQuery"]=5;
 //>>excludeEnd("ctx");
-$recv($4)._click_((function(){
+$recv($5)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
-$5="#play-track"._asJQuery();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx["asJQuery"]=5;
-//>>excludeEnd("ctx");
-$recv($5)._off_("click");
 $6="#play-track"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx2.sendIdx["asJQuery"]=6;
 //>>excludeEnd("ctx");
-$recv($6)._click_((function(){
+$recv($6)._off_("click");
+$7="#play-track"._asJQuery();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["asJQuery"]=7;
+//>>excludeEnd("ctx");
+$recv($7)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx3) {
 //>>excludeEnd("ctx");
@@ -139,11 +144,11 @@ return $recv(window)._onPause();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["click:"]=4;
 //>>excludeEnd("ctx");
-$7="#show-image"._asJQuery();
+$8="#show-image"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=7;
+$ctx1.sendIdx["asJQuery"]=8;
 //>>excludeEnd("ctx");
-$recv($7)._click_((function(){
+$recv($8)._click_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
@@ -171,10 +176,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x0a\x09images := OrderedCollection new.\x0a\x09cursor := 1.\x0a\x09images add: 'lotus_flower.png'.\x0a\x09images add: 'http://wallpaperhdwide.com/wp-content/gallery/pictures-of-drawings-of-flowers/flower_drawings_by_maddyfield-d65jiy1.jpg'.\x0a\x09images add: 'http://www.pics4world.com/vb/imgcache/2/24542showing.jpg'.\x0a\x09images add: 'http://images.fineartamerica.com/images-medium-large/colourful-flowers-xafira-mendonsa.jpg'.\x0a\x09images add: 'http://g03.a.alicdn.com/kf/HTB1rHldHVXXXXbbXFXXq6xXFXXX6/3D-wall-art-peacock-and-font-b-flowers-b-font-diy-diamond-painting-mosaic-square-diamonds.jpg'.\x0a\x0a\x09self doPictureListener.\x0a\x0a\x09'#amber-with' asJQuery click: [ self doAmberWith ].\x0a\x09'#silk-tag' asSilk on: #click bind: [ self doSilkTAG ].\x0a\x09'#jquery-append' asJQuery click: [ self doJQueryAppend ].\x0a\x09'#play-track' asJQuery click: [self doPlayNewTrack ].\x0a\x09'#pause-track' asJQuery click: [\x0a\x09\x09'#play-track' asJQuery off: 'click'.\x0a\x09\x09'#play-track' asJQuery click: [ window onResume ].\x0a\x09\x09window onPause \x22window fireEvent: 'pause'\x22 ].\x0a\x09'#show-image' asJQuery click: [ self showImage ].\x0a\x0a\x09'#geo-location' asJQuery click: [ self geoLocation ].",
+source: "augmentPage\x0a\x0a\x09images := OrderedCollection new.\x0a\x09cursor := 1.\x0a\x09images add: 'lotus_flower.png'.\x0a\x09images add: 'http://wallpaperhdwide.com/wp-content/gallery/pictures-of-drawings-of-flowers/flower_drawings_by_maddyfield-d65jiy1.jpg'.\x0a\x09images add: 'http://www.pics4world.com/vb/imgcache/2/24542showing.jpg'.\x0a\x09images add: 'http://images.fineartamerica.com/images-medium-large/colourful-flowers-xafira-mendonsa.jpg'.\x0a\x09images add: 'http://g03.a.alicdn.com/kf/HTB1rHldHVXXXXbbXFXXq6xXFXXX6/3D-wall-art-peacock-and-font-b-flowers-b-font-diy-diamond-painting-mosaic-square-diamonds.jpg'.\x0a\x0a\x09self doPictureListener.\x0a\x0a\x09\x22indicate this code has run on the web page\x22\x0a\x09'#amber-with' asJQuery css: #{ 'background-color' ->'SpringGreen '}.\x0a\x0a\x09'#amber-with' asJQuery click: [ self doAmberWith ].\x0a\x09'#silk-tag' asSilk on: #click bind: [ self doSilkTAG ].\x0a\x09'#jquery-append' asJQuery click: [ self doJQueryAppend ].\x0a\x09'#play-track' asJQuery click: [self doPlayNewTrack ].\x0a\x09'#pause-track' asJQuery click: [\x0a\x09\x09'#play-track' asJQuery off: 'click'.\x0a\x09\x09'#play-track' asJQuery click: [ window onResume ].\x0a\x09\x09window onPause \x22window fireEvent: 'pause'\x22 ].\x0a\x09'#show-image' asJQuery click: [ self showImage ].\x0a\x0a\x09'#geo-location' asJQuery click: [ self geoLocation ].",
 referencedClasses: ["OrderedCollection"],
 //>>excludeEnd("ide");
-messageSends: ["new", "add:", "doPictureListener", "click:", "asJQuery", "doAmberWith", "on:bind:", "asSilk", "doSilkTAG", "doJQueryAppend", "doPlayNewTrack", "off:", "onResume", "onPause", "showImage", "geoLocation"]
+messageSends: ["new", "add:", "doPictureListener", "css:", "asJQuery", "click:", "doAmberWith", "on:bind:", "asSilk", "doSilkTAG", "doJQueryAppend", "doPlayNewTrack", "off:", "onResume", "onPause", "showImage", "geoLocation"]
 }),
 $globals.AmberCordova);
 
@@ -189,7 +194,6 @@ var msg,button;
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
-$recv(window)._alert_("AmberCordova>>begin");
 msg="Hello world.";
 button="#sayHello"._asJQuery();
 $recv(button)._click_((function(){
@@ -213,10 +217,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "begin\x0a\x0a    | msg button |\x0a\x0awindow alert: 'AmberCordova>>begin'.\x0a\x0a    msg := 'Hello world.'.\x0a    button := '#sayHello' asJQuery.\x0a    button click: [button after: '<p>' , msg , '</p>'].",
+source: "begin\x0a\x0a    | msg button |\x0a\x0a    msg := 'Hello world.'.\x0a    button := '#sayHello' asJQuery.\x0a    button click: [button after: '<p>' , msg , '</p>'].",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["alert:", "asJQuery", "click:", "after:", ","]
+messageSends: ["asJQuery", "click:", "after:", ","]
 }),
 $globals.AmberCordova);
 

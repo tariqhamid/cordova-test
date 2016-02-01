@@ -2,8 +2,8 @@ define([
     './testing',
     'amber/devel',
     // --- packages used only during development begin here ---
-    'src/Timer',
     'src/Timer-Tests',
+    'src/LindaClient-Tests',
     'amber/legacy/Benchfib',
     'amber/legacy/Examples',
     'amber/legacy/IDE'

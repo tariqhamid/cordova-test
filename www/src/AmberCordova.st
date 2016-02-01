@@ -117,8 +117,6 @@ begin
 
     | msg button |
 
-window alert: 'AmberCordova>>begin'.
-
     msg := 'Hello world.'.
     button := '#sayHello' asJQuery.
     button click: [button after: '<p>' , msg , '</p>'].
@@ -145,6 +143,9 @@ augmentPage
 	images add: 'http://g03.a.alicdn.com/kf/HTB1rHldHVXXXXbbXFXXq6xXFXXX6/3D-wall-art-peacock-and-font-b-flowers-b-font-diy-diamond-painting-mosaic-square-diamonds.jpg'.
 
 	self doPictureListener.
+
+	"indicate this code has run on the web page"
+	'#amber-with' asJQuery css: #{ 'background-color' ->'SpringGreen '}.
 
 	'#amber-with' asJQuery click: [ self doAmberWith ].
 	'#silk-tag' asSilk on: #click bind: [ self doSilkTAG ].

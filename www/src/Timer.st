@@ -113,7 +113,7 @@ setupModel
 			#counter -> (ko observable: selected value * 60) .
 			#wantsAlert -> (ko observable: #notify)
 		}.
-	ko applyBindings: viewModel
+	ko applyBindings: viewModel value: (document getElementById: 'ko-timer').
 !
 
 sevenSegHandler
@@ -158,10 +158,10 @@ wantsAlert: selectedOption
 
 augmentPage
 
-window alert: 'augmentPage'.
+window alert: 'Timer>>augmentPage'.
 
 	'#start' asJQuery click: [self doAction].
-	'body' asJQuery append:
+	'#ko-timer' asJQuery append:
 		'<div class="exampleContainer">
 			<div data-bind="sevenSeg: { digits: 5, value: counter }" class="big-sevenSeg" style="width: 420px;"></div>
 		</div>'.
@@ -204,3 +204,4 @@ start
 	window alert: 'Timer class>>start'.
 	self new augmentPage
 ! !
+

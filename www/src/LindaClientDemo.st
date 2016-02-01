@@ -336,7 +336,7 @@ doJQueryPrepend: aMsg
 	| elem|
 	elem := '<li>' asJQuery.
 	elem html: aMsg.
-	'#output-list' asJQuery prepend: elem
+	'#linda-output-list' asJQuery prepend: elem
 !
 
 incInterval
@@ -360,7 +360,7 @@ augmentPage
 
 	'#start' asJQuery click: [ self startDemo ].
 	self setupViewModel.
-	ko applyBindings: viewModel.
+	ko applyBindings: viewModel value: (document getElementById: 'ko-linda').
 	self setupLindaClient.
 !
 
