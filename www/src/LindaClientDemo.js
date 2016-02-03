@@ -1450,7 +1450,7 @@ var self=this;
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._setupLindaClient();
-$recv("#start"._asJQuery())._text_("デモ中");
+$recv("#start"._asJQuery())._text_("Running Linda Demo");
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"startDemo",{},$globals.LindaClientApp)});
@@ -1458,7 +1458,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "startDemo\x0a\x0a\x09self setupLindaClient.\x0a\x09'#start' asJQuery text: 'デモ中'",
+source: "startDemo\x0a\x0a\x09self setupLindaClient.\x0a\x09'#start' asJQuery text: 'Running Linda Demo' \x22'デモ中'\x22",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["setupLindaClient", "text:", "asJQuery"]
@@ -3182,8 +3182,8 @@ $4=$recv(anIndex)._printString();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["printString"]=1;
 //>>excludeEnd("ctx");
-$3="第".__comma($4);
-$2=$recv($3).__comma("番目のフィボナッチ数: ");
+$3="Article".__comma($4);
+$2=$recv($3).__comma("n-th Fibonacci number: ");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx[","]=2;
 //>>excludeEnd("ctx");
@@ -3203,7 +3203,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["anIndex", "aValue"],
-source: "writeResult: anIndex value: aValue\x0a\x09| tuple |\x0a\x09self doJQueryPrepend:'第', anIndex printString, '番目のフィボナッチ数: ', aValue printString.\x0a\x09tuple := FibTuple result.\x0a\x09tuple n: anIndex.\x0a\x09tuple answer: aValue.\x0a\x09self tupleSpace write: tuple",
+source: "writeResult: anIndex value: aValue\x0a\x09| tuple |\x0a\x09\x22self doJQueryPrepend:'第', anIndex printString, '番目のフィボナッチ数: ', aValue printString.\x22\x0a\x09\x22n-th Fibonacci number\x22\x0a\x09self doJQueryPrepend:'Article', anIndex printString, 'n-th Fibonacci number: ', aValue printString.\x0a\x09tuple := FibTuple result.\x0a\x09tuple n: anIndex.\x0a\x09tuple answer: aValue.\x0a\x09self tupleSpace write: tuple",
 referencedClasses: ["FibTuple"],
 //>>excludeEnd("ide");
 messageSends: ["doJQueryPrepend:", ",", "printString", "result", "n:", "answer:", "write:", "tupleSpace"]

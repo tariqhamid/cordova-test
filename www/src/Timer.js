@@ -64,8 +64,7 @@ var self=this;
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
-$recv(window)._alert_("Timer>>augmentPage");
-$1="#start"._asJQuery();
+$1="#timer-start"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["asJQuery"]=1;
 //>>excludeEnd("ctx");
@@ -88,10 +87,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x0awindow alert: 'Timer>>augmentPage'.\x0a\x0a\x09'#start' asJQuery click: [self doAction].\x0a\x09'#ko-timer' asJQuery append:\x0a\x09\x09'<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>'.\x0a\x0a\x09ko bindingHandlers at: #sevenSeg put: self sevenSegHandler.\x0a\x0a\x09self setupModel",
+source: "augmentPage\x0a\x0a\x09'#timer-start' asJQuery click: [self doAction].\x0a\x09'#ko-timer' asJQuery append:\x0a\x09\x09'<div class=\x22exampleContainer\x22>\x0a\x09\x09\x09<div data-bind=\x22sevenSeg: { digits: 5, value: counter }\x22 class=\x22big-sevenSeg\x22 style=\x22width: 420px;\x22></div>\x0a\x09\x09</div>'.\x0a\x0a\x09ko bindingHandlers at: #sevenSeg put: self sevenSegHandler.\x0a\x0a\x09self setupModel",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["alert:", "click:", "asJQuery", "doAction", "append:", "at:put:", "bindingHandlers", "sevenSegHandler", "setupModel"]
+messageSends: ["click:", "asJQuery", "doAction", "append:", "at:put:", "bindingHandlers", "sevenSegHandler", "setupModel"]
 }),
 $globals.Timer);
 
@@ -181,7 +180,7 @@ var $1,$2;
 $1=self._isRunning();
 if($core.assert($1)){
 self._stopTimerProcess();
-$2="#start"._asJQuery();
+$2="#timer-start"._asJQuery();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["asJQuery"]=1;
 //>>excludeEnd("ctx");
@@ -192,7 +191,7 @@ $ctx1.sendIdx["text:"]=1;
 } else {
 self._setupCounter();
 self._setupTimerProcess();
-$recv("#start"._asJQuery())._text_("STOP");
+$recv("#timer-start"._asJQuery())._text_("STOP");
 };
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -201,7 +200,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "doAction\x0a\x0a\x09self isRunning\x0a\x09\x09ifTrue: [self stopTimerProcess.\x0a\x09\x09\x09'#start' asJQuery text: 'START'.]\x0a\x09\x09ifFalse: [self setupCounter.\x0a\x09\x09\x09self setupTimerProcess.\x0a\x09\x09\x09'#start' asJQuery text: 'STOP'.].",
+source: "doAction\x0a\x0a\x09self isRunning\x0a\x09\x09ifTrue: [self stopTimerProcess.\x0a\x09\x09\x09'#timer-start' asJQuery text: 'START'.]\x0a\x09\x09ifFalse: [self setupCounter.\x0a\x09\x09\x09self setupTimerProcess.\x0a\x09\x09\x09'#timer-start' asJQuery text: 'STOP'.].",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["ifTrue:ifFalse:", "isRunning", "stopTimerProcess", "text:", "asJQuery", "setupCounter", "setupTimerProcess"]
@@ -889,7 +888,6 @@ var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-$recv(window)._alert_("Timer class>>start");
 $recv(self._new())._augmentPage();
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -898,10 +896,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "start\x0a\x09window alert: 'Timer class>>start'.\x0a\x09self new augmentPage",
+source: "start\x0a\x09self new augmentPage",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["alert:", "augmentPage", "new"]
+messageSends: ["augmentPage", "new"]
 }),
 $globals.Timer.klass);
 

@@ -15,6 +15,7 @@ require.config({
     "mousetrap": "bower_components/mousetrap/mousetrap",
     "jquery.blockUI": "bower_components/blockui/jquery.blockUI",
     "socket.io": "bower_components/socket.io-client/socket.io",
+    "snap.svg": "bower_components/snap.svg/dist/snap.svg",
     "sevenSeg": "sevenSeg.js/sevenSeg",
     "notifyjs": "bower_components/notify.js/notify",
     "linda-client": "node_modules/linda/lib/linda-client",
@@ -32,7 +33,9 @@ require.config({
     "amber": "bower_components/amber/support",
     "amber_core": "bower_components/amber/src",
     "amber-ambercordova": "src",
-    "amber-timer": "src"
+    "amber-timer": "src",
+    "amber-snapsvg": "src",
+    "amber-todolist": "src"
   },
   "shim": {
     "typeahead": {

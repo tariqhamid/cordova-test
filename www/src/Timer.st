@@ -47,10 +47,10 @@ doAction
 
 	self isRunning
 		ifTrue: [self stopTimerProcess.
-			'#start' asJQuery text: 'START'.]
+			'#timer-start' asJQuery text: 'START'.]
 		ifFalse: [self setupCounter.
 			self setupTimerProcess.
-			'#start' asJQuery text: 'STOP'.].
+			'#timer-start' asJQuery text: 'STOP'.].
 !
 
 isRunning
@@ -158,9 +158,7 @@ wantsAlert: selectedOption
 
 augmentPage
 
-window alert: 'Timer>>augmentPage'.
-
-	'#start' asJQuery click: [self doAction].
+	'#timer-start' asJQuery click: [self doAction].
 	'#ko-timer' asJQuery append:
 		'<div class="exampleContainer">
 			<div data-bind="sevenSeg: { digits: 5, value: counter }" class="big-sevenSeg" style="width: 420px;"></div>
@@ -201,7 +199,6 @@ request
 !
 
 start
-	window alert: 'Timer class>>start'.
 	self new augmentPage
 ! !
 

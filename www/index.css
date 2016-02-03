@@ -7,13 +7,15 @@ body {
 #picture-frame {
     background: gold; /* for testing purposes */
 
-    background-size: cover;
-    background-position: center;
+    position: relative;;
 
-    top: 400px;
-    left: 100px;
-    width:800px;
-    height:100px;
+    top: 10px;
+    width:90%;
+    min-height:100px;
+
+    margin: 10px auto;
+
+
     border:1px solid #000;
 }
 

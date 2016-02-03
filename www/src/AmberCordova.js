@@ -1,6 +1,6 @@
 define("amber-ambercordova/AmberCordova", ["amber/boot"
 //>>excludeStart("imports", pragmas.excludeImports);
-, "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"
+, "amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"
 //>>excludeEnd("imports");
 , "amber_core/Kernel-Objects"], function($boot
 //>>excludeStart("imports", pragmas.excludeImports);
@@ -10,7 +10,7 @@ define("amber-ambercordova/AmberCordova", ["amber/boot"
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('AmberCordova');
 $core.packages["AmberCordova"].innerEval = function (expr) { return eval(expr); };
-$core.packages["AmberCordova"].imports = ["amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"];
+$core.packages["AmberCordova"].imports = ["amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"];
 $core.packages["AmberCordova"].transport = {"type":"amd","amdNamespace":"amber-ambercordova"};
 
 $core.addClass('AmberCordova', $globals.Object, ['images', 'cursor', 'mySound', 'aTrack', 'paused'], 'AmberCordova');
@@ -19,6 +19,8 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 function $OrderedCollection(){return $globals.OrderedCollection||(typeof OrderedCollection=="undefined"?nil:OrderedCollection)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -188,6 +190,8 @@ $core.method({
 selector: "begin",
 protocol: 'old-example',
 fn: function (){
+"use strict";
+
 var self=this;
 var msg,button;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -229,6 +233,8 @@ $core.method({
 selector: "doAmberWith",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -267,6 +273,8 @@ $core.method({
 selector: "doJQueryAppend",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -291,6 +299,8 @@ $core.method({
 selector: "doNextImg",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -325,6 +335,8 @@ $core.method({
 selector: "doNextTrack",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -349,6 +361,8 @@ $core.method({
 selector: "doPictureListener",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var myElement;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -391,6 +405,8 @@ $core.method({
 selector: "doPlayNewTrack",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 function $Audio(){return $globals.Audio||(typeof Audio=="undefined"?nil:Audio)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -426,6 +442,8 @@ $core.method({
 selector: "doPrevImg",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -460,6 +478,8 @@ $core.method({
 selector: "doSilkTAG",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -484,16 +504,164 @@ $core.method({
 selector: "geoLocation",
 protocol: 'action',
 fn: function (){
-var self=this;
-return self;
+"use strict";
 
+var self=this;
+function $String(){return $globals.String||(typeof String=="undefined"?nil:String)}
+function $Date(){return $globals.Date||(typeof Date=="undefined"?nil:Date)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1,$19,$18,$17,$20,$16,$15,$22,$21,$14,$23,$13,$12,$25,$24,$11,$26,$10,$9,$28,$27,$8,$29,$7,$6,$5,$30,$4,$3,$2,$31,$34,$33,$32;
+$recv($recv($recv(window)._navigator())._geolocation())._getCurrentPosition_onError_((function(position){
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx2) {
+//>>excludeEnd("ctx");
+$1=window;
+$19=$recv(position)._coords();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["coords"]=1;
+//>>excludeEnd("ctx");
+$18=$recv($19)._latitude();
+$17="Lat: ".__comma($18);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=16;
+//>>excludeEnd("ctx");
+$20=$recv($String())._cr();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["cr"]=1;
+//>>excludeEnd("ctx");
+$16=$recv($17).__comma($20);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=15;
+//>>excludeEnd("ctx");
+$15=$recv($16).__comma("Long: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=14;
+//>>excludeEnd("ctx");
+$22=$recv(position)._coords();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["coords"]=2;
+//>>excludeEnd("ctx");
+$21=$recv($22)._longitude();
+$14=$recv($15).__comma($21);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=13;
+//>>excludeEnd("ctx");
+$23=$recv($String())._cr();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["cr"]=2;
+//>>excludeEnd("ctx");
+$13=$recv($14).__comma($23);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=12;
+//>>excludeEnd("ctx");
+$12=$recv($13).__comma("Altitude: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=11;
+//>>excludeEnd("ctx");
+$25=$recv(position)._coords();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["coords"]=3;
+//>>excludeEnd("ctx");
+$24=$recv($25)._altitude();
+$11=$recv($12).__comma($24);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=10;
+//>>excludeEnd("ctx");
+$26=$recv($String())._cr();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["cr"]=3;
+//>>excludeEnd("ctx");
+$10=$recv($11).__comma($26);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=9;
+//>>excludeEnd("ctx");
+$9=$recv($10).__comma("Heading: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=8;
+//>>excludeEnd("ctx");
+$28=$recv(position)._coords();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["coords"]=4;
+//>>excludeEnd("ctx");
+$27=$recv($28)._heading();
+$8=$recv($9).__comma($27);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=7;
+//>>excludeEnd("ctx");
+$29=$recv($String())._cr();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["cr"]=4;
+//>>excludeEnd("ctx");
+$7=$recv($8).__comma($29);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=6;
+//>>excludeEnd("ctx");
+$6=$recv($7).__comma("Speed: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=5;
+//>>excludeEnd("ctx");
+$5=$recv($6).__comma($recv($recv(position)._coords())._speed());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=4;
+//>>excludeEnd("ctx");
+$30=$recv($String())._cr();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["cr"]=5;
+//>>excludeEnd("ctx");
+$4=$recv($5).__comma($30);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=3;
+//>>excludeEnd("ctx");
+$3=$recv($4).__comma("Time: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=2;
+//>>excludeEnd("ctx");
+$2=$recv($3).__comma($recv($Date())._fromMilliseconds_($recv(position)._timestamp()));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=1;
+//>>excludeEnd("ctx");
+return $recv($1)._alert_($2);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["alert:"]=1;
+//>>excludeEnd("ctx");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx2) {$ctx2.fillBlock({position:position},$ctx1,1)});
+//>>excludeEnd("ctx");
+}),(function(error){
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx2) {
+//>>excludeEnd("ctx");
+$31=window;
+$34=$recv("code: ".__comma($recv(error)._code())).__comma($recv($String())._cr());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=19;
+//>>excludeEnd("ctx");
+$33=$recv($34).__comma("message: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=18;
+//>>excludeEnd("ctx");
+$32=$recv($33).__comma($recv(error)._message());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=17;
+//>>excludeEnd("ctx");
+return $recv($31)._alert_($32);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx2) {$ctx2.fillBlock({error:error},$ctx1,2)});
+//>>excludeEnd("ctx");
+}));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"geoLocation",{},$globals.AmberCordova)});
+//>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "geoLocation\x0a\x22\x0a\x09navigator geolocation getCurrentPosition: [:position |\x0a\x09\x09alert value: 'Lat: ',(position coords latitude),\x0a\x09\x09\x09  (String cr),'Long: ',(position coords longitude),\x0a\x09\x09\x09  (String cr),'Altitude: ',(position coords altitude),\x0a\x09\x09\x09  (String cr),'Heading: ',(position coords heading),\x0a\x09\x09\x09  (String cr),'Speed: ',(position coords speed),\x0a\x09\x09\x09  (String cr),'Time: ',(position timestamp)]\x0a\x09\x09onError: [:error |\x0a\x09\x09\x09alert value: 'code: ',(error code),(String cr),\x0a\x09\x09\x09\x09  'message: ',(error message)]\x0a\x22",
-referencedClasses: [],
+source: "geoLocation\x0a\x0a  window navigator geolocation getCurrentPosition: [:position |\x0a\x09\x09window alert: 'Lat: ',(position coords latitude),\x0a\x09\x09\x09  (String cr),'Long: ',(position coords longitude),\x0a\x09\x09\x09  (String cr),'Altitude: ',(position coords altitude),\x0a\x09\x09\x09  (String cr),'Heading: ',(position coords heading),\x0a\x09\x09\x09  (String cr),'Speed: ',(position coords speed),\x0a\x09\x09\x09  (String cr),'Time: ',(Date fromMilliseconds: (position timestamp))]\x0a\x09\x09onError: [:error |\x0a\x09\x09\x09window alert: 'code: ',(error code),(String cr),\x0a\x09\x09\x09\x09  'message: ',(error message)]",
+referencedClasses: ["String", "Date"],
 //>>excludeEnd("ide");
-messageSends: []
+messageSends: ["getCurrentPosition:onError:", "geolocation", "navigator", "alert:", ",", "latitude", "coords", "cr", "longitude", "altitude", "heading", "speed", "fromMilliseconds:", "timestamp", "code", "message"]
 }),
 $globals.AmberCordova);
 
@@ -502,6 +670,8 @@ $core.method({
 selector: "helloFromSmalltalk",
 protocol: 'old-example',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -527,6 +697,8 @@ $core.method({
 selector: "processSwipe",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var direction;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -576,6 +748,8 @@ $core.method({
 selector: "showImage",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -606,6 +780,8 @@ $core.method({
 selector: "withEmbeddedJavascript",
 protocol: 'old-example',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -631,6 +807,8 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

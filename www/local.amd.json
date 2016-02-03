@@ -1,6 +1,8 @@
 {
     "paths": {
         "amber-ambercordova": "src",
-        "amber-timer": "src"
+        "amber-timer": "src",
+        "amber-snapsvg": "src",
+        "amber-todolist": "src"
     }
 }

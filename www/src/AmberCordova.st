@@ -1,5 +1,5 @@
 Smalltalk createPackage: 'AmberCordova'!
-(Smalltalk packageAt: 'AmberCordova') imports: {'amber-ambercordova/LindaClient'. 'amber-ambercordova/LindaClient-Tests'. 'amber-ambercordova/LindaClientDemo'. 'amber-ambercordova/Timer'. 'amber-ambercordova/Timer-Tests'. 'amber/jquery/Wrappers-JQuery'. 'amber/web/Web'. 'silk/Silk'}!
+(Smalltalk packageAt: 'AmberCordova') imports: {'amber-ambercordova/AmberSnapsvg'. 'amber-ambercordova/Boomerang'. 'amber-ambercordova/Boomerang-Tests'. 'amber-ambercordova/LindaClient'. 'amber-ambercordova/LindaClient-Tests'. 'amber-ambercordova/LindaClientDemo'. 'amber-ambercordova/Timer'. 'amber-ambercordova/Timer-Tests'. 'amber-ambercordova/TodoList'. 'amber-ambercordova/TwitterWall'. 'amber-ambercordova/Zendo'. 'amber-ambercordova/Zendo-Tests'. 'amber/jquery/Wrappers-JQuery'. 'amber/web/Web'. 'silk/Silk'}!
 Object subclass: #AmberCordova
 	instanceVariableNames: 'images cursor mySound aTrack paused'
 	package: 'AmberCordova'!
@@ -66,18 +66,17 @@ doSilkTAG
 !
 
 geoLocation
-"
-	navigator geolocation getCurrentPosition: [:position |
-		alert value: 'Lat: ',(position coords latitude),
+
+  window navigator geolocation getCurrentPosition: [:position |
+		window alert: 'Lat: ',(position coords latitude),
 			  (String cr),'Long: ',(position coords longitude),
 			  (String cr),'Altitude: ',(position coords altitude),
 			  (String cr),'Heading: ',(position coords heading),
 			  (String cr),'Speed: ',(position coords speed),
-			  (String cr),'Time: ',(position timestamp)]
+			  (String cr),'Time: ',(Date fromMilliseconds: (position timestamp))]
 		onError: [:error |
-			alert value: 'code: ',(error code),(String cr),
+			window alert: 'code: ',(error code),(String cr),
 				  'message: ',(error message)]
-"
 !
 
 processSwipe

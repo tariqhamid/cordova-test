@@ -351,7 +351,7 @@ intervalLimit
 startDemo
 
 	self setupLindaClient.
-	'#start' asJQuery text: 'デモ中'
+	'#start' asJQuery text: 'Running Linda Demo' "'デモ中'"
 ! !
 
 !LindaClientApp methodsFor: 'starting'!
@@ -757,7 +757,9 @@ tupleSpace
 
 writeResult: anIndex value: aValue
 	| tuple |
-	self doJQueryPrepend:'第', anIndex printString, '番目のフィボナッチ数: ', aValue printString.
+	"self doJQueryPrepend:'第', anIndex printString, '番目のフィボナッチ数: ', aValue printString."
+	"n-th Fibonacci number"
+	self doJQueryPrepend:'Article', anIndex printString, 'n-th Fibonacci number: ', aValue printString.
 	tuple := FibTuple result.
 	tuple n: anIndex.
 	tuple answer: aValue.

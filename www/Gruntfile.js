@@ -39,7 +39,14 @@ module.exports = function (grunt) {
                     'src/LindaClient-Tests.st',
                     'src/LindaClientDemo.st',
                     'src/Timer.st',
-                    'src/Timer-Tests.st'
+                    'src/Timer-Tests.st',
+                    'src/Boomerang-Tests.st',
+                    'src/Boomerang.st',
+                    'src/Zendo-Tests.st',
+                    'src/Zendo.st',
+                    'src/AmberSnapsvg.st',
+                    'src/TodoList.st',
+                    'src/TwitterWall.st'
                 ],
                 amd_namespace: 'amber-ambercordova',
                 libraries: ['amber_core/SUnit', 'amber/web/Web', 'silk/Silk']
