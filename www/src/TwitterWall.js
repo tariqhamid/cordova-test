@@ -50,7 +50,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aJson"],
-source: "json: aJson\x0ajson := aJson",
+source: "json: aJson\x0ajson := aJson.\x0a\x0a\x22window alert: (JSON stringify: aJson)\x22\x0a\x22Transcript show: (JSON stringify: aJson); cr;cr.\x22",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
@@ -65,7 +65,7 @@ fn: function (tr){
 "use strict";
 
 var self=this;
-var tdUser,tdMessage,img,a,pMessage,pDate;
+var tdUser,tdMessage,img,a,pMessage,pDate,user;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -108,32 +108,36 @@ $recv(tr)._append_(tdMessage);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["append:"]=2;
 //>>excludeEnd("ctx");
+user=$recv(self["@json"])._at_("user");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["at:"]=1;
+//>>excludeEnd("ctx");
 $6=$recv($HTMLCanvas())._new();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["new"]=3;
 //>>excludeEnd("ctx");
 $5=$recv($6)._img();
-$7=$recv(self["@json"])._at_("profile_image_url");
+$7=$recv(user)._at_("profile_image_url");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:"]=1;
+$ctx1.sendIdx["at:"]=2;
 //>>excludeEnd("ctx");
 img=$recv($5)._src_($7);
 $8=$recv(img)._element();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["element"]=3;
 //>>excludeEnd("ctx");
-$9=$recv(self["@json"])._at_("from_user");
+$9=$recv(user)._at_("name");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:"]=2;
+$ctx1.sendIdx["at:"]=3;
 //>>excludeEnd("ctx");
 $recv($8)._title_($9);
 $10=$recv(img)._element();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["element"]=4;
 //>>excludeEnd("ctx");
-$12=$recv(self["@json"])._at_("from_user");
+$12=$recv(user)._at_("screen_name");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:"]=3;
+$ctx1.sendIdx["at:"]=4;
 //>>excludeEnd("ctx");
 $11="http://twitter.com/".__comma($12);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -145,9 +149,9 @@ $14=$recv($HTMLCanvas())._new();
 $ctx1.sendIdx["new"]=4;
 //>>excludeEnd("ctx");
 $13=$recv($14)._a();
-$16=$recv(self["@json"])._at_("from_user");
+$16=$recv(user)._at_("screen_name");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:"]=4;
+$ctx1.sendIdx["at:"]=5;
 //>>excludeEnd("ctx");
 $15="http://twitter.com/".__comma($16);
 a=$recv($13)._href_($15);
@@ -178,7 +182,7 @@ $ctx1.sendIdx["id:"]=3;
 $19=pMessage;
 $20=$recv(self["@json"])._at_("text");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:"]=5;
+$ctx1.sendIdx["at:"]=6;
 //>>excludeEnd("ctx");
 $recv($19)._append_($20);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -197,15 +201,15 @@ $ctx1.sendIdx["append:"]=7;
 $recv(tdMessage)._append_(pDate);
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"renderOn:",{tr:tr,tdUser:tdUser,tdMessage:tdMessage,img:img,a:a,pMessage:pMessage,pDate:pDate},$globals.Tweet)});
+}, function($ctx1) {$ctx1.fill(self,"renderOn:",{tr:tr,tdUser:tdUser,tdMessage:tdMessage,img:img,a:a,pMessage:pMessage,pDate:pDate,user:user},$globals.Tweet)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["tr"],
-source: "renderOn: tr\x0a\x0a| tdUser tdMessage img a pMessage pDate |\x0atdUser := HTMLCanvas new td.\x0atdUser element id: 'user'.\x0atdMessage := HTMLCanvas new td.\x0atdMessage element id: 'messageBox'.\x0a\x0atr append: tdUser.\x0atr append: tdMessage.\x0a\x0aimg := HTMLCanvas new img src: (json at: 'profile_image_url') .\x0aimg element title: (json at: 'from_user').\x0aimg element longDesc: ('http://twitter.com/', (json at: 'from_user')).\x0a\x0aa := HTMLCanvas new a href: ('http://twitter.com/', (json at: 'from_user')).\x0aa append: img.\x0a\x0atdUser append: a.\x0a\x0apMessage := HTMLCanvas new p.\x0apMessage element id: 'message'.\x0apMessage append: (json at: 'text').\x0atdMessage append: pMessage.\x0a\x0apDate := HTMLCanvas new p.\x0apDate element id: 'date'.\x0apDate append: (json at: 'created_at').\x0atdMessage append: pDate.",
+source: "renderOn: tr\x0a\x0a| tdUser tdMessage img a pMessage pDate user |\x0atdUser := HTMLCanvas new td.\x0atdUser element id: 'user'.\x0atdMessage := HTMLCanvas new td.\x0atdMessage element id: 'messageBox'.\x0a\x0atr append: tdUser.\x0atr append: tdMessage.\x0a\x0auser := json at: 'user'.\x0a\x0aimg := HTMLCanvas new img src: (user at: 'profile_image_url') .\x0aimg element title: (user at: 'name').\x0aimg element longDesc: ('http://twitter.com/', (user at: 'screen_name')).\x0a\x0aa := HTMLCanvas new a href: ('http://twitter.com/', (user at: 'screen_name')).\x0aa append: img.\x0a\x0atdUser append: a.\x0a\x0apMessage := HTMLCanvas new p.\x0apMessage element id: 'message'.\x0apMessage append: (json at: 'text').\x0atdMessage append: pMessage.\x0a\x0apDate := HTMLCanvas new p.\x0apDate element id: 'date'.\x0apDate append: (json at: 'created_at').\x0atdMessage append: pDate.",
 referencedClasses: ["HTMLCanvas"],
 //>>excludeEnd("ide");
-messageSends: ["td", "new", "id:", "element", "append:", "src:", "img", "at:", "title:", "longDesc:", ",", "href:", "a", "p"]
+messageSends: ["td", "new", "id:", "element", "append:", "at:", "src:", "img", "title:", "longDesc:", ",", "href:", "a", "p"]
 }),
 $globals.Tweet);
 
@@ -253,16 +257,7 @@ var queryString;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1;
 queryString=$recv($recv("#searchQuery"._asJQuery())._val())._replace_with_("#","%23");
-$1="http://localhost:8080/api/Twitter?count=5&q=".__comma(queryString);
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx[","]=1;
-//>>excludeEnd("ctx");
-self._query_($1);
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["query:"]=1;
-//>>excludeEnd("ctx");
 self._query_("http://www.clapistan.com/api/Twitter?count=5&q=".__comma(queryString));
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -271,7 +266,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "query\x0a    | queryString |\x0a\x0a    queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.\x0a\x0a    self query: ('http://localhost:8080/api/Twitter?count=5&q=', queryString).\x0a\x0a\x09self query:  ('http://www.clapistan.com/api/Twitter?count=5&q=', queryString).",
+source: "query\x0a    | queryString |\x0a\x0a    queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.\x0a\x0a    \x22self query: ('http://localhost:8080/api/Twitter?count=5&q=', queryString).\x22\x0a\x0a\x09self query:  ('http://www.clapistan.com/api/Twitter?count=5&q=', queryString).",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["replace:with:", "val", "asJQuery", "query:", ","]
@@ -288,47 +283,32 @@ fn: function (queryURL){
 var self=this;
 var result;
 function $JQuery(){return $globals.JQuery||(typeof JQuery=="undefined"?nil:JQuery)}
-function $JSON(){return $globals.JSON||(typeof JSON=="undefined"?nil:JSON)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1,$2,$3,$4,$5,$7,$6;
-result=$recv($recv($JQuery())._current())._ajax_($globals.HashedCollection._newFromPairs_(["type","GET","url",queryURL,"dataType","json","success",(function(jsonData,textStatus,jqXHR){
+var $1,$3,$2;
+result=$recv($recv($JQuery())._current())._ajax_($globals.HashedCollection._newFromPairs_(["type","GET","url",queryURL,"dataType","json","success",(function(jsonData){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
-$1=window;
-$2="SUCCESS ".__comma(queryURL);
+return self._success_($recv(jsonData)._at_("statuses"));
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx[","]=1;
-//>>excludeEnd("ctx");
-$recv($1)._alert_($2);
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx["alert:"]=1;
-//>>excludeEnd("ctx");
-$3="#output-list"._asJQuery();
-$4="<br>".__comma($recv($JSON())._stringify_(jsonData));
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx[","]=2;
-//>>excludeEnd("ctx");
-return $recv($3)._append_($4);
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx2) {$ctx2.fillBlock({jsonData:jsonData,textStatus:textStatus,jqXHR:jqXHR},$ctx1,1)});
+}, function($ctx2) {$ctx2.fillBlock({jsonData:jsonData},$ctx1,1)});
 //>>excludeEnd("ctx");
 }),"error",(function(xhr,status){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
-$5=window;
-$7=$recv($recv(status).__comma(" ")).__comma("TwitterSearch>>query: ");
+$1=window;
+$3=$recv($recv(status).__comma(" ")).__comma("TwitterSearch>>query: ");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx[","]=4;
+$ctx2.sendIdx[","]=2;
 //>>excludeEnd("ctx");
-$6=$recv($7).__comma(queryURL);
+$2=$recv($3).__comma(queryURL);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx2.sendIdx[","]=3;
+$ctx2.sendIdx[","]=1;
 //>>excludeEnd("ctx");
-return $recv($5)._alert_($6);
+return $recv($1)._alert_($2);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx2) {$ctx2.fillBlock({xhr:xhr,status:status},$ctx1,2)});
 //>>excludeEnd("ctx");
@@ -340,10 +320,53 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["queryURL"],
-source: "query: queryURL\x0a  | result |\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> queryURL.\x0a        'dataType' -> 'json'.\x0a        'success' -> [ :jsonData :textStatus :jqXHR | \x0a\x09\x09\x09window alert: 'SUCCESS ' ,  queryURL.\x0a\x09\x09\x09'#output-list' asJQuery\x0a            \x09append: '<br>',(JSON stringify: jsonData)].\x0a        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]\x0a        }",
-referencedClasses: ["JQuery", "JSON"],
+source: "query: queryURL\x0a  | result |\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> queryURL.\x0a        'dataType' -> 'json'.\x0a\x09\x09'success' -> [ :jsonData | \x0a\x09\x09\x09self success: (jsonData at: 'statuses')].\x0a        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]\x0a        }",
+referencedClasses: ["JQuery"],
 //>>excludeEnd("ide");
-messageSends: ["ajax:", "current", "alert:", ",", "append:", "asJQuery", "stringify:"]
+messageSends: ["ajax:", "current", "success:", "at:", "alert:", ","]
+}),
+$globals.TwitterSearch);
+
+$core.addMethod(
+$core.method({
+selector: "success2:",
+protocol: 'not yet classified',
+fn: function (tweets){
+"use strict";
+
+var self=this;
+var wall,table,tr;
+function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
+function $Tweet(){return $globals.Tweet||(typeof Tweet=="undefined"?nil:Tweet)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+wall="#playground";
+table=$recv($recv($HTMLCanvas())._onJQuery_($recv(wall)._asJQuery()))._table();
+$recv($recv(table)._element())._id_("twitterwall");
+$recv(tweets)._do_((function(tweet){
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx2) {
+//>>excludeEnd("ctx");
+tr=$recv($recv($HTMLCanvas())._new())._tr();
+tr;
+$recv(table)._append_(tr);
+return $recv($Tweet())._openAt_with_(tr,tweet);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx2) {$ctx2.fillBlock({tweet:tweet},$ctx1,1)});
+//>>excludeEnd("ctx");
+}));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"success2:",{tweets:tweets,wall:wall,table:table,tr:tr},$globals.TwitterSearch)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: ["tweets"],
+source: "success2: tweets\x0a\x09| wall table tr |\x0a\x09wall := '#playground'.\x0a\x09table := (HTMLCanvas onJQuery: (wall asJQuery))  table.\x0a\x09table element id: 'twitterwall'.\x0a\x0a\x09tweets do: [ :tweet | \x0a\x09\x09\x09   tr := HTMLCanvas new tr.\x0a\x09\x09\x09   table append: tr.\x0a\x09\x09\x09   Tweet openAt: tr with: tweet\x0a\x09\x09\x09   ].",
+referencedClasses: ["HTMLCanvas", "Tweet"],
+//>>excludeEnd("ide");
+messageSends: ["table", "onJQuery:", "asJQuery", "id:", "element", "do:", "tr", "new", "append:", "openAt:with:"]
 }),
 $globals.TwitterSearch);
 
@@ -392,7 +415,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["tweets"],
-source: "success: tweets\x0a| playground table tr |\x0aplayground := '#playground' asJQuery.\x0aplayground empty.\x0a [:html |\x0a\x09table := html table.\x0a\x09table element id: 'twitterwall'.\x0a\x0a\x09tweets do: [ :tweet |\x0a        \x09   tr := html tr.\x0a\x09           table append: tr.\x0a        \x09   Tweet openAt: tr with: tweet\x0a        ]\x0a] appendToJQuery: playground.",
+source: "success: tweets\x0a\x09| playground table tr |\x0a\x09\x0a\x09playground := '#playground' asJQuery.\x0a\x09playground empty.\x0a\x09 [:html |\x0a\x09\x09table := html table.\x0a\x09\x09table element id: 'twitterwall'.\x0a\x0a\x09\x09tweets do: [ :tweet |\x0a\x09\x09\x09\x09   tr := html tr.\x0a\x09\x09\x09\x09   table append: tr.\x0a\x09\x09\x09\x09   Tweet openAt: tr with: tweet\x0a\x09\x09\x09]\x0a\x09] appendToJQuery: playground.",
 referencedClasses: ["Tweet"],
 //>>excludeEnd("ide");
 messageSends: ["asJQuery", "empty", "appendToJQuery:", "table", "id:", "element", "do:", "tr", "append:", "openAt:with:"]
