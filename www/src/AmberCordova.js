@@ -777,6 +777,120 @@ $globals.AmberCordova);
 
 $core.addMethod(
 $core.method({
+selector: "testLocalStorage",
+protocol: 'old-example',
+fn: function (){
+"use strict";
+
+var self=this;
+var coll,hcoll;
+function $OrderedCollection(){return $globals.OrderedCollection||(typeof OrderedCollection=="undefined"?nil:OrderedCollection)}
+function $HashedCollection(){return $globals.HashedCollection||(typeof HashedCollection=="undefined"?nil:HashedCollection)}
+function $JSON(){return $globals.JSON||(typeof JSON=="undefined"?nil:JSON)}
+function $SmalltalkImage(){return $globals.SmalltalkImage||(typeof SmalltalkImage=="undefined"?nil:SmalltalkImage)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1,$2,$4,$3;
+coll=$recv($OrderedCollection())._new();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["new"]=1;
+//>>excludeEnd("ctx");
+$recv(coll)._add_("abc");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["add:"]=1;
+//>>excludeEnd("ctx");
+$recv(coll)._add_("xon");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["add:"]=2;
+//>>excludeEnd("ctx");
+hcoll=$recv($HashedCollection())._new();
+$recv(hcoll)._at_put_("en","English");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["at:put:"]=1;
+//>>excludeEnd("ctx");
+$recv(hcoll)._at_put_("fr","French");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["at:put:"]=2;
+//>>excludeEnd("ctx");
+$recv(hcoll)._at_put_("ge","German");
+$recv(coll)._add_(hcoll);
+$recv(localStorage)._setItem_value_("coll",$recv(coll)._asJSONString());
+coll=nil;
+$recv(localStorage)._getItem_("coll");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["getItem:"]=1;
+//>>excludeEnd("ctx");
+$1=$recv(localStorage)._getItem_("coll");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["getItem:"]=2;
+//>>excludeEnd("ctx");
+$recv($JSON())._parse_($1);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["parse:"]=1;
+//>>excludeEnd("ctx");
+$2=$recv($SmalltalkImage())._current();
+$4=$recv(localStorage)._getItem_("coll");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["getItem:"]=3;
+//>>excludeEnd("ctx");
+$3=$recv($JSON())._parse_($4);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["parse:"]=2;
+//>>excludeEnd("ctx");
+$recv($2)._readJSObject_($3);
+$recv($recv($recv($JSON())._parse_($recv(localStorage)._getItem_("coll")))._at_((3)))._at_("fr");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["at:"]=1;
+//>>excludeEnd("ctx");
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testLocalStorage",{coll:coll,hcoll:hcoll},$globals.AmberCordova)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testLocalStorage\x0a\x09\x22http://stackoverflow.com/questions/22604341/amber-and-localstorage-asjson/23234804#23234804\x22\x0a\x09| coll hcoll |\x0a\x0a\x09coll := OrderedCollection new.\x0a\x09coll add: 'abc'.\x0a\x09coll add: 'xon'.\x0a\x0a\x09hcoll := HashedCollection new.\x0a\x09hcoll at: 'en' put: 'English'.\x0a\x09hcoll at: 'fr' put: 'French'.\x0a\x09hcoll at: 'ge' put: 'German'.\x0a\x0a\x09coll add: hcoll.\x0a\x0a\x09localStorage setItem: 'coll' value: coll asJSONString.\x0a\x0a\x09\x22We set coll to nil to indicate that we \x0a\x09are going to retrieve it back from the localStorage\x22\x0a\x0a\x09coll := nil.\x0a\x0a\x09localStorage getItem: 'coll'.\x0a\x0a\x09JSON parse: (localStorage getItem: 'coll').\x0a\x0a\x09SmalltalkImage current readJSObject: \x0a\x09\x09\x09\x09(JSON parse: (localStorage getItem: 'coll')) .\x0a\x0a\x0a\x09((JSON parse: (localStorage getItem: 'coll')) at: 3) at: 'fr' ",
+referencedClasses: ["OrderedCollection", "HashedCollection", "JSON", "SmalltalkImage"],
+//>>excludeEnd("ide");
+messageSends: ["new", "add:", "at:put:", "setItem:value:", "asJSONString", "getItem:", "parse:", "readJSObject:", "current", "at:"]
+}),
+$globals.AmberCordova);
+
+$core.addMethod(
+$core.method({
+selector: "testXMLHttpRequest",
+protocol: 'old-example',
+fn: function (){
+"use strict";
+
+var self=this;
+var req;
+function $XMLHttpRequest(){return $globals.XMLHttpRequest||(typeof XMLHttpRequest=="undefined"?nil:XMLHttpRequest)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1;
+req=$recv($XMLHttpRequest())._new();
+$recv(req)._open_url_asynchronous_("GET","http://amber-lang.net/",false);
+$recv(req)._send_("");
+$1=$recv(req)._responseText();
+return $1;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testXMLHttpRequest",{req:req},$globals.AmberCordova)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testXMLHttpRequest\x0a\x09\x22http://stackoverflow.com/questions/18472447/amber-smalltalk-and-xmlhttprequest-get\x22\x0a\x09| req |\x0a\x09req := XMLHttpRequest new.\x0a\x09req open: 'GET' url: 'http://amber-lang.net/' asynchronous: false.\x0a\x09req send: ''.\x0a\x09^ req responseText  ",
+referencedClasses: ["XMLHttpRequest"],
+//>>excludeEnd("ide");
+messageSends: ["new", "open:url:asynchronous:", "send:", "responseText"]
+}),
+$globals.AmberCordova);
+
+$core.addMethod(
+$core.method({
 selector: "withEmbeddedJavascript",
 protocol: 'old-example',
 fn: function (){

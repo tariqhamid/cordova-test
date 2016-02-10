@@ -125,6 +125,48 @@ helloFromSmalltalk
 	^ self withEmbeddedJavascript
 !
 
+testLocalStorage
+	"http://stackoverflow.com/questions/22604341/amber-and-localstorage-asjson/23234804#23234804"
+	| coll hcoll |
+
+	coll := OrderedCollection new.
+	coll add: 'abc'.
+	coll add: 'xon'.
+
+	hcoll := HashedCollection new.
+	hcoll at: 'en' put: 'English'.
+	hcoll at: 'fr' put: 'French'.
+	hcoll at: 'ge' put: 'German'.
+
+	coll add: hcoll.
+
+	localStorage setItem: 'coll' value: coll asJSONString.
+
+	"We set coll to nil to indicate that we 
+	are going to retrieve it back from the localStorage"
+
+	coll := nil.
+
+	localStorage getItem: 'coll'.
+
+	JSON parse: (localStorage getItem: 'coll').
+
+	SmalltalkImage current readJSObject: 
+				(JSON parse: (localStorage getItem: 'coll')) .
+
+
+	((JSON parse: (localStorage getItem: 'coll')) at: 3) at: 'fr'
+!
+
+testXMLHttpRequest
+	"http://stackoverflow.com/questions/18472447/amber-smalltalk-and-xmlhttprequest-get"
+	| req |
+	req := XMLHttpRequest new.
+	req open: 'GET' url: 'http://amber-lang.net/' asynchronous: false.
+	req send: ''.
+	^ req responseText
+!
+
 withEmbeddedJavascript
 	< return 'with ' + 'embedded ' +  'javascript ' + 'text ' >
 ! !

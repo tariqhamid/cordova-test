@@ -320,7 +320,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["queryURL"],
-source: "query: queryURL\x0a  | result |\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> queryURL.\x0a        'dataType' -> 'json'.\x0a\x09\x09'success' -> [ :jsonData | \x0a\x09\x09\x09self success: (jsonData at: 'statuses')].\x0a        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]\x0a        }",
+source: "query: queryURL\x0a  | result |\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> queryURL.\x0a        'dataType' -> 'json'.\x0a\x09\x09'success' -> [ :jsonData | \x0a\x09\x09\x09\x22'#treecontainer' asJQuery jstree: jsonData.\x22\x0a\x09\x09\x09self success: (jsonData at: 'statuses')].\x0a        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]\x0a        }",
 referencedClasses: ["JQuery"],
 //>>excludeEnd("ide");
 messageSends: ["ajax:", "current", "success:", "at:", "alert:", ","]

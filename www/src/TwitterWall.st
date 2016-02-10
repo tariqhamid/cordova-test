@@ -84,6 +84,7 @@ query: queryURL
         'url' -> queryURL.
         'dataType' -> 'json'.
 		'success' -> [ :jsonData | 
+			"'#treecontainer' asJQuery jstree: jsonData."
 			self success: (jsonData at: 'statuses')].
         'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]
         }
