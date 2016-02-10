@@ -62,17 +62,27 @@ Object subclass: #TwitterSearch
 !TwitterSearch methodsFor: 'not yet classified'!
 
 query
-| result queryString |
+    | queryString |
 
-  queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.
+    queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.
+
+    self query: ('http://localhost:8080/api/Twitter?count=5&q=', queryString).
+
+	self query:  ('http://www.clapistan.com/api/Twitter?count=5&q=', queryString).
+!
+
+query: queryURL
+  | result |
 
   result :=  JQuery current ajax: #{
         'type' -> 'GET'.
-        'url' -> ('http://search.twitter.com/search.json?rpp=5&q=', queryString).
-        'dataType' -> 'jsonp'.
-        'success' -> [ :jsonData | '#output-list' asJQuery
-            append: '<br>',(JSON stringify: jsonData)].
-        'error' -> [ :xhr :status | window alert: ('TwitterSearch>>query ' , status)]
+        'url' -> queryURL.
+        'dataType' -> 'json'.
+        'success' -> [ :jsonData :textStatus :jqXHR | 
+			window alert: 'SUCCESS ' ,  queryURL.
+			'#output-list' asJQuery
+            	append: '<br>',(JSON stringify: jsonData)].
+        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]
         }
 !
 

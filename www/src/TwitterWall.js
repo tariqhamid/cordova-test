@@ -249,58 +249,101 @@ fn: function (){
 "use strict";
 
 var self=this;
-var result,queryString;
+var queryString;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1;
+queryString=$recv($recv("#searchQuery"._asJQuery())._val())._replace_with_("#","%23");
+$1="http://localhost:8080/api/Twitter?count=5&q=".__comma(queryString);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx[","]=1;
+//>>excludeEnd("ctx");
+self._query_($1);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["query:"]=1;
+//>>excludeEnd("ctx");
+self._query_("http://www.clapistan.com/api/Twitter?count=5&q=".__comma(queryString));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"query",{queryString:queryString},$globals.TwitterSearch)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "query\x0a    | queryString |\x0a\x0a    queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.\x0a\x0a    self query: ('http://localhost:8080/api/Twitter?count=5&q=', queryString).\x0a\x0a\x09self query:  ('http://www.clapistan.com/api/Twitter?count=5&q=', queryString).",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: ["replace:with:", "val", "asJQuery", "query:", ","]
+}),
+$globals.TwitterSearch);
+
+$core.addMethod(
+$core.method({
+selector: "query:",
+protocol: 'not yet classified',
+fn: function (queryURL){
+"use strict";
+
+var self=this;
+var result;
 function $JQuery(){return $globals.JQuery||(typeof JQuery=="undefined"?nil:JQuery)}
 function $JSON(){return $globals.JSON||(typeof JSON=="undefined"?nil:JSON)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $2,$1,$3,$5,$6,$7,$4;
-$2="#searchQuery"._asJQuery();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=1;
-//>>excludeEnd("ctx");
-$1=$recv($2)._val();
-queryString=$recv($1)._replace_with_("#","%23");
-$3=$recv($JQuery())._current();
-$5="http://search.twitter.com/search.json?rpp=5&q=".__comma(queryString);
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx[","]=1;
-//>>excludeEnd("ctx");
-$4=$globals.HashedCollection._newFromPairs_(["type","GET","url",$5,"dataType","jsonp","success",(function(jsonData){
+var $1,$2,$3,$4,$5,$7,$6;
+result=$recv($recv($JQuery())._current())._ajax_($globals.HashedCollection._newFromPairs_(["type","GET","url",queryURL,"dataType","json","success",(function(jsonData,textStatus,jqXHR){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
-$6="#output-list"._asJQuery();
-$7="<br>".__comma($recv($JSON())._stringify_(jsonData));
+$1=window;
+$2="SUCCESS ".__comma(queryURL);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=1;
+//>>excludeEnd("ctx");
+$recv($1)._alert_($2);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["alert:"]=1;
+//>>excludeEnd("ctx");
+$3="#output-list"._asJQuery();
+$4="<br>".__comma($recv($JSON())._stringify_(jsonData));
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx2.sendIdx[","]=2;
 //>>excludeEnd("ctx");
-return $recv($6)._append_($7);
+return $recv($3)._append_($4);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx2) {$ctx2.fillBlock({jsonData:jsonData},$ctx1,1)});
+}, function($ctx2) {$ctx2.fillBlock({jsonData:jsonData,textStatus:textStatus,jqXHR:jqXHR},$ctx1,1)});
 //>>excludeEnd("ctx");
 }),"error",(function(xhr,status){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
 //>>excludeEnd("ctx");
-return $recv(window)._alert_("TwitterSearch>>query ".__comma(status));
+$5=window;
+$7=$recv($recv(status).__comma(" ")).__comma("TwitterSearch>>query: ");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=4;
+//>>excludeEnd("ctx");
+$6=$recv($7).__comma(queryURL);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx[","]=3;
+//>>excludeEnd("ctx");
+return $recv($5)._alert_($6);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx2) {$ctx2.fillBlock({xhr:xhr,status:status},$ctx1,2)});
 //>>excludeEnd("ctx");
-})]);
-result=$recv($3)._ajax_($4);
+})]));
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"query",{result:result,queryString:queryString},$globals.TwitterSearch)});
+}, function($ctx1) {$ctx1.fill(self,"query:",{queryURL:queryURL,result:result},$globals.TwitterSearch)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
-args: [],
-source: "query\x0a| result queryString |\x0a\x0a  queryString := ('#searchQuery'  asJQuery val) replace: '#' with: '%23'.\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> ('http://search.twitter.com/search.json?rpp=5&q=', queryString).\x0a        'dataType' -> 'jsonp'.\x0a        'success' -> [ :jsonData | '#output-list' asJQuery\x0a            append: '<br>',(JSON stringify: jsonData)].\x0a        'error' -> [ :xhr :status | window alert: ('TwitterSearch>>query ' , status)]\x0a        }",
+args: ["queryURL"],
+source: "query: queryURL\x0a  | result |\x0a\x0a  result :=  JQuery current ajax: #{\x0a        'type' -> 'GET'.\x0a        'url' -> queryURL.\x0a        'dataType' -> 'json'.\x0a        'success' -> [ :jsonData :textStatus :jqXHR | \x0a\x09\x09\x09window alert: 'SUCCESS ' ,  queryURL.\x0a\x09\x09\x09'#output-list' asJQuery\x0a            \x09append: '<br>',(JSON stringify: jsonData)].\x0a        'error' -> [ :xhr :status | window alert: (status , ' ' , 'TwitterSearch>>query: ', queryURL )]\x0a        }",
 referencedClasses: ["JQuery", "JSON"],
 //>>excludeEnd("ide");
-messageSends: ["replace:with:", "val", "asJQuery", "ajax:", "current", ",", "append:", "stringify:", "alert:"]
+messageSends: ["ajax:", "current", "alert:", ",", "append:", "asJQuery", "stringify:"]
 }),
 $globals.TwitterSearch);
 
