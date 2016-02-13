@@ -6,7 +6,6 @@ Object subclass: #AmberSnapsvg
 
 !AmberSnapsvg methodsFor: 'action'!
 
-
 doSnapSvg
 "translation to Smalltalk points 1 to 4 of
 http://snapsvg.io/start/ "
@@ -27,10 +26,7 @@ smallCircle := s circle: 100 value: 150 value: 70.
 !AmberSnapsvg methodsFor: 'starting'!
 
 augmentPage
-"
-	'#amber-with' asJQuery click: [ self doAmberWith ].
-	'#jquery-append' asJQuery click: [ self doJQueryAppend ].
-"
+
 	'#snapsvg-button' asJQuery click: [self doSnapSvg].
 
 	'#snapsvg-button' asJQuery css: #{ 'background-color' ->'Green'}.
@@ -41,3 +37,4 @@ augmentPage
 start
 	self new augmentPage
 ! !
+

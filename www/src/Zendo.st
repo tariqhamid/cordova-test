@@ -18,8 +18,10 @@ doJQueryAppend
 !Zendo methodsFor: 'starting'!
 
 augmentPage
+"
 	'#amber-with' asJQuery click: [ self doAmberWith ].
 	'#jquery-append' asJQuery click: [ self doJQueryAppend ]
+"
 ! !
 
 !Zendo class methodsFor: 'starting'!
@@ -27,3 +29,4 @@ augmentPage
 start
 	self new augmentPage
 ! !
+

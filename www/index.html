@@ -23,6 +23,19 @@
         font-family: verdana;
       }
 
+      .flex-container {
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-flow: row wrap;
+          flex-flow: row wrap;
+      }
+
+      .flex-item {
+          -webkit-flex: 1 auto;
+          flex: 1 auto;
+      }
+
+
 	    .big-sevenSeg
 	    {
 			padding: 0.5em;
@@ -52,21 +65,24 @@
   <body>
 
 
+  <figure id="demo" class="flex-container">
+      <div style="background:hsl(113,50%,75%)" class="flex-item">
+
+      <h1>HelloAmber</h1>
+      <p>This is a sample app. It contains some
+      <a href="parts.html">batteries included</a>
+      and should be
+      <a href="uninstall.html">cleaned up</a>
+      once you start developing your own  app / lib.</p>
+      <button id="amber-with">Hello from TagBrush >> with:</button>
+      <button id="silk-tag">Hello from Silk >> TAG:</button>
+      <button id="jquery-append">Hello from jQuery append</button>
+      <ol id="output-list"></ol>
+
+      </div>
 
 
-    <h1>HelloAmber</h1>
-    <p>This is a sample app. It contains some
-    <a href="parts.html">batteries included</a>
-    and should be
-    <a href="uninstall.html">cleaned up</a>
-    once you start developing your own  app / lib.</p>
-    <button id="amber-with">Hello from TagBrush >> with:</button>
-    <button id="silk-tag">Hello from Silk >> TAG:</button>
-    <button id="jquery-append">Hello from jQuery append</button>
-    <ol id="output-list"></ol>
-
-
-    <div id="old-example" style="border: 1px solid darkgray;border-width: 10px;background: gray">
+    <div id="old-example" class="flex-item" style="border: 1px solid darkgray;border-width: 10px;background: gray">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()">class browser</button>
@@ -77,7 +93,7 @@
     </div>
 
 
-    <div id="richard-eng" style="border: 1px solid magenta;border-width: 10px;background-color: #00c;text-indent: 50px;">
+    <div id="richard-eng" class="flex-item" style="border: 1px solid magenta;border-width: 10px;background-color: #00c;text-indent: 50px;">
       <button id="play-track">play track</button>
       <button id="pause-track">pause track</button>
       <button id="show-image">showimage</button>
@@ -86,7 +102,7 @@
     </div>
 
 
-    <div id="ko-timer" style="border: 1px solid blue;border-width: 10px;background-color: #24c2c7;">
+    <div id="ko-timer" class="flex-item" style="border: 1px solid blue;border-width: 10px;background-color: #24c2c7;">
       <div id="timer-inputs" style="text-indent: 10px">
         <div id="timers">
           <p>Timer time(min)
@@ -111,7 +127,7 @@
 
     </div> <!-- ko-timer -->
 
-    <div id="ko-linda" style="border: 1px solid blueviolet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
+    <div id="ko-linda" class="flex-item" style="border: 1px solid blueviolet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
       <div><span></span></div>
       <br>
       <div><a href="fibWorker.html">Fibonacci worker</a></div>
@@ -125,13 +141,13 @@
     </div>
 
 
-    <div id="snapsvg-demo" style="border: 1px solid violet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
+    <div id="snapsvg-demo" class="flex-item" style="border: 1px solid violet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
     <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
     <button id="snapsvg-button">Hello from Snap.svg</button>
     <!-- <svg id="svg" style="height:200px; width: 90%"></svg>  -->
     </div>
 
-    <div id="twitter-wall">
+    <div id="twitter-wall" class="flex-item">
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -145,8 +161,7 @@
     	</center>
     </div>
 
-    <div id="input-types">
-    </div>
+  </figure>
 
     <script type='text/javascript'>
 
@@ -236,81 +251,92 @@
 
                 amber.globals.TwitterSearch._new()._query();
 
-
-                var inputsObj =
-                {
-                  'button' : 	'Defines a clickable button (mostly used with a JavaScript to activate a script)',
-                  'checkbox' :	'Defines a checkbox',
-                  'color' :	'Defines a color picker',
-                  'date' :	'Defines a date control (year, month and day (no time))',
-                  'datetime' :	'The input type datetime has been removed from the HTML standard. Use datetime-local instead.',
-                  'datetime-local' :	'Defines a date and time control (year, month, day, hour, minute, second, and fraction of a second (no time zone)',
-                  'email' :	'Defines a field for an e-mail address',
-                  'file' :	'Defines a file-select field and a "Browse..." button (for file uploads)',
-                  'hidden' :	'Defines a hidden input field',
-                  'image' :	'Defines an image as the submit button',
-                  'month' :	'Defines a month and year control (no time zone)',
-                  'number' :	'Defines a field for entering a number',
-                  'password' :	'Defines a password field (characters are masked)',
-                  'radio' :	'Defines a radio button',
-                  'range' :	'Defines a control for entering a number whose exact value is not important (like a slider control)',
-                  'reset' :	'Defines a reset button (resets all form values to default values)',
-                  'search' :	'Defines a text field for entering a search string',
-                  'submit' 	: 'Defines a submit button',
-                  'tel' :	'Defines a field for entering a telephone number',
-                  'text' :	'Default. Defines a single-line text field (default width is 20 characters)',
-                  'time' :	'Defines a control for entering a time (no time zone)',
-                  'url' :	'Defines a field for entering a URL',
-                  'week' :	'Defines a week and year control (no time zone)'
-                };
-
-                // <table border="" cellspacing="0">
-                var table1 = document.createElement("TABLE");
-                table1.setAttribute("cellspacing", "0");
-                table1.setAttribute("border", "");
-                table1.setAttribute("width", "50%");
-                table1.setAttribute("style", "border: solid 1px; text-align: center; margin: 0px auto;");
-                var thead1 = document.createElement("THEAD");
-                thead1.innerHTML = "<td>Input Types</td><td>Widget</td><td>Description</td>";
-                table1.appendChild(thead1);
-                var caption1 = document.createElement("CAPTION");
-                caption1.innerHTML = "<h3>Input Types</h3>";
-                table1.appendChild(caption1);
-
-                for (var prop in inputsObj) {
-                  if (inputsObj.hasOwnProperty(prop)) {
-                  // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
-                    //alert("prop: " + prop + " value: " + inputsObj[prop]);
-
-                    var tr1 = document.createElement("TR");
-
-                    var input = document.createElement("INPUT");
-                    input.type = prop; //x.setAttribute("type", "button");
-                    input.setAttribute("value", prop);
-                    //var t = document.createTextNode(prop);       // Create a text node
-                    //input.appendChild(t);
-                    //input.className = "css-class-name"; // set the CSS class
-
-                    var td1 = document.createElement("td");
-                    td1.setAttribute("style", "border: solid 1px ");
-                    td1.innerHTML = prop;
-                    var td2 = document.createElement("td");
-                    td2.appendChild(input);
-                    td2.setAttribute("style", "border: solid 1px ");
-                    var td3 = document.createElement("td");
-                    td3.setAttribute("style", "border: solid 1px ");
-                    //td3.setAttribute("style", "border: solid 1px ");
-                    td3.innerHTML = inputsObj[prop];
-                    tr1.appendChild(td1);
-                    tr1.appendChild(td2);
-                    tr1.appendChild(td3);
-                    table1.appendChild(tr1);
-                  }
-                }
-                document.body.appendChild(table1);
-
             });
 
+            displayInputs();
+
+        }
+
+        function displayInputs()
+        {
+          var inputsObj =
+          {
+            'button' : 	'Defines a clickable button (mostly used with a JavaScript to activate a script)',
+            'checkbox' :	'Defines a checkbox',
+            'color' :	'Defines a color picker',
+            'date' :	'Defines a date control (year, month and day (no time))',
+            'datetime' :	'The input type datetime has been removed from the HTML standard. Use datetime-local instead.',
+            'datetime-local' :	'Defines a date and time control (year, month, day, hour, minute, second, and fraction of a second (no time zone)',
+            'email' :	'Defines a field for an e-mail address',
+            'file' :	'Defines a file-select field and a "Browse..." button (for file uploads)',
+            'hidden' :	'Defines a hidden input field',
+            'image' :	'Defines an image as the submit button',
+            'month' :	'Defines a month and year control (no time zone)',
+            'number' :	'Defines a field for entering a number',
+            'password' :	'Defines a password field (characters are masked)',
+            'radio' :	'Defines a radio button',
+            'range' :	'Defines a control for entering a number whose exact value is not important (like a slider control)',
+            'reset' :	'Defines a reset button (resets all form values to default values)',
+            'search' :	'Defines a text field for entering a search string',
+            'submit' 	: 'Defines a submit button',
+            'tel' :	'Defines a field for entering a telephone number',
+            'text' :	'Default. Defines a single-line text field (default width is 20 characters)',
+            'time' :	'Defines a control for entering a time (no time zone)',
+            'url' :	'Defines a field for entering a URL',
+            'week' :	'Defines a week and year control (no time zone)'
+          };
+
+
+          // <table border="" cellspacing="0">
+          var table1 = document.createElement("TABLE");
+          table1.setAttribute("cellspacing", "0");
+          table1.setAttribute("border", "");
+          table1.setAttribute("width", "50%");
+          table1.setAttribute("style", "border: solid 1px; text-align: center; margin: 0px auto;");
+          var thead1 = document.createElement("THEAD");
+          thead1.innerHTML = "<td>Input Types</td><td>Widget</td><td>Description</td>";
+          table1.appendChild(thead1);
+          var caption1 = document.createElement("CAPTION");
+          caption1.innerHTML = "<h3>Input Types</h3>";
+          table1.appendChild(caption1);
+
+          for (var prop in inputsObj) {
+            if (inputsObj.hasOwnProperty(prop)) {
+            // or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
+              //alert("prop: " + prop + " value: " + inputsObj[prop]);
+
+              var tr1 = document.createElement("TR");
+
+              var input = document.createElement("INPUT");
+              input.type = prop; //x.setAttribute("type", "button");
+              input.setAttribute("value", prop);
+              //var t = document.createTextNode(prop);       // Create a text node
+              //input.appendChild(t);
+              //input.className = "css-class-name"; // set the CSS class
+
+              var td1 = document.createElement("td");
+              td1.setAttribute("style", "border: solid 1px ");
+              td1.innerHTML = prop;
+              var td2 = document.createElement("td");
+              td2.appendChild(input);
+              td2.setAttribute("style", "border: solid 1px ");
+              var td3 = document.createElement("td");
+              td3.setAttribute("style", "border: solid 1px ");
+              //td3.setAttribute("style", "border: solid 1px ");
+              td3.innerHTML = inputsObj[prop];
+              tr1.appendChild(td1);
+              tr1.appendChild(td2);
+              tr1.appendChild(td3);
+              table1.appendChild(tr1);
+            }
+          }
+          //    <div id="input-types" class="flex-item">
+          var div1 = document.createElement("div");
+          div1.id = "input-types";
+          div1.setAttribute("class", "flex-item");
+          div1.setAttribute("style", "border: 1px solid darkgray;border-width: 10px;background:hsl(178,50%,75%)");
+          div1.appendChild(table1);
+          document.body.appendChild(div1);
         }
 
         // alert dialog dismissed

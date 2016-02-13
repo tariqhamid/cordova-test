@@ -10,47 +10,18 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1;
-$1="#amber-with"._asJQuery();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["asJQuery"]=1;
-//>>excludeEnd("ctx");
-$recv($1)._click_((function(){
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx2) {
-//>>excludeEnd("ctx");
-return self._doAmberWith();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)});
-//>>excludeEnd("ctx");
-}));
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["click:"]=1;
-//>>excludeEnd("ctx");
-$recv("#jquery-append"._asJQuery())._click_((function(){
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx2) {
-//>>excludeEnd("ctx");
-return self._doJQueryAppend();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)});
-//>>excludeEnd("ctx");
-}));
 return self;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"augmentPage",{},$globals.Zendo)});
-//>>excludeEnd("ctx");
+
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x09'#amber-with' asJQuery click: [ self doAmberWith ].\x0a\x09'#jquery-append' asJQuery click: [ self doJQueryAppend ]",
+source: "augmentPage\x0a\x22\x0a\x09'#amber-with' asJQuery click: [ self doAmberWith ].\x0a\x09'#jquery-append' asJQuery click: [ self doJQueryAppend ]\x0a\x22",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["click:", "asJQuery", "doAmberWith", "doJQueryAppend"]
+messageSends: []
 }),
 $globals.Zendo);
 
@@ -59,6 +30,8 @@ $core.method({
 selector: "doAmberWith",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -97,6 +70,8 @@ $core.method({
 selector: "doJQueryAppend",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -122,6 +97,8 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

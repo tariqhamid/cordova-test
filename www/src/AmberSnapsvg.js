@@ -19,6 +19,8 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -45,7 +47,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x22\x0a\x09'#amber-with' asJQuery click: [ self doAmberWith ].\x0a\x09'#jquery-append' asJQuery click: [ self doJQueryAppend ].\x0a\x22\x0a\x09'#snapsvg-button' asJQuery click: [self doSnapSvg].\x0a\x0a\x09'#snapsvg-button' asJQuery css: #{ 'background-color' ->'Green'}.",
+source: "augmentPage\x0a\x0a\x09'#snapsvg-button' asJQuery click: [self doSnapSvg].\x0a\x0a\x09'#snapsvg-button' asJQuery css: #{ 'background-color' ->'Green'}.",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["click:", "asJQuery", "doSnapSvg", "css:"]
@@ -57,6 +59,8 @@ $core.method({
 selector: "doSnapSvg",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var s,bigCircle,smallCircle;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -89,6 +93,8 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

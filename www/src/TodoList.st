@@ -199,6 +199,7 @@ renderHeaderOn: html
 renderOn: html
 	html div
 		id: 'application';
+		class: 'flex-item';
 		with: [
                   self renderHeaderOn: html.
                   self renderBodyOn: html.
@@ -219,11 +220,6 @@ renderTodosOn: html
 !TodoList methodsFor: 'starting'!
 
 augmentPage
-"
-	'#amber-with' asJQuery click: [ self doAmberWith ].
-	'#jquery-append' asJQuery click: [ self doJQueryAppend ].
-"
-
 	self appendToJQuery: 'body' asJQuery
 ! !
 
