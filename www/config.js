@@ -35,7 +35,9 @@ require.config({
     "amber-ambercordova": "src",
     "amber-timer": "src",
     "amber-snapsvg": "src",
-    "amber-todolist": "src"
+    "amber-todolist": "src",
+    "amber-cornucopiascorecards": "src",
+    "amber-cornucopiascorecards/css": "css"
   },
   "shim": {
     "typeahead": {
@@ -46,6 +48,7 @@ require.config({
     },
     "jquery-ui": {
       "deps": [
+        "jquery",
         "jquery",
         "jquery"
       ]

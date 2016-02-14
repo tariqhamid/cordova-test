@@ -32,7 +32,12 @@
 
       .flex-item {
           -webkit-flex: 1 auto;
-          flex: 1 auto;
+          flex: 0 1 auto;
+      }
+
+      .flex-item {
+        border-radius: .25rem;
+        border-width: 15px
       }
 
 
@@ -51,11 +56,11 @@
 	    }
 
 @media screen and (min-width : 768px){
-    html{ font-size : 120%;}
+    html { font-size : 120%;}
 }
 
 @media screen and (min-width : 1024px) {
-    html{ font-size : 100%};
+    html { font-size : 100%;}
 }
 
     </style>
@@ -66,23 +71,20 @@
 
 
   <figure id="demo" class="flex-container">
-      <div style="background:hsl(113,50%,75%)" class="flex-item">
 
+    <div id="hello-amber" class="flex-item" style="border: solid black;background:hsl(113,50%,75%)">
       <h1>HelloAmber</h1>
-      <p>This is a sample app. It contains some
-      <a href="parts.html">batteries included</a>
-      and should be
-      <a href="uninstall.html">cleaned up</a>
-      once you start developing your own  app / lib.</p>
+      <p>This is a sample app. It contains some <a href="parts.html">batteries included</a>
+      and should be <a href="uninstall.html">cleaned up</a> once you start developing your own  app / lib.
+      </p>
       <button id="amber-with">Hello from TagBrush >> with:</button>
       <button id="silk-tag">Hello from Silk >> TAG:</button>
       <button id="jquery-append">Hello from jQuery append</button>
       <ol id="output-list"></ol>
 
-      </div>
+    </div>
 
-
-    <div id="old-example" class="flex-item" style="border: 1px solid darkgray;border-width: 10px;background: gray">
+    <div id="old-example" class="flex-item" style="border: solid darkgray;background: gray">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()">class browser</button>
@@ -93,7 +95,7 @@
     </div>
 
 
-    <div id="richard-eng" class="flex-item" style="border: 1px solid magenta;border-width: 10px;background-color: #00c;text-indent: 50px;">
+    <div id="richard-eng" class="flex-item" style="border: solid magenta;background-color: #00c;text-indent: 50px;">
       <button id="play-track">play track</button>
       <button id="pause-track">pause track</button>
       <button id="show-image">showimage</button>
@@ -101,8 +103,7 @@
       <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
     </div>
 
-
-    <div id="ko-timer" class="flex-item" style="border: 1px solid blue;border-width: 10px;background-color: #24c2c7;">
+    <div id="ko-timer" class="flex-item" style="border: solid blue;background-color: #24c2c7;">
       <div id="timer-inputs" style="text-indent: 10px">
         <div id="timers">
           <p>Timer time(min)
@@ -118,16 +119,14 @@
         <div><span data-bind="text: counter"></span>
         </div>
       </div>
-
       <!--
       <div class="exampleContainer">
         <div id="sequence-indicator" data-bind="sevenSeg: { digits: 7, value: counter }" class="med-sevenSegArray5" style="width: 420px;"></div>
       </div>
       -->
-
     </div> <!-- ko-timer -->
 
-    <div id="ko-linda" class="flex-item" style="border: 1px solid blueviolet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
+    <div id="ko-linda" class="flex-item" style="border: solid blueviolet;background-color: #ff9;text-indent: 50px;">
       <div><span></span></div>
       <br>
       <div><a href="fibWorker.html">Fibonacci worker</a></div>
@@ -141,11 +140,37 @@
     </div>
 
 
-    <div id="snapsvg-demo" class="flex-item" style="border: 1px solid violet;border-width: 10px;background-color: #ff9;text-indent: 50px;">
+    <div id="snapsvg-demo" class="flex-item" style="border: solid violet;background-color: #ff9;text-indent: 50px;">
     <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
     <button id="snapsvg-button">Hello from Snap.svg</button>
     <!-- <svg id="svg" style="height:200px; width: 90%"></svg>  -->
     </div>
+
+
+    <div id="sean-denigris" class="flex-item cover-container" style="border: solid cyan;background-color: #0fc;text-indent: 50px;">
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
+        </div>
+      </div>
+      <div class="inner cover">
+        <h1 class="cover-heading">Find Clean Eggs</h1>
+        <p class="lead"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org egg ratings</a> in an easily-searchable web UI. Just start typing a brand name and its rating will appear...</p>
+        <p class="lead">
+          <comment>Set default keyboard focus in HTML5 via autofocus per http://stackoverflow.com/questions/4166423/default-html-form-focus-without-javascript </comment>
+          <input type="text" class="form-control" id="suppliers" autofocus >
+        </p>
+      </div>
+      <div class="mastfoot">
+        <div class="inner">
+          <p>Powered by <a href="https://github.com/amber-smalltalk/amber">Amber Smalltalk</a>.</br>
+          <a href="http://getbootstrap.com/">Bootstrap</a> <a href="http://getbootstrap.com/examples/cover/">cover template</a> by <a href="https://twitter.com/mdo">@mdo</a>.</br>
+          Photo credit: <a href="https://www.flickr.com/photos/adamjackson/7166328170/">"My Backyard Chickens"</a> by adamjackson1984 is licensed under CC BY 2.0</p>
+        </div>
+      </div>
+    </div>
+
+
 
     <div id="twitter-wall" class="flex-item">
       <center>
@@ -251,6 +276,11 @@
 
                 amber.globals.TwitterSearch._new()._query();
 
+                // Per http://stackoverflow.com/questions/1789945/how-can-i-check-if-one-string-contains-another-substring, later versions of JS can call include() (didn't work when I tried it in firebug), but old school is...
+          		  var isDev = location.search.indexOf("dev=t") > -1;
+          		  if (isDev) require(["amber-ide-starter-dialog"], function (dlg) { dlg.start(); });
+          		  amber.globals.CornucopiaScorecardsApp._start();
+
             });
 
             displayInputs();
@@ -322,7 +352,6 @@
               td2.setAttribute("style", "border: solid 1px ");
               var td3 = document.createElement("td");
               td3.setAttribute("style", "border: solid 1px ");
-              //td3.setAttribute("style", "border: solid 1px ");
               td3.innerHTML = inputsObj[prop];
               tr1.appendChild(td1);
               tr1.appendChild(td2);
@@ -334,7 +363,7 @@
           var div1 = document.createElement("div");
           div1.id = "input-types";
           div1.setAttribute("class", "flex-item");
-          div1.setAttribute("style", "border: 1px solid darkgray;border-width: 10px;background:hsl(178,50%,75%)");
+          div1.setAttribute("style", "border: solid darkgray;background:hsl(178,50%,75%)");
           div1.appendChild(table1);
           document.body.appendChild(div1);
         }

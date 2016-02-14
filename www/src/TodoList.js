@@ -10,8 +10,6 @@ $core.method({
 selector: "=",
 protocol: 'testing',
 fn: function (aTodo){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -41,8 +39,6 @@ $core.method({
 selector: "id",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@id"];
@@ -63,8 +59,6 @@ $core.method({
 selector: "id:",
 protocol: 'accessing',
 fn: function (aString){
-"use strict";
-
 var self=this;
 self["@id"]=aString;
 return self;
@@ -84,8 +78,6 @@ $core.method({
 selector: "initialize",
 protocol: 'initializing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -118,8 +110,6 @@ $core.method({
 selector: "isDone",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@isDone"];
@@ -140,8 +130,6 @@ $core.method({
 selector: "isDone:",
 protocol: 'accessing',
 fn: function (aBool){
-"use strict";
-
 var self=this;
 self["@isDone"]=aBool;
 return self;
@@ -161,8 +149,6 @@ $core.method({
 selector: "onDeleteClickedDo:",
 protocol: 'accessing',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 self["@onDeleteClicked"]=aBlock;
 return self;
@@ -182,8 +168,6 @@ $core.method({
 selector: "onTodoChangedDo:",
 protocol: 'accessing',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 self["@onTodoChanged"]=aBlock;
 return self;
@@ -203,8 +187,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 var input,delete_;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -298,8 +280,6 @@ $core.method({
 selector: "text",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@text"];
@@ -320,8 +300,6 @@ $core.method({
 selector: "text:",
 protocol: 'accessing',
 fn: function (anObject){
-"use strict";
-
 var self=this;
 self["@text"]=anObject;
 return self;
@@ -341,8 +319,6 @@ $core.method({
 selector: "toggleIsDone",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -368,8 +344,6 @@ $core.method({
 selector: "fromDictionary:",
 protocol: 'not yet classified',
 fn: function (aDict){
-"use strict";
-
 var self=this;
 var todo;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -410,8 +384,6 @@ $core.method({
 selector: "fromDictionary:withCallback:",
 protocol: 'not yet classified',
 fn: function (aDict,aBlock){
-"use strict";
-
 var self=this;
 var todo;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -440,8 +412,6 @@ $core.method({
 selector: "fromDictionary:withTodoChangedCallback:withDeleteClickedCallback:",
 protocol: 'not yet classified',
 fn: function (aDict,aBlock,oBlock){
-"use strict";
-
 var self=this;
 var todo;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -471,8 +441,6 @@ $core.method({
 selector: "newWithText:",
 protocol: 'not yet classified',
 fn: function (aString){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -500,8 +468,6 @@ $core.method({
 selector: "addTodo:",
 protocol: 'adding/removing',
 fn: function (aTodo){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -547,8 +513,6 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -573,8 +537,6 @@ $core.method({
 selector: "doAmberWith",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -613,8 +575,6 @@ $core.method({
 selector: "doJQueryAppend",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -639,8 +599,6 @@ $core.method({
 selector: "handleInput:",
 protocol: 'events',
 fn: function (anEvent){
-"use strict";
-
 var self=this;
 var text,todo;
 function $Todo(){return $globals.Todo||(typeof Todo=="undefined"?nil:Todo)}
@@ -669,8 +627,6 @@ $core.method({
 selector: "initialize",
 protocol: 'initializing',
 fn: function (){
-"use strict";
-
 var self=this;
 function $TodoStorage(){return $globals.TodoStorage||(typeof TodoStorage=="undefined"?nil:TodoStorage)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -720,8 +676,6 @@ $core.method({
 selector: "removeTodo:",
 protocol: 'adding/removing',
 fn: function (aTodo){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -747,8 +701,6 @@ $core.method({
 selector: "renderBodyOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -786,8 +738,6 @@ $core.method({
 selector: "renderFooterOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -827,8 +777,6 @@ $core.method({
 selector: "renderFormOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 var input,defaultText;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -883,8 +831,6 @@ $core.method({
 selector: "renderHeaderOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -924,8 +870,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -964,8 +908,6 @@ $core.method({
 selector: "renderTodosOn:",
 protocol: 'rendering',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1039,8 +981,6 @@ $core.method({
 selector: "run",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1065,8 +1005,6 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1093,8 +1031,6 @@ $core.method({
 selector: "add:",
 protocol: 'adding/removing',
 fn: function (anObject){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1120,8 +1056,6 @@ $core.method({
 selector: "at:",
 protocol: 'accessing',
 fn: function (anIndex){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1147,8 +1081,6 @@ $core.method({
 selector: "at:put:",
 protocol: 'accessing',
 fn: function (anIndex,anObject){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1174,8 +1106,6 @@ $core.method({
 selector: "collect:",
 protocol: 'iterating',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1201,8 +1131,6 @@ $core.method({
 selector: "detect:",
 protocol: 'iterating',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1228,8 +1156,6 @@ $core.method({
 selector: "do:",
 protocol: 'iterating',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1255,8 +1181,6 @@ $core.method({
 selector: "getArray",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 var anArray,aJSONArray;
 function $Smalltalk(){return $globals.Smalltalk||(typeof Smalltalk=="undefined"?nil:Smalltalk)}
@@ -1308,8 +1232,6 @@ $core.method({
 selector: "indexOf:",
 protocol: 'accessing',
 fn: function (anObject){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1335,8 +1257,6 @@ $core.method({
 selector: "initialize",
 protocol: 'initializing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1362,8 +1282,6 @@ $core.method({
 selector: "initializeStorage",
 protocol: 'initializing',
 fn: function (){
-"use strict";
-
 var self=this;
 var anArray;
 function $Array(){return $globals.Array||(typeof Array=="undefined"?nil:Array)}
@@ -1393,8 +1311,6 @@ $core.method({
 selector: "lenght",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1420,8 +1336,6 @@ $core.method({
 selector: "remove:",
 protocol: 'adding/removing',
 fn: function (anObject){
-"use strict";
-
 var self=this;
 var d;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1462,8 +1376,6 @@ $core.method({
 selector: "save",
 protocol: 'persistence',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1488,8 +1400,6 @@ $core.method({
 selector: "select:",
 protocol: 'iterating',
 fn: function (aBlock){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1515,8 +1425,6 @@ $core.method({
 selector: "setArray",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -1542,8 +1450,6 @@ $core.method({
 selector: "size",
 protocol: 'accessing',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

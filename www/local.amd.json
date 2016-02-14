@@ -3,6 +3,8 @@
         "amber-ambercordova": "src",
         "amber-timer": "src",
         "amber-snapsvg": "src",
-        "amber-todolist": "src"
+        "amber-todolist": "src",
+        "amber-cornucopiascorecards": "src",
+        "amber-cornucopiascorecards/css": "css"
     }
 }

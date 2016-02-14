@@ -1,5 +1,5 @@
 Smalltalk createPackage: 'AmberCordova'!
-(Smalltalk packageAt: 'AmberCordova') imports: {'amber-ambercordova/AmberSnapsvg'. 'amber-ambercordova/Boomerang'. 'amber-ambercordova/Boomerang-Tests'. 'amber-ambercordova/LindaClient'. 'amber-ambercordova/LindaClient-Tests'. 'amber-ambercordova/LindaClientDemo'. 'amber-ambercordova/Timer'. 'amber-ambercordova/Timer-Tests'. 'amber-ambercordova/TodoList'. 'amber-ambercordova/TwitterWall'. 'amber-ambercordova/Zendo'. 'amber-ambercordova/Zendo-Tests'. 'amber/jquery/Wrappers-JQuery'. 'amber/web/Web'. 'silk/Silk'}!
+(Smalltalk packageAt: 'AmberCordova') imports: {'amber-ambercordova/AmberSnapsvg'. 'amber-ambercordova/Boomerang'. 'amber-ambercordova/Boomerang-Tests'. 'amber-ambercordova/CornucopiaScorecards-Platform'. 'amber-ambercordova/CornucopiaScorecards'. 'amber-ambercordova/CornucopiaScorecards-Tests'. 'amber-ambercordova/CornucopiaScorecardsApp'. 'amber-ambercordova/LindaClient'. 'amber-ambercordova/LindaClient-Tests'. 'amber-ambercordova/LindaClientDemo'. 'amber-ambercordova/Timer'. 'amber-ambercordova/Timer-Tests'. 'amber-ambercordova/TodoList'. 'amber-ambercordova/TwitterWall'. 'amber-ambercordova/Zendo'. 'amber-ambercordova/Zendo-Tests'. 'amber/jquery/Wrappers-JQuery'. 'amber/web/Web'. 'silk/Silk'}!
 Object subclass: #AmberCordova
 	instanceVariableNames: 'images cursor mySound aTrack paused'
 	package: 'AmberCordova'!
@@ -140,22 +140,22 @@ testLocalStorage
 
 	coll add: hcoll.
 
-	localStorage setItem: 'coll' value: coll asJSONString.
+	window localStorage setItem: 'coll' value: coll asJSONString.
 
-	"We set coll to nil to indicate that we 
+	"We set coll to nil to indicate that we
 	are going to retrieve it back from the localStorage"
 
 	coll := nil.
 
-	localStorage getItem: 'coll'.
+	window localStorage getItem: 'coll'.
 
-	JSON parse: (localStorage getItem: 'coll').
+	JSON parse: (window localStorage getItem: 'coll').
 
-	SmalltalkImage current readJSObject: 
-				(JSON parse: (localStorage getItem: 'coll')) .
+	SmalltalkImage current readJSObject:
+				(JSON parse: (window localStorage getItem: 'coll')) .
 
 
-	((JSON parse: (localStorage getItem: 'coll')) at: 3) at: 'fr'
+	((JSON parse: (window localStorage getItem: 'coll')) at: 3) at: 'fr'
 !
 
 testXMLHttpRequest
@@ -207,4 +207,3 @@ start
 	"AmberCordova start"
 	^ self new augmentPage
 ! !
-

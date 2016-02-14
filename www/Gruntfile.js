@@ -46,7 +46,11 @@ module.exports = function (grunt) {
                     'src/Zendo.st',
                     'src/AmberSnapsvg.st',
                     'src/TodoList.st',
-                    'src/TwitterWall.st'
+                    'src/TwitterWall.st',
+                    'src/CornucopiaScorecards-Platform.st',
+                    'src/CornucopiaScorecards-Tests.st',
+                    'src/CornucopiaScorecards.st',
+                    'src/CornucopiaScorecardsApp.st'
                 ],
                 amd_namespace: 'amber-ambercordova',
                 libraries: ['amber_core/SUnit', 'amber/web/Web', 'silk/Silk']

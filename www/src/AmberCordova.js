@@ -1,6 +1,6 @@
 define("amber-ambercordova/AmberCordova", ["amber/boot"
 //>>excludeStart("imports", pragmas.excludeImports);
-, "amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"
+, "amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/CornucopiaScorecards-Platform", "amber-ambercordova/CornucopiaScorecards", "amber-ambercordova/CornucopiaScorecards-Tests", "amber-ambercordova/CornucopiaScorecardsApp", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"
 //>>excludeEnd("imports");
 , "amber_core/Kernel-Objects"], function($boot
 //>>excludeStart("imports", pragmas.excludeImports);
@@ -10,7 +10,7 @@ define("amber-ambercordova/AmberCordova", ["amber/boot"
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('AmberCordova');
 $core.packages["AmberCordova"].innerEval = function (expr) { return eval(expr); };
-$core.packages["AmberCordova"].imports = ["amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"];
+$core.packages["AmberCordova"].imports = ["amber-ambercordova/AmberSnapsvg", "amber-ambercordova/Boomerang", "amber-ambercordova/Boomerang-Tests", "amber-ambercordova/CornucopiaScorecards", "amber-ambercordova/CornucopiaScorecards-Platform", "amber-ambercordova/CornucopiaScorecards-Tests", "amber-ambercordova/CornucopiaScorecardsApp", "amber-ambercordova/LindaClient", "amber-ambercordova/LindaClient-Tests", "amber-ambercordova/LindaClientDemo", "amber-ambercordova/Timer", "amber-ambercordova/Timer-Tests", "amber-ambercordova/TodoList", "amber-ambercordova/TwitterWall", "amber-ambercordova/Zendo", "amber-ambercordova/Zendo-Tests", "amber/jquery/Wrappers-JQuery", "amber/web/Web", "silk/Silk"];
 $core.packages["AmberCordova"].transport = {"type":"amd","amdNamespace":"amber-ambercordova"};
 
 $core.addClass('AmberCordova', $globals.Object, ['images', 'cursor', 'mySound', 'aTrack', 'paused'], 'AmberCordova');
@@ -19,8 +19,6 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 function $OrderedCollection(){return $globals.OrderedCollection||(typeof OrderedCollection=="undefined"?nil:OrderedCollection)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -190,8 +188,6 @@ $core.method({
 selector: "begin",
 protocol: 'old-example',
 fn: function (){
-"use strict";
-
 var self=this;
 var msg,button;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -233,8 +229,6 @@ $core.method({
 selector: "doAmberWith",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -273,8 +267,6 @@ $core.method({
 selector: "doJQueryAppend",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -299,8 +291,6 @@ $core.method({
 selector: "doNextImg",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -335,8 +325,6 @@ $core.method({
 selector: "doNextTrack",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -361,8 +349,6 @@ $core.method({
 selector: "doPictureListener",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var myElement;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -405,8 +391,6 @@ $core.method({
 selector: "doPlayNewTrack",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 function $Audio(){return $globals.Audio||(typeof Audio=="undefined"?nil:Audio)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -442,8 +426,6 @@ $core.method({
 selector: "doPrevImg",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -478,8 +460,6 @@ $core.method({
 selector: "doSilkTAG",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -504,8 +484,6 @@ $core.method({
 selector: "geoLocation",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 function $String(){return $globals.String||(typeof String=="undefined"?nil:String)}
 function $Date(){return $globals.Date||(typeof Date=="undefined"?nil:Date)}
@@ -670,8 +648,6 @@ $core.method({
 selector: "helloFromSmalltalk",
 protocol: 'old-example',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -697,8 +673,6 @@ $core.method({
 selector: "processSwipe",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var direction;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -748,8 +722,6 @@ $core.method({
 selector: "showImage",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -780,8 +752,6 @@ $core.method({
 selector: "testLocalStorage",
 protocol: 'old-example',
 fn: function (){
-"use strict";
-
 var self=this;
 var coll,hcoll;
 function $OrderedCollection(){return $globals.OrderedCollection||(typeof OrderedCollection=="undefined"?nil:OrderedCollection)}
@@ -791,7 +761,7 @@ function $SmalltalkImage(){return $globals.SmalltalkImage||(typeof SmalltalkImag
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1,$2,$4,$3;
+var $1,$2,$4,$3,$5,$8,$7,$6;
 coll=$recv($OrderedCollection())._new();
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["new"]=1;
@@ -815,31 +785,47 @@ $ctx1.sendIdx["at:put:"]=2;
 //>>excludeEnd("ctx");
 $recv(hcoll)._at_put_("ge","German");
 $recv(coll)._add_(hcoll);
-$recv(localStorage)._setItem_value_("coll",$recv(coll)._asJSONString());
+$1=$recv(window)._localStorage();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["localStorage"]=1;
+//>>excludeEnd("ctx");
+$recv($1)._setItem_value_("coll",$recv(coll)._asJSONString());
 coll=nil;
-$recv(localStorage)._getItem_("coll");
+$2=$recv(window)._localStorage();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["localStorage"]=2;
+//>>excludeEnd("ctx");
+$recv($2)._getItem_("coll");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["getItem:"]=1;
 //>>excludeEnd("ctx");
-$1=$recv(localStorage)._getItem_("coll");
+$4=$recv(window)._localStorage();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["localStorage"]=3;
+//>>excludeEnd("ctx");
+$3=$recv($4)._getItem_("coll");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["getItem:"]=2;
 //>>excludeEnd("ctx");
-$recv($JSON())._parse_($1);
+$recv($JSON())._parse_($3);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["parse:"]=1;
 //>>excludeEnd("ctx");
-$2=$recv($SmalltalkImage())._current();
-$4=$recv(localStorage)._getItem_("coll");
+$5=$recv($SmalltalkImage())._current();
+$8=$recv(window)._localStorage();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["localStorage"]=4;
+//>>excludeEnd("ctx");
+$7=$recv($8)._getItem_("coll");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["getItem:"]=3;
 //>>excludeEnd("ctx");
-$3=$recv($JSON())._parse_($4);
+$6=$recv($JSON())._parse_($7);
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["parse:"]=2;
 //>>excludeEnd("ctx");
-$recv($2)._readJSObject_($3);
-$recv($recv($recv($JSON())._parse_($recv(localStorage)._getItem_("coll")))._at_((3)))._at_("fr");
+$recv($5)._readJSObject_($6);
+$recv($recv($recv($JSON())._parse_($recv($recv(window)._localStorage())._getItem_("coll")))._at_((3)))._at_("fr");
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["at:"]=1;
 //>>excludeEnd("ctx");
@@ -850,10 +836,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "testLocalStorage\x0a\x09\x22http://stackoverflow.com/questions/22604341/amber-and-localstorage-asjson/23234804#23234804\x22\x0a\x09| coll hcoll |\x0a\x0a\x09coll := OrderedCollection new.\x0a\x09coll add: 'abc'.\x0a\x09coll add: 'xon'.\x0a\x0a\x09hcoll := HashedCollection new.\x0a\x09hcoll at: 'en' put: 'English'.\x0a\x09hcoll at: 'fr' put: 'French'.\x0a\x09hcoll at: 'ge' put: 'German'.\x0a\x0a\x09coll add: hcoll.\x0a\x0a\x09localStorage setItem: 'coll' value: coll asJSONString.\x0a\x0a\x09\x22We set coll to nil to indicate that we \x0a\x09are going to retrieve it back from the localStorage\x22\x0a\x0a\x09coll := nil.\x0a\x0a\x09localStorage getItem: 'coll'.\x0a\x0a\x09JSON parse: (localStorage getItem: 'coll').\x0a\x0a\x09SmalltalkImage current readJSObject: \x0a\x09\x09\x09\x09(JSON parse: (localStorage getItem: 'coll')) .\x0a\x0a\x0a\x09((JSON parse: (localStorage getItem: 'coll')) at: 3) at: 'fr' ",
+source: "testLocalStorage\x0a\x09\x22http://stackoverflow.com/questions/22604341/amber-and-localstorage-asjson/23234804#23234804\x22\x0a\x09| coll hcoll |\x0a\x0a\x09coll := OrderedCollection new.\x0a\x09coll add: 'abc'.\x0a\x09coll add: 'xon'.\x0a\x0a\x09hcoll := HashedCollection new.\x0a\x09hcoll at: 'en' put: 'English'.\x0a\x09hcoll at: 'fr' put: 'French'.\x0a\x09hcoll at: 'ge' put: 'German'.\x0a\x0a\x09coll add: hcoll.\x0a\x0a\x09window localStorage setItem: 'coll' value: coll asJSONString.\x0a\x0a\x09\x22We set coll to nil to indicate that we\x0a\x09are going to retrieve it back from the localStorage\x22\x0a\x0a\x09coll := nil.\x0a\x0a\x09window localStorage getItem: 'coll'.\x0a\x0a\x09JSON parse: (window localStorage getItem: 'coll').\x0a\x0a\x09SmalltalkImage current readJSObject:\x0a\x09\x09\x09\x09(JSON parse: (window localStorage getItem: 'coll')) .\x0a\x0a\x0a\x09((JSON parse: (window localStorage getItem: 'coll')) at: 3) at: 'fr'",
 referencedClasses: ["OrderedCollection", "HashedCollection", "JSON", "SmalltalkImage"],
 //>>excludeEnd("ide");
-messageSends: ["new", "add:", "at:put:", "setItem:value:", "asJSONString", "getItem:", "parse:", "readJSObject:", "current", "at:"]
+messageSends: ["new", "add:", "at:put:", "setItem:value:", "localStorage", "asJSONString", "getItem:", "parse:", "readJSObject:", "current", "at:"]
 }),
 $globals.AmberCordova);
 
@@ -862,8 +848,6 @@ $core.method({
 selector: "testXMLHttpRequest",
 protocol: 'old-example',
 fn: function (){
-"use strict";
-
 var self=this;
 var req;
 function $XMLHttpRequest(){return $globals.XMLHttpRequest||(typeof XMLHttpRequest=="undefined"?nil:XMLHttpRequest)}
@@ -882,7 +866,7 @@ return $1;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "testXMLHttpRequest\x0a\x09\x22http://stackoverflow.com/questions/18472447/amber-smalltalk-and-xmlhttprequest-get\x22\x0a\x09| req |\x0a\x09req := XMLHttpRequest new.\x0a\x09req open: 'GET' url: 'http://amber-lang.net/' asynchronous: false.\x0a\x09req send: ''.\x0a\x09^ req responseText  ",
+source: "testXMLHttpRequest\x0a\x09\x22http://stackoverflow.com/questions/18472447/amber-smalltalk-and-xmlhttprequest-get\x22\x0a\x09| req |\x0a\x09req := XMLHttpRequest new.\x0a\x09req open: 'GET' url: 'http://amber-lang.net/' asynchronous: false.\x0a\x09req send: ''.\x0a\x09^ req responseText",
 referencedClasses: ["XMLHttpRequest"],
 //>>excludeEnd("ide");
 messageSends: ["new", "open:url:asynchronous:", "send:", "responseText"]
@@ -894,8 +878,6 @@ $core.method({
 selector: "withEmbeddedJavascript",
 protocol: 'old-example',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -921,8 +903,6 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

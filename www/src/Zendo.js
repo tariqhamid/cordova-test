@@ -10,8 +10,6 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 return self;
 
@@ -30,8 +28,6 @@ $core.method({
 selector: "doAmberWith",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -70,8 +66,6 @@ $core.method({
 selector: "doJQueryAppend",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -97,8 +91,6 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

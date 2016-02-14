@@ -19,8 +19,6 @@ $core.method({
 selector: "json",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@json"];
@@ -41,8 +39,6 @@ $core.method({
 selector: "json:",
 protocol: 'not yet classified',
 fn: function (aJson){
-"use strict";
-
 var self=this;
 self["@json"]=aJson;
 return self;
@@ -62,8 +58,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'not yet classified',
 fn: function (tr){
-"use strict";
-
 var self=this;
 var tdUser,tdMessage,img,a,pMessage,pDate,user;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -219,8 +213,6 @@ $core.method({
 selector: "openAt:with:",
 protocol: 'not yet classified',
 fn: function (tr,aJson){
-"use strict";
-
 var self=this;
 var tweet;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -250,8 +242,6 @@ $core.method({
 selector: "query",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var queryString;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -278,8 +268,6 @@ $core.method({
 selector: "query:",
 protocol: 'not yet classified',
 fn: function (queryURL){
-"use strict";
-
 var self=this;
 var result;
 function $JQuery(){return $globals.JQuery||(typeof JQuery=="undefined"?nil:JQuery)}
@@ -332,8 +320,6 @@ $core.method({
 selector: "success2:",
 protocol: 'not yet classified',
 fn: function (tweets){
-"use strict";
-
 var self=this;
 var wall,table,tr;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -375,8 +361,6 @@ $core.method({
 selector: "success:",
 protocol: 'not yet classified',
 fn: function (tweets){
-"use strict";
-
 var self=this;
 var playground,table,tr;
 function $Tweet(){return $globals.Tweet||(typeof Tweet=="undefined"?nil:Tweet)}
