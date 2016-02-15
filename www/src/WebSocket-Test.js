@@ -10,8 +10,6 @@ $core.method({
 selector: "doSend:",
 protocol: 'not yet classified',
 fn: function (message){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -37,8 +35,6 @@ $core.method({
 selector: "init",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -64,8 +60,6 @@ $core.method({
 selector: "newWebSocket:",
 protocol: 'not yet classified',
 fn: function (aWSConnectionURL){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -90,8 +84,6 @@ $core.method({
 selector: "onClose:",
 protocol: 'not yet classified',
 fn: function (evt){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -116,8 +108,6 @@ $core.method({
 selector: "onError:",
 protocol: 'not yet classified',
 fn: function (evt){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -142,8 +132,6 @@ $core.method({
 selector: "onMessage:",
 protocol: 'not yet classified',
 fn: function (evt){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -174,8 +162,6 @@ $core.method({
 selector: "onOpen:",
 protocol: 'not yet classified',
 fn: function (evt){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -201,8 +187,6 @@ $core.method({
 selector: "output",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@output"];
@@ -223,8 +207,6 @@ $core.method({
 selector: "output:",
 protocol: 'not yet classified',
 fn: function (aString){
-"use strict";
-
 var self=this;
 self["@output"]=aString;
 return self;
@@ -244,8 +226,6 @@ $core.method({
 selector: "s",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@s"];
@@ -266,8 +246,6 @@ $core.method({
 selector: "s:",
 protocol: 'not yet classified',
 fn: function (aSocket){
-"use strict";
-
 var self=this;
 self["@s"]=aSocket;
 return self;
@@ -287,8 +265,6 @@ $core.method({
 selector: "testWebSocket",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -313,8 +289,6 @@ $core.method({
 selector: "testWebSocket:",
 protocol: 'not yet classified',
 fn: function (aWSConnectionURL){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -375,8 +349,6 @@ $core.method({
 selector: "writeToScreen:",
 protocol: 'not yet classified',
 fn: function (message){
-"use strict";
-
 var self=this;
 var pre;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -408,8 +380,6 @@ $core.method({
 selector: "wsUri",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@wsUri"];
@@ -430,8 +400,6 @@ $core.method({
 selector: "wsUri:",
 protocol: 'not yet classified',
 fn: function (aString){
-"use strict";
-
 var self=this;
 self["@wsUri"]=aString;
 return self;
@@ -454,8 +422,6 @@ $core.method({
 selector: "initialize",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 function $WebSocketTest(){return $globals.WebSocketTest||(typeof WebSocketTest=="undefined"?nil:WebSocketTest)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -490,8 +456,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'not yet classified',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -518,8 +482,6 @@ $core.method({
 selector: "websocketTest",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@websocketTest"];
@@ -540,8 +502,6 @@ $core.method({
 selector: "websocketTest:",
 protocol: 'not yet classified',
 fn: function (aTest){
-"use strict";
-
 var self=this;
 self["@websocketTest"]=aTest;
 return self;
@@ -562,8 +522,6 @@ $core.method({
 selector: "startTest",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

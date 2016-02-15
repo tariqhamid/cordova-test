@@ -38,7 +38,8 @@ require.config({
     "amber-todolist": "src",
     "amber-cornucopiascorecards": "src",
     "amber-cornucopiascorecards/css": "css",
-    "amber-video": "src"
+    "amber-video": "src",
+    "WebSocket-Test": "src"
   },
   "shim": {
     "typeahead": {
