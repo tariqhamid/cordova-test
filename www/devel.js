@@ -5,6 +5,7 @@ define([
     'amber-ambercordova/Timer-Tests',
     'amber-ambercordova/LindaClient-Tests',
     'amber-ambercordova/AmberVideo-Tests',
+    'amber-ambercordova/WebSocket-Test',
     //'amber-video/AmberVideo-Tests',
     'amber/legacy/Benchfib',
     'amber/legacy/Examples',

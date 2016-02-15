@@ -10,8 +10,6 @@ $core.method({
 selector: "ensureVideo",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -57,8 +55,6 @@ $core.method({
 selector: "initialize",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 function $AmberVideo(){return $globals.AmberVideo||(typeof AmberVideo=="undefined"?nil:AmberVideo)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -92,8 +88,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'not yet classified',
 fn: function (html){
-"use strict";
-
 var self=this;
 var tag;
 function $HTMLCanvas(){return $globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
@@ -139,8 +133,6 @@ $core.method({
 selector: "renderSliderOn:",
 protocol: 'not yet classified',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -190,8 +182,6 @@ $core.method({
 selector: "videoController",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@videoController"];
@@ -213,8 +203,6 @@ $core.method({
 selector: "start",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -241,8 +229,6 @@ $core.method({
 selector: "ensureVideo",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -278,8 +264,6 @@ $core.method({
 selector: "initialize",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 function $AmberVideo(){return $globals.AmberVideo||(typeof AmberVideo=="undefined"?nil:AmberVideo)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -313,8 +297,6 @@ $core.method({
 selector: "renderOn:",
 protocol: 'not yet classified',
 fn: function (html){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -376,8 +358,6 @@ $core.method({
 selector: "videoController",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 var $1;
 $1=self["@videoController"];
@@ -399,8 +379,6 @@ $core.method({
 selector: "start",
 protocol: 'not yet classified',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

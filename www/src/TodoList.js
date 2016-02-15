@@ -517,7 +517,7 @@ var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-self._appendToJQuery_("body"._asJQuery());
+self._appendToJQuery_("#todos"._asJQuery());
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"augmentPage",{},$globals.TodoList)});
@@ -525,7 +525,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x09self appendToJQuery: 'body' asJQuery",
+source: "augmentPage\x0a\x09\x22self appendToJQuery: 'body' asJQuery\x22\x0a\x09self appendToJQuery: '#todos' asJQuery",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["appendToJQuery:", "asJQuery"]

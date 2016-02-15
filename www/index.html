@@ -113,12 +113,12 @@
     font: 1em source-sans-pro, Source Sans Pro, Helvetica, sans-serif;
 }
 
-#todo-application
+#todo-application, #web-socket
 {
   border-radius: 10px;
   border: solid 2px #ccc;
   background-color: #ff9;
-  width: 34%;
+  width: 87%;
   -webkit-order: 99;
   order: 99;
 }
@@ -222,6 +222,17 @@
       <div id="log"></div>
     </div>
 
+    <div id="todos">
+    </div>
+
+    <div>
+      <div class="comment">
+        <div><span><a href="https://github.com/HeSe/amber-websocketEcho">https://github.com/HeSe/amber-websocketEcho</a></span></div>
+      </div>
+      <div id="web-socket">
+        <button id="web-socket-button" onclick="amber.globals.WebSocketTestWidget._startTest()">Test Websocket</button>
+      </div>
+    </div>
 
     <div id="snapsvg-demo" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
@@ -370,6 +381,7 @@
           		  amber.globals.CornucopiaScorecardsApp._start();
 
                 //amber.globals.AmberVideo._start();
+                //smalltalk.WebSocketTestWidget._startTest();
 
             });
 

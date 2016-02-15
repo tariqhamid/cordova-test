@@ -219,7 +219,8 @@ renderTodosOn: html
 !TodoList methodsFor: 'starting'!
 
 augmentPage
-	self appendToJQuery: 'body' asJQuery
+	"self appendToJQuery: 'body' asJQuery"
+	self appendToJQuery: '#todos' asJQuery
 ! !
 
 !TodoList class methodsFor: 'not yet classified'!
