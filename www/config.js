@@ -37,7 +37,8 @@ require.config({
     "amber-snapsvg": "src",
     "amber-todolist": "src",
     "amber-cornucopiascorecards": "src",
-    "amber-cornucopiascorecards/css": "css"
+    "amber-cornucopiascorecards/css": "css",
+    "amber-video": "src"
   },
   "shim": {
     "typeahead": {

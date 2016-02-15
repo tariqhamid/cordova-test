@@ -19,8 +19,6 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -59,8 +57,6 @@ $core.method({
 selector: "doSnapSvg",
 protocol: 'action',
 fn: function (){
-"use strict";
-
 var self=this;
 var s,bigCircle,smallCircle;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -93,8 +89,6 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
-"use strict";
-
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

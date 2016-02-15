@@ -25,8 +25,8 @@
 
       .flex-container {
           display: -webkit-flex;
-          /* display: flex; */
-          display: inline-flex;
+          display: flex;
+          /* display: inline-flex; */
           -webkit-flex-flow: row wrap;
           flex-flow: row wrap;
       }
@@ -42,6 +42,13 @@
         border-width: 15px
       }
 
+      /*.flex-container div {color: SlateGrey;}*/
+      .comment {
+        border-radius: .25rem;
+        border-width: 15px;
+        background-color: #FFBF00; /* amber */
+        font: italic bold 12px/30px Georgia, serif;
+      }
 
 	    .big-sevenSeg
 	    {
@@ -65,6 +72,7 @@
   background-image: url("https://farm8.staticflickr.com/7212/7166328170_23d010c74a_b_d.jpg");
   background-position: top right; /* bottom left is less interesting part of the image */
   background-size: cover;
+  color: wheat;
 }
 
 .ui-autocomplete {
@@ -105,15 +113,32 @@
     font: 1em source-sans-pro, Source Sans Pro, Helvetica, sans-serif;
 }
 
+#todo-application
+{
+  border-radius: 10px;
+  border: solid 2px #ccc;
+  background-color: #ff9;
+  width: 34%;
+  -webkit-order: 99;
+  order: 99;
+}
+
+#input-types
+{
+    width: 44%;
+    -webkit-order: 100;
+    order: 100;
+}
+
     </style>
 
   </head>
 
   <body>
-  <div id="heading" style="border: solid black;background:hsl(113,10%,85%);text-align:center">
-  <br/>
-  <p>Source Code on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a></p>
-  <br/>
+  <div id="heading" style="border: solid black;background:hsl(86,10%,85%);">
+  <p style="border: solid lightgray;background:hsl(113,100%,85%);text-indent: 40%;"><a href="http://amber-lang.net/">Amber Website</a></p>
+  <p style="border: solid lightgray;background:hsl(113,10%,85%);text-indent: 40%;"><a href="https://groups.google.com/forum/#!forum/amber-lang">Newsgroup</a></p>
+  <p style="border: solid lightgray;background:hsl(113,10%,85%);text-align:right;font-size:small;margin-right:20px"><a href="http://amber.confusedprogrammer.com">http://amber.confusedprogrammer.com</a> [source code for this demo mashup on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a>]</p>
   </div>
   <figure id="demo" class="flex-container">
 
@@ -132,7 +157,7 @@
     <div id="old-example" style="border: solid darkgray;background: gray">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
-        <button onclick="require('amber/helpers').popupHelios()">class browser</button>
+        <button onclick="require('amber/helpers').popupHelios()" style="background: red">class browser</button>
         <button id="sayHello">say hello</button>
       </article>
       <p><a href="#" onclick="showAlert(); return false;">Show alert with text from Amber</a></p>
@@ -140,7 +165,12 @@
     </div>
 
 
-    <div id="richard-eng" style="border: solid magenta;background-color: #00c;text-indent: 50px;">
+    <div id="richard-eng" style="border: solid magenta;background-color: #00c;">
+      <div class="comment">
+        <div><span><a href="https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9">https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9</a></span></div>
+        <div><span><a href="https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf">https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf</a></span></div>
+        <div><span><a href="https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e">https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e</a></span></div>
+      </div>
       <button id="play-track">play track</button>
       <button id="pause-track">pause track</button>
       <button id="show-image">showimage</button>
@@ -149,6 +179,11 @@
     </div>
 
     <div id="ko-timer" style="border: solid blue;background-color: #24c2c7;">
+      <div class="comment">
+        <div><span><a href="http://qiita.com/tetha/items/eac0839fb1e0328b6fd4">http://qiita.com/tetha/items/eac0839fb1e0328b6fd4</a></span></div>
+        <div><span><a href="https://github.com/tty-hayashi/KohakuTimer">https://github.com/tty-hayashi/KohakuTimer</a></span></div>
+        <div><span><a href="http://brandonlwhite.github.io/sevenSeg.js/">http://brandonlwhite.github.io/sevenSeg.js/</a></span></div>
+      </div>
       <div id="timer-inputs" style="text-indent: 10px">
         <div id="timers">
           <p>Timer time(min)
@@ -172,7 +207,10 @@
     </div> <!-- ko-timer -->
 
     <div id="ko-linda" style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
-      <div><span></span></div>
+      <div class="comment">
+        <div><span><a href="https://github.com/tty-hayashi/LindaClientDemo">https://github.com/tty-hayashi/LindaClientDemo</a></span></div>
+        <div><span><a href="http://qiita.com/tetha/items/ed861060847bd01ca21e">http://qiita.com/tetha/items/ed861060847bd01ca21e</a></span></div>
+      </div>
       <br>
       <div><a href="fibWorker.html">Fibonacci worker</a></div>
       <br>
@@ -186,13 +224,22 @@
 
 
     <div id="snapsvg-demo" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
-      <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
+      <div class="comment">
+        <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
+      </div>
       <button id="snapsvg-button">Hello from Snap.svg</button>
       <svg id="svg"/>
     </div>
 
+    <div id="amber-video" style="border: solid purple;background-color: #ff9;text-indent: 10px;">
+      <div class="comment">
+        <p><h2><a href="https://github.com/HeSe/amber-video">https://github.com/HeSe/amber-video</a></h2></p>
+      </div>
+      <button id="amber-video-button" onclick="amber.globals.AmberVideo._start()">start video chat</button>
+    </div>
 
-    <div id="sean-denigris" class="cover-container" style="border: solid cyan;background-color: #0fc;text-indent: 50px; color: wheat;">
+
+    <div id="sean-denigris" class="cover-container" style="border: solid cyan;background-color: #0fc;">
       <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
@@ -213,7 +260,7 @@
 
 
 
-    <div id="twitter-wall">
+    <div id="twitter-wall" style="border: solid hotpink;background-color: #ff9;">
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -322,6 +369,8 @@
           		  if (isDev) require(["amber-ide-starter-dialog"], function (dlg) { dlg.start(); });
           		  amber.globals.CornucopiaScorecardsApp._start();
 
+                //amber.globals.AmberVideo._start();
+
             });
 
             displayInputs();
@@ -403,7 +452,7 @@
           //    <div id="input-types" class="flex-item">
           var div1 = document.createElement("div");
           div1.id = "input-types";
-          //div1.setAttribute("class", "flex-item");
+          div1.setAttribute("class", "flex-item");
           div1.setAttribute("style", "border: solid darkgray;background:hsl(178,50%,75%)");
           div1.appendChild(table1);
           document.body.appendChild(div1);

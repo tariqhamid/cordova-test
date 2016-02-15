@@ -50,7 +50,9 @@ module.exports = function (grunt) {
                     'src/CornucopiaScorecards-Platform.st',
                     'src/CornucopiaScorecards-Tests.st',
                     'src/CornucopiaScorecards.st',
-                    'src/CornucopiaScorecardsApp.st'
+                    'src/CornucopiaScorecardsApp.st',
+                    'src/AmberVideo.st', // list all sources in dependency order
+                    'src/AmberVideo-Tests.st' // list all tests in dependency order
                 ],
                 amd_namespace: 'amber-ambercordova',
                 libraries: ['amber_core/SUnit', 'amber/web/Web', 'silk/Silk']

@@ -4,6 +4,8 @@ define([
     // --- packages used only during development begin here ---
     'amber-ambercordova/Timer-Tests',
     'amber-ambercordova/LindaClient-Tests',
+    'amber-ambercordova/AmberVideo-Tests',
+    //'amber-video/AmberVideo-Tests',
     'amber/legacy/Benchfib',
     'amber/legacy/Examples',
     'amber/legacy/IDE'

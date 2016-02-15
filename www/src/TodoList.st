@@ -198,8 +198,7 @@ renderHeaderOn: html
 
 renderOn: html
 	html div
-		id: 'application';
-		class: 'flex-item';
+		id: 'todo-application';
 		with: [
                   self renderHeaderOn: html.
                   self renderBodyOn: html.

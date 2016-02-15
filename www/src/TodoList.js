@@ -876,8 +876,7 @@ return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(html)._div();
-$recv($1)._id_("application");
-$recv($1)._class_("flex-item");
+$recv($1)._id_("todo-application");
 $2=$recv($1)._with_((function(){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx2) {
@@ -896,10 +895,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["html"],
-source: "renderOn: html\x0a\x09html div\x0a\x09\x09id: 'application';\x0a\x09\x09class: 'flex-item';\x0a\x09\x09with: [\x0a                  self renderHeaderOn: html.\x0a                  self renderBodyOn: html.\x0a                  self renderFooterOn: html. ]",
+source: "renderOn: html\x0a\x09html div\x0a\x09\x09id: 'todo-application';\x0a\x09\x09with: [\x0a                  self renderHeaderOn: html.\x0a                  self renderBodyOn: html.\x0a                  self renderFooterOn: html. ]",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["id:", "div", "class:", "with:", "renderHeaderOn:", "renderBodyOn:", "renderFooterOn:"]
+messageSends: ["id:", "div", "with:", "renderHeaderOn:", "renderBodyOn:", "renderFooterOn:"]
 }),
 $globals.TodoList);
 
