@@ -25,14 +25,16 @@
 
       .flex-container {
           display: -webkit-flex;
-          display: flex;
+          /* display: flex; */
+          display: inline-flex;
           -webkit-flex-flow: row wrap;
           flex-flow: row wrap;
       }
 
       .flex-item {
           -webkit-flex: 1 auto;
-          flex: 0 1 auto;
+          /*flex: 0 1 auto;*/
+          flex: 1 1 0;
       }
 
       .flex-item {
@@ -55,13 +57,7 @@
 	        width: 200px;
 	    }
 
-@media screen and (min-width : 768px){
-    html { font-size : 120%;}
-}
 
-@media screen and (min-width : 1024px) {
-    html { font-size : 100%;}
-}
 
 
 #sean-denigris
@@ -97,13 +93,28 @@
   display: none;
 }
 
+#svg {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: solid 2px #ccc;
+    width: 300px;
+    height: 300px;
+    float: left;
+    margin-right: 10px;
+    font: 1em source-sans-pro, Source Sans Pro, Helvetica, sans-serif;
+}
+
     </style>
 
   </head>
 
   <body>
-
-
+  <div id="heading" style="border: solid black;background:hsl(113,10%,85%);text-align:center">
+  <br/>
+  <p>Source Code on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a></p>
+  <br/>
+  </div>
   <figure id="demo" class="flex-container">
 
     <div id="hello-amber" class="flex-item" style="border: solid black;background:hsl(113,50%,75%)">
@@ -118,7 +129,7 @@
 
     </div>
 
-    <div id="old-example" class="flex-item" style="border: solid darkgray;background: gray">
+    <div id="old-example" style="border: solid darkgray;background: gray">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()">class browser</button>
@@ -129,7 +140,7 @@
     </div>
 
 
-    <div id="richard-eng" class="flex-item" style="border: solid magenta;background-color: #00c;text-indent: 50px;">
+    <div id="richard-eng" style="border: solid magenta;background-color: #00c;text-indent: 50px;">
       <button id="play-track">play track</button>
       <button id="pause-track">pause track</button>
       <button id="show-image">showimage</button>
@@ -137,7 +148,7 @@
       <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
     </div>
 
-    <div id="ko-timer" class="flex-item" style="border: solid blue;background-color: #24c2c7;">
+    <div id="ko-timer" style="border: solid blue;background-color: #24c2c7;">
       <div id="timer-inputs" style="text-indent: 10px">
         <div id="timers">
           <p>Timer time(min)
@@ -160,7 +171,7 @@
       -->
     </div> <!-- ko-timer -->
 
-    <div id="ko-linda" class="flex-item" style="border: solid blueviolet;background-color: #ff9;text-indent: 50px;">
+    <div id="ko-linda" style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
       <div><span></span></div>
       <br>
       <div><a href="fibWorker.html">Fibonacci worker</a></div>
@@ -174,14 +185,14 @@
     </div>
 
 
-    <div id="snapsvg-demo" class="flex-item" style="border: solid violet;background-color: #ff9;text-indent: 50px;">
-    <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
-    <button id="snapsvg-button">Hello from Snap.svg</button>
-    <!-- <svg id="svg" style="height:200px; width: 90%"></svg>  -->
+    <div id="snapsvg-demo" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
+      <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
+      <button id="snapsvg-button">Hello from Snap.svg</button>
+      <svg id="svg"/>
     </div>
 
 
-    <div id="sean-denigris" class="flex-item cover-container" style="border: solid cyan;background-color: #0fc;text-indent: 50px; color: wheat;">
+    <div id="sean-denigris" class="cover-container" style="border: solid cyan;background-color: #0fc;text-indent: 50px; color: wheat;">
       <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
@@ -202,7 +213,7 @@
 
 
 
-    <div id="twitter-wall" class="flex-item">
+    <div id="twitter-wall">
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -392,7 +403,7 @@
           //    <div id="input-types" class="flex-item">
           var div1 = document.createElement("div");
           div1.id = "input-types";
-          div1.setAttribute("class", "flex-item");
+          //div1.setAttribute("class", "flex-item");
           div1.setAttribute("style", "border: solid darkgray;background:hsl(178,50%,75%)");
           div1.appendChild(table1);
           document.body.appendChild(div1);

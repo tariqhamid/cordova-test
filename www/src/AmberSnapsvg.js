@@ -19,6 +19,8 @@ $core.method({
 selector: "augmentPage",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
@@ -37,7 +39,7 @@ return self._doSnapSvg();
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)});
 //>>excludeEnd("ctx");
 }));
-$recv("#snapsvg-button"._asJQuery())._css_($globals.HashedCollection._newFromPairs_(["background-color","Green"]));
+$recv("#snapsvg-button"._asJQuery())._css_($globals.HashedCollection._newFromPairs_(["background-color","hotpink"]));
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"augmentPage",{},$globals.AmberSnapsvg)});
@@ -45,7 +47,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "augmentPage\x0a\x0a\x09'#snapsvg-button' asJQuery click: [self doSnapSvg].\x0a\x0a\x09'#snapsvg-button' asJQuery css: #{ 'background-color' ->'Green'}.",
+source: "augmentPage\x0a\x0a\x09'#snapsvg-button' asJQuery click: [self doSnapSvg].\x0a\x0a\x09'#snapsvg-button' asJQuery css: #{ 'background-color' ->'hotpink'}.",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["click:", "asJQuery", "doSnapSvg", "css:"]
@@ -57,12 +59,14 @@ $core.method({
 selector: "doSnapSvg",
 protocol: 'action',
 fn: function (){
+"use strict";
+
 var self=this;
 var s,bigCircle,smallCircle;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-s=$recv(snapSvg)._value_value_((300),(600));
+s=$recv(snapSvg)._value_("#svg");
 bigCircle=$recv(s)._circle_value_value_((150),(150),(100));
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 $ctx1.sendIdx["circle:value:value:"]=1;
@@ -76,10 +80,10 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "doSnapSvg\x0a\x22translation to Smalltalk points 1 to 4 of\x0ahttp://snapsvg.io/start/ \x22\x0a\x0a| s bigCircle smallCircle |\x0a\x0as := snapSvg value: 300 value: 600.\x0a\x22s := snapSvg value: '#svg'.\x22\x0a\x0abigCircle := s circle: 150 value: 150 value: 100.\x0abigCircle attr: #{'fill' -> '#bada55'. 'stroke' -> '#000'. 'strokeWidth' -> 5}.\x0asmallCircle := s circle: 100 value: 150 value: 70.\x0a\x0a\x22Transcript show: s outerSVG.\x22\x0a\x22s inspect\x22",
+source: "doSnapSvg\x0a\x22translation to Smalltalk points 1 to 4 of\x0ahttp://snapsvg.io/start/ \x22\x0a\x0a| s bigCircle smallCircle |\x0a\x0a\x22s := snapSvg value: 300 value: 600.\x22\x0as := snapSvg value: '#svg'.\x0a\x0abigCircle := s circle: 150 value: 150 value: 100.\x0abigCircle attr: #{'fill' -> '#bada55'. 'stroke' -> '#000'. 'strokeWidth' -> 5}.\x0asmallCircle := s circle: 100 value: 150 value: 70.\x0a\x0a\x22Transcript show: s outerSVG.\x22\x0a\x22s inspect\x22",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["value:value:", "circle:value:value:", "attr:"]
+messageSends: ["value:", "circle:value:value:", "attr:"]
 }),
 $globals.AmberSnapsvg);
 
@@ -89,6 +93,8 @@ $core.method({
 selector: "start",
 protocol: 'starting',
 fn: function (){
+"use strict";
+
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {

@@ -12,8 +12,8 @@ http://snapsvg.io/start/ "
 
 | s bigCircle smallCircle |
 
-s := snapSvg value: 300 value: 600.
-"s := snapSvg value: '#svg'."
+"s := snapSvg value: 300 value: 600."
+s := snapSvg value: '#svg'.
 
 bigCircle := s circle: 150 value: 150 value: 100.
 bigCircle attr: #{'fill' -> '#bada55'. 'stroke' -> '#000'. 'strokeWidth' -> 5}.
@@ -29,7 +29,7 @@ augmentPage
 
 	'#snapsvg-button' asJQuery click: [self doSnapSvg].
 
-	'#snapsvg-button' asJQuery css: #{ 'background-color' ->'Green'}.
+	'#snapsvg-button' asJQuery css: #{ 'background-color' ->'hotpink'}.
 ! !
 
 !AmberSnapsvg class methodsFor: 'starting'!
