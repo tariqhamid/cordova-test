@@ -53,7 +53,8 @@ module.exports = function (grunt) {
                     'src/CornucopiaScorecardsApp.st',
                     'src/AmberVideo.st',
                     'src/AmberVideo-Tests.st',
-                    'src/WebSocket-Test.st'
+                    'src/WebSocket-Test.st',
+                    'src/Examples-Paper.st'
                 ],
                 amd_namespace: 'amber-ambercordova',
                 libraries: ['amber_core/SUnit', 'amber/web/Web', 'silk/Silk']

@@ -27,6 +27,7 @@
           display: -webkit-flex;
           display: flex;
           /* display: inline-flex; */
+
           -webkit-flex-flow: row wrap;
           flex-flow: row wrap;
       }
@@ -34,12 +35,14 @@
       .flex-item {
           -webkit-flex: 1 auto;
           /*flex: 0 1 auto;*/
-          flex: 1 1 0;
-      }
+          flex: 1;
 
-      .flex-item {
-        border-radius: .25rem;
-        border-width: 15px
+          border-radius: .25rem;
+          border-width: 15px;
+
+          overflow: scroll;
+          resize: both;
+          min-width: 300px;
       }
 
       /*.flex-container div {color: SlateGrey;}*/
@@ -130,19 +133,36 @@
     order: 100;
 }
 
+
+[draggable=true] {
+    cursor: move;
+}
+
+.resizable {
+    overflow: scroll;
+    resize: both;
+    x-max-width: 300px;
+    x-max-height: 460px;
+}
+
+#todos
+{
+    position:relative; /* important (all position that's not `static`) */
+}
+
     </style>
 
   </head>
 
   <body>
-  <div id="heading" style="border: solid black;background:hsl(86,10%,85%);">
+  <div id="heading" draggable="true" class="resizable" style="border: solid black;background:hsl(86,10%,85%);">
   <p style="border: solid lightgray;background:hsl(113,100%,85%);text-indent: 40%;"><a href="http://amber-lang.net/">Amber Website</a></p>
   <p style="border: solid lightgray;background:hsl(113,10%,85%);text-indent: 40%;"><a href="https://groups.google.com/forum/#!forum/amber-lang">Newsgroup</a></p>
   <p style="border: solid lightgray;background:hsl(113,10%,85%);text-align:right;font-size:small;margin-right:20px"><a href="http://amber.confusedprogrammer.com">http://amber.confusedprogrammer.com</a> [source code for this demo mashup on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a>]</p>
   </div>
   <figure id="demo" class="flex-container">
 
-    <div id="hello-amber" class="flex-item" style="border: solid black;background:hsl(113,50%,75%)">
+    <div id="hello-amber" draggable="true" class="resizable" style="border: solid black;background:hsl(113,50%,75%)">
       <h1>HelloAmber</h1>
       <p>This is a sample app. It contains some <a href="parts.html">batteries included</a>
       and should be <a href="uninstall.html">cleaned up</a> once you start developing your own  app / lib.
@@ -154,7 +174,7 @@
 
     </div>
 
-    <div id="old-example" style="border: solid darkgray;background: gray">
+    <div id="old-example" draggable="true" class="resizable" style="border: solid darkgray;background: gray">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()" style="background: red">class browser</button>
@@ -165,7 +185,7 @@
     </div>
 
 
-    <div id="richard-eng" style="border: solid magenta;background-color: #00c;">
+    <div id="richard-eng" draggable="true" class="resizable" style="border: solid magenta;background-color: #00c;">
       <div class="comment">
         <div><span><a href="https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9">https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9</a></span></div>
         <div><span><a href="https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf">https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf</a></span></div>
@@ -178,7 +198,7 @@
       <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
     </div>
 
-    <div id="ko-timer" style="border: solid blue;background-color: #24c2c7;">
+    <div id="ko-timer" draggable="true" class="resizable" style="border: solid blue;background-color: #24c2c7;">
       <div class="comment">
         <div><span><a href="http://qiita.com/tetha/items/eac0839fb1e0328b6fd4">http://qiita.com/tetha/items/eac0839fb1e0328b6fd4</a></span></div>
         <div><span><a href="https://github.com/tty-hayashi/KohakuTimer">https://github.com/tty-hayashi/KohakuTimer</a></span></div>
@@ -206,7 +226,7 @@
       -->
     </div> <!-- ko-timer -->
 
-    <div id="ko-linda" style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
+    <div id="ko-linda" draggable="true" class="resizable" style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
         <div><span><a href="https://github.com/tty-hayashi/LindaClientDemo">https://github.com/tty-hayashi/LindaClientDemo</a></span></div>
         <div><span><a href="http://qiita.com/tetha/items/ed861060847bd01ca21e">http://qiita.com/tetha/items/ed861060847bd01ca21e</a></span></div>
@@ -222,7 +242,10 @@
       <div id="log"></div>
     </div>
 
-    <div id="todos">
+    <div id="todos" draggable="true" class="resizable" style="background: teal">
+      <div class="comment">
+        <div><span><a href="https://github.com/rbistolfi/Amber-Todo">https://github.com/rbistolfi/Amber-Todo</a></span></div>
+      </div>
     </div>
 
     <div>
@@ -235,15 +258,35 @@
     </div>
 
 
-    <div id="snapsvg-demo" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
+    <div id="snapsvg-demo" draggable="true" class="resizable" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
-        <p><h2><a href="https://github.com/hhzl/Amber-snapsvg-demo">https://github.com/hhzl/Amber-snapsvg-demo</a></h2></p>
+        <p><h2><a href="https://github.com/hhzl/Amber-Graphical-Libraries-Demo">https://github.com/hhzl/Amber-Graphical-Libraries-Demo</a></h2></p>
       </div>
       <button id="snapsvg-button">Hello from Snap.svg</button>
       <svg id="svg"/>
     </div>
 
-    <div id="amber-video" style="border: solid purple;background-color: #ff9;text-indent: 10px;">
+    <div id="paper-demo" draggable="true" class="resizable">
+      <div class="comment">
+        <div><span><a href="https://github.com/HeSe/amber-websocketEcho">https://github.com/HeSe/amber-websocketEcho</a></span></div>
+      </div>
+      <div>
+         <button onclick="amber.globals.Paper1._main()">Paper Demo 1</button>
+         <button onclick="amber.globals.Fabric1._main()">Fabric Demo 1</button>
+<!--
+         <button onclick="amber.globals.SVG1._main()">SVG Demo 1</button>
+         <button onclick="amber.globals.SnapSVG1._main()">SnapSVG Demo 1</button>
+-->
+         <button onclick="amber.globals.Physics1._main()">PhysicsJS Demo 1</button>
+      </div>
+      <canvas id="myCanvas"></canvas>
+      <div id="drawing"></div>
+<!--
+      <svg id="svg-drawing"/>
+-->
+    </div>
+
+    <div id="amber-video" draggable="true" class="resizable" style="border: solid purple;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
         <p><h2><a href="https://github.com/HeSe/amber-video">https://github.com/HeSe/amber-video</a></h2></p>
       </div>
@@ -251,7 +294,7 @@
     </div>
 
 
-    <div id="sean-denigris" class="cover-container" style="border: solid cyan;background-color: #0fc;">
+    <div id="sean-denigris" draggable="true" class="resizable" class="cover-container" style="border: solid cyan;background-color: #0fc;">
       <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
@@ -272,7 +315,7 @@
 
 
 
-    <div id="twitter-wall" style="border: solid hotpink;background-color: #ff9;">
+    <div id="twitter-wall" draggable="true" class="resizable" style="border: solid hotpink;background-color: #ff9;">
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -386,8 +429,6 @@
 
             });
 
-            displayInputs();
-
         }
 
         function displayInputs()
@@ -481,6 +522,10 @@
         function showAlert() {
             alert(amberCodova._helloFromSmalltalk() + ' on: ' + device.name);
         }
+
+
+        displayInputs();
+
 
 
     </script>
