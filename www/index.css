@@ -1,5 +1,6 @@
 body {
-    background-image: url("lotus_flower.png");
+    /* background-image: url("lotus_flower.png"); */
+    background-image: url("amber.png");
     background-position: center top;
 }
 
@@ -14,7 +15,6 @@ body {
     min-height:100px;
 
     margin: 10px auto;
-
 
     border:1px solid #000;
 }
