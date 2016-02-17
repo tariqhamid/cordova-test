@@ -141,6 +141,7 @@
 
 
 [draggable=true] {
+    -khtml-user-drag: element;
     cursor: move;
 }
 
@@ -524,9 +525,10 @@
           // return a NodeList of div wrapped in a figure with attribute class "highlighted"
           ///   <figure id="demo" class="flex-container">
           ///
-          var matches = document.body.querySelectorAll('figure.flex-container > div');
+          // var matches = document.body.querySelectorAll('figure.flex-container > div');
+          var dragItems = document.querySelectorAll('[draggable=true]');
           // alert(matches);
-          [].forEach.call(cols, function(col) {
+          [].forEach.call(dragItems, function(col) {
             col.addEventListener('dragstart', handleDragStart, false);
             col.addEventListener('dragenter', handleDragEnter, false)
             col.addEventListener('dragover', handleDragOver, false);
