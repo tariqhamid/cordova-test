@@ -158,6 +158,7 @@
 #todos
 {
     position:relative; /* important (all position that's not `static`) */
+    background: teal;
 }
 
     </style>
@@ -252,7 +253,7 @@
       <div id="log"></div>
     </div>
 
-    <div id="todos" draggable="true" class="resizable" style="background: teal">
+    <div id="todos" draggable="true" class="resizable">
       <div class="comment">
         <div><span><a href="https://github.com/rbistolfi/Amber-Todo">https://github.com/rbistolfi/Amber-Todo</a></span></div>
       </div>
@@ -568,7 +569,7 @@
 
         var dragSrcEl = null;
         function handleDragStart(e) {
-          this.style.opacity = '0.4';  // this / e.target is the source node.
+          ////this.style.opacity = '0.4';  // this / e.target is the source node.
 
           dragSrcEl = this;
 
