@@ -115,7 +115,7 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
     border: solid 2px #ccc;
-    width: 300px;
+    width: 250px;
     height: 300px;
     float: left;
     margin-right: 10px;
@@ -143,13 +143,17 @@
 [draggable=true] {
     -khtml-user-drag: element;
     cursor: move;
+    border: 2px dashed #000;
 }
 
 .resizable {
     overflow: scroll;
     resize: both;
-    x-max-width: 300px;
-    x-max-height: 460px;
+    height: 280px;
+    width: 280px;
+
+    border-radius: .5rem;
+    border-width: 15px;
 }
 .column.over {
   border: 2px dashed #000;
@@ -157,23 +161,41 @@
 
 #todos
 {
-    position:relative; /* important (all position that's not `static`) */
     background: teal;
 }
 
     </style>
 
+    <style>
+  #container {
+    position:absolute;
+            background-color: wheat;
+    }
+        #elem{
+            position: absolute;
+            background-color: green;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+        }
+    </style>
+
   </head>
 
-  <body>
-  <div id="heading" class="resizable" style="margin: 0px auto; width: 90%; border: solid black;background:hsl(86,10%,85%);">
-  <p style="text-align:right;margin-right: 40%;"><a href="http://amber-lang.net/">Amber Website</a></p>
-  <p style="text-align:right;margin-right: 40%;"><a href="https://groups.google.com/forum/#!forum/amber-lang">Newsgroup</a></p>
-  <p style="border: solid lightgray;background:hsl(113,100%,85%);text-align:right;font-size:small"><a href="http://amber.confusedprogrammer.com">http://amber.confusedprogrammer.com</a> [source code for this demo mashup on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-  </div>
+  <body id="container">
+
+    <div id="elem" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="height: 50px;width: 1000px; border: solid black;background:hsl(86,10%,85%);">
+    <p style="text-align:right;margin-right: 40%;"><a href="http://amber-lang.net/">Amber Website</a></p>
+    <p style="text-align:right;margin-right: 40%;"><a href="https://groups.google.com/forum/#!forum/amber-lang">Newsgroup</a></p>
+    <p style="border: solid lightgray;background:hsl(113,100%,85%);text-align:right;font-size:small"><a href="http://amber.confusedprogrammer.com">http://amber.confusedprogrammer.com</a> [source code for this demo mashup on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </div>
+
   <figure id="demo" class="flex-container">
 
-    <div id="hello-amber" draggable="true" class="resizable" style="width: 444px; border: solid black;background:hsl(113,50%,75%)">
+    <div id="hello-amber" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="width: 444px; border: solid black;background:hsl(113,50%,75%)">
       <h1>HelloAmber</h1>
       <p>This is a sample app. It contains some <a href="parts.html">batteries included</a>
       and should be <a href="uninstall.html">cleaned up</a> once you start developing your own  app / lib.
@@ -182,10 +204,9 @@
       <button id="silk-tag">Hello from Silk >> TAG:</button>
       <button id="jquery-append">Hello from jQuery append</button>
       <ol id="output-list"></ol>
-
     </div>
 
-    <div id="old-example" draggable="true" class="resizable" style="border: solid darkgray;background: gray">
+    <div id="old-example" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid darkgray;background-color: rgb(255, 255, 153);">
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()" style="background: red">class browser</button>
@@ -195,8 +216,7 @@
       <p id="deviceProperties">Loading device properties...</p>
     </div>
 
-
-    <div id="richard-eng" draggable="true" class="resizable" style="border: solid magenta;background-color: #00c;">
+    <div id="richard-eng" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid magenta;background-color: #00c;">
       <div class="comment">
         <div><span><a href="https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9">https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9</a></span></div>
         <div><span><a href="https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf">https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf</a></span></div>
@@ -209,7 +229,8 @@
       <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
     </div>
 
-    <div id="ko-timer" draggable="true" class="resizable" style="border: solid blue;background-color: #24c2c7;">
+
+    <div id="ko-timer" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid blue;background-color: #24c2c7;">
       <div class="comment">
         <div><span><a href="http://qiita.com/tetha/items/eac0839fb1e0328b6fd4">http://qiita.com/tetha/items/eac0839fb1e0328b6fd4</a></span></div>
         <div><span><a href="https://github.com/tty-hayashi/KohakuTimer">https://github.com/tty-hayashi/KohakuTimer</a></span></div>
@@ -237,7 +258,7 @@
       -->
     </div> <!-- ko-timer -->
 
-    <div id="ko-linda" draggable="true" class="resizable" style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
+    <div id="ko-linda" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid blueviolet;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
         <div><span><a href="https://github.com/tty-hayashi/LindaClientDemo">https://github.com/tty-hayashi/LindaClientDemo</a></span></div>
         <div><span><a href="http://qiita.com/tetha/items/ed861060847bd01ca21e">http://qiita.com/tetha/items/ed861060847bd01ca21e</a></span></div>
@@ -253,13 +274,13 @@
       <div id="log"></div>
     </div>
 
-    <div id="todos" draggable="true" class="resizable">
+    <div id="todos" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'>
       <div class="comment">
         <div><span><a href="https://github.com/rbistolfi/Amber-Todo">https://github.com/rbistolfi/Amber-Todo</a></span></div>
       </div>
     </div>
 
-    <div id="web-socket-example" draggable="true" class="resizable">
+    <div id="web-socket-example" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'>
       <div class="comment">
         <div><span><a href="https://github.com/HeSe/amber-websocketEcho">https://github.com/HeSe/amber-websocketEcho</a></span></div>
       </div>
@@ -269,7 +290,7 @@
     </div>
 
 
-    <div id="snapsvg-demo" draggable="true" class="resizable" style="border: solid violet;background-color: #ff9;text-indent: 10px;">
+    <div id="snapsvg-demo" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid violet;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
         <p><h2><a href="https://github.com/hhzl/Amber-Graphical-Libraries-Demo">https://github.com/hhzl/Amber-Graphical-Libraries-Demo</a></h2></p>
       </div>
@@ -277,7 +298,7 @@
       <svg id="svg"/>
     </div>
 
-    <div id="paper-demo" draggable="true" class="resizable">
+    <div id="paper-demo" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'>
       <div class="comment">
         <div><span><a href="https://github.com/HeSe/amber-websocketEcho">https://github.com/HeSe/amber-websocketEcho</a></span></div>
       </div>
@@ -297,7 +318,7 @@
 -->
     </div>
 
-    <div id="amber-video" draggable="true" class="resizable" style="border: solid purple;background-color: #ff9;text-indent: 10px;">
+    <div id="amber-video" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid purple;background-color: #ff9;text-indent: 10px;">
       <div class="comment">
         <p><h2><a href="https://github.com/HeSe/amber-video">https://github.com/HeSe/amber-video</a></h2></p>
       </div>
@@ -305,13 +326,13 @@
     </div>
 
 
-    <div id="sean-denigris" draggable="true" class="resizable" class="cover-container" style="border: solid cyan;background-color: #0fc;">
+    <div id="sean-denigris" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' class="cover-container" style="border: solid cyan;background-color: #0fc;">
       <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
         </div>
       </div>
-      <div class="inner cover">
+      <div class="inner cover" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'>
         <h1 class="cover-heading">Find Clean Eggs</h1>
         <p class="lead"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org egg ratings</a> in an easily-searchable web UI.<br/>Just start typing a brand name and its rating will appear...</p>
         <p class="lead">
@@ -326,7 +347,7 @@
 
 
 
-    <div id="twitter-wall" draggable="true" class="resizable" style="border: solid hotpink;background-color: #ff9;">
+    <div id="twitter-wall" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid hotpink;background-color: #ff9;">
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -338,6 +359,10 @@
       <div id="treecontainer"></div>
     	<div id="playground"></div>
     	</center>
+    </div>
+
+    <div id="input-ranges" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid purple;background-color: green;">
+
     </div>
 
   </figure>
@@ -517,30 +542,51 @@
           //    <div id="input-types" class="flex-item">
           var div1 = document.createElement("div");
           div1.id = "input-types";
-          div1.setAttribute("class", "flex-item");
-          div1.setAttribute("style", "border: solid darkgray;background:hsl(178,50%,75%)");
           div1.appendChild(table1);
-          document.body.appendChild(div1);
+          var parent = document.getElementById("input-ranges");
+          parent.appendChild(div1);
 
           ////////////////////////////////////////////
           // return a NodeList of div wrapped in a figure with attribute class "highlighted"
           ///   <figure id="demo" class="flex-container">
           ///
           // var matches = document.body.querySelectorAll('figure.flex-container > div');
-          var dragItems = document.querySelectorAll('[draggable=true]');
+
+          window.dragItems = document.querySelectorAll('[draggable=true]');
           // alert(matches);
-          [].forEach.call(dragItems, function(col) {
+          var x = 50;
+          var y;
+          var i = 0;
+          [].forEach.call(window.dragItems, function(col) {
+            /*
             col.addEventListener('dragstart', handleDragStart, false);
             col.addEventListener('dragenter', handleDragEnter, false)
             col.addEventListener('dragover', handleDragOver, false);
             col.addEventListener('dragleave', handleDragLeave, false);
             col.addEventListener('drop', handleDrop, false);
             col.addEventListener('dragend', handleDragEnd, false);
+            */
+
+            if ("sean-denigris" == col.id) // chicken background
+              col.setAttribute("style", "position: absolute;border: solid yellow;");
+            else
+              col.setAttribute("style", "position: absolute;border: solid darkgray;background:hsl("
+              + parseInt(360 * Math.random()) + ","
+              + parseInt(50 * Math.random() + 50) + "%," + parseInt(50 * Math.random() + 50 ) + "%)");
+
+
+            y = ((i % 4) * 290) + 60;
+            x = Math.floor(i/4) * 300 + 20;
+            i = i + 1;
+
+            col.style.left= x + 'px';
+            col.style.top=  y + 'px';
 
           });
+          window.zIndex = 0;
 
         }
-
+/*
         function handleDrop(e) {
           // this / e.target is current target element.
 
@@ -561,8 +607,12 @@
 
         function handleDragEnd(e) {
           // this/e.target is the source node.
+          //this.style.left=(e.screenX  - this.clientWidth) + 'px';
+          //this.style.top=(e.screenY - this.clientHeight) + 'px';
+          //this.style.left=(e.screenX - e.offsetX) + 'px';
+          //this.style.top=(e.screenY - e.offsetY) + 'px';
 
-          [].forEach.call(cols, function (col) {
+          [].forEach.call(window.dragItems, function (col) {
             col.classList.remove('over');
           });
         }
@@ -606,11 +656,64 @@
         function showAlert() {
             alert(amberCodova._helloFromSmalltalk() + ' on: ' + device.name);
         }
-
+*/
 
         displayInputs();
+    </script>
+
+    <script>
+        var mydragg = function(){
+            return {
+                move : function(divid,xpos,ypos){
+                    divid.style.left = xpos + 'px';
+                    divid.style.top = ypos + 'px';
+                },
+                startMoving : function(divid,container,evt){
+                    evt = evt || window.event;
+
+                    evt.currentTarget.style.zIndex = ++window.zIndex;
+
+                    if (((evt.currentTarget.clientHeight - evt.offsetY) < 10) ||
+                        ((evt.currentTarget.clientWidth - evt.offsetX) < 10))
+                    {
+                      return; // handle resize instead elsewhere
+                    }
 
 
+
+                    var posX = evt.clientX,
+                        posY = evt.clientY,
+                    divTop = divid.style.top,
+                    divLeft = divid.style.left,
+                    eWi = parseInt(divid.style.width),
+                    eHe = parseInt(divid.style.height),
+                    cWi = parseInt(document.getElementById(container).style.width),
+                    cHe = parseInt(document.getElementById(container).style.height);
+                    document.getElementById(container).style.cursor='move';
+                    divTop = divTop.replace('px','');
+                    divLeft = divLeft.replace('px','');
+                    var diffX = posX - divLeft,
+                        diffY = posY - divTop;
+                    document.onmousemove = function(evt){
+                        evt = evt || window.event;
+                        var posX = evt.clientX,
+                            posY = evt.clientY,
+                            aX = posX - diffX,
+                            aY = posY - diffY;
+                            if (aX < 0) aX = 0;
+                            if (aY < 0) aY = 0;
+                            if (aX + eWi > cWi) aX = cWi - eWi;
+                            if (aY + eHe > cHe) aY = cHe -eHe;
+                        mydragg.move(divid,aX,aY);
+                    }
+                },
+                stopMoving : function(container){
+                    var a = document.createElement('script');
+                    document.getElementById(container).style.cursor='default';
+                    document.onmousemove = function(){}
+                },
+            }
+        }();
 
     </script>
 
