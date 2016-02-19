@@ -56,7 +56,7 @@
         border-radius: .25rem;
         border-width: 15px;
         background-color: #FFBF00; /* amber */
-        font: italic bold 12px/30px Georgia, serif;
+        font: italic bold 10px/16px Georgia, serif;
       }
 
 	    .big-sevenSeg
@@ -164,24 +164,24 @@
     background: teal;
 }
 
-    </style>
+</style>
 
-    <style>
-  #container {
-    position:absolute;
-            background-color: wheat;
-    }
-        #elem{
-            position: absolute;
-            background-color: green;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -o-user-select: none;
-            -ms-user-select: none;
-            -khtml-user-select: none;
-            user-select: none;
-        }
-    </style>
+<style>
+#container {
+  position:absolute;
+          background-color: wheat;
+  }
+#elem{
+    position: absolute;
+    background-color: green;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+</style>
 
   </head>
 
@@ -218,9 +218,9 @@
 
     <div id="richard-eng" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid magenta;background-color: #00c;">
       <div class="comment">
-        <div><span><a href="https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9">https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9</a></span></div>
-        <div><span><a href="https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf">https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf</a></span></div>
-        <div><span><a href="https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e">https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e</a></span></div>
+        <a href="https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9">https://medium.com/smalltalk-talk/a-gentle-introduction-to-amber-8c532631e9ab#.w6ai5nco9</a>
+        <a href="https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf">https://medium.com/smalltalk-talk/you-are-now-an-ambersmith-c257a73f4ef9#.1x3wh7osf</a>
+        <a href="https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e">https://medium.com/smalltalk-talk/amber-alert-we-can-do-mobile-apps-34b2d4d32731#.mowl2gs0e</a>
       </div>
       <button id="play-track">play track</button>
       <button id="pause-track">pause track</button>
@@ -232,9 +232,9 @@
 
     <div id="ko-timer" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid blue;background-color: #24c2c7;">
       <div class="comment">
-        <div><span><a href="http://qiita.com/tetha/items/eac0839fb1e0328b6fd4">http://qiita.com/tetha/items/eac0839fb1e0328b6fd4</a></span></div>
-        <div><span><a href="https://github.com/tty-hayashi/KohakuTimer">https://github.com/tty-hayashi/KohakuTimer</a></span></div>
-        <div><span><a href="http://brandonlwhite.github.io/sevenSeg.js/">http://brandonlwhite.github.io/sevenSeg.js/</a></span></div>
+        <a href="http://qiita.com/tetha/items/eac0839fb1e0328b6fd4">http://qiita.com/tetha/items/eac0839fb1e0328b6fd4</a>
+        <a href="https://github.com/tty-hayashi/KohakuTimer">https://github.com/tty-hayashi/KohakuTimer</a>
+        <a href="http://brandonlwhite.github.io/sevenSeg.js/">http://brandonlwhite.github.io/sevenSeg.js/</a>
       </div>
       <div id="timer-inputs" style="text-indent: 10px">
         <div id="timers">
@@ -520,6 +520,7 @@
               var input = document.createElement("INPUT");
               input.type = prop; //x.setAttribute("type", "button");
               input.setAttribute("value", prop);
+              input.setAttribute("onmousedown","event.cancelBubble=true;");
               //var t = document.createTextNode(prop);       // Create a text node
               //input.appendChild(t);
               //input.className = "css-class-name"; // set the CSS class
