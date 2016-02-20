@@ -1,0 +1,46 @@
+{
+  "name": "amber-contrib-domite",
+  "description": "Lite mite wrapping basic DOM for Amber Smalltalk",
+  "version": "0.3.3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/*.js",
+    "/*.html",
+    "test",
+    "tests"
+  ],
+  "authors": [
+    {
+      "name": "Herbert Vojčík",
+      "email": "herby@mailbox.sk"
+    }
+  ],
+  "homepage": "https://github.com/amber-smalltalk/amber-contrib-domite",
+  "keywords": [
+    "Amber",
+    "Smalltalk"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "private": false,
+  "dependencies": {
+    "amber": ">=0.14.17"
+  },
+  "devDependencies": {
+    "amber-contrib-legacy": "^0.2.0",
+    "amber-ide-starter-dialog": "^0.1.0",
+    "helios": ">=0.5.3"
+  },
+  "_release": "0.3.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.3",
+    "commit": "da198bcbaebb64e8026beecccd346e84d4521fff"
+  },
+  "_source": "git://github.com/herby/domite.git",
+  "_target": "^0.3.3",
+  "_originalSource": "domite"
+}

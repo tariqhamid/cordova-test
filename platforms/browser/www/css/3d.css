@@ -1,0 +1,36 @@
+#box3d {
+    width: 100%;
+    height:192px;
+    padding: 0px;
+    text-align: center;
+    -webkit-perspective: 400;
+    -webkit-perspective-origin: 0px 0px;
+}
+#mini-box3d {
+    width: 10%;
+    height:20px;
+    padding: 0px;
+    text-align: center;
+    -webkit-perspective: 400;
+    -webkit-perspective-origin: 0px 0px;
+}
+html {
+    font-size : 100%; 
+}
+ 
+@media screen and (min-width : 768px){
+    html{ font-size : 120%;} 
+}
+ 
+@media screen and (min-width : 1024px) {
+    html{ font-size : 100%}; 
+}
+
+article,aside,canvas,details,figcaption,figure,
+header,footer,main,menu,nav,section,summary {
+	display: block;
+}
+
+table   { width: 100%; }
+th, section td  { padding: 10px; border: 1px solid #ddd; }
+th  { background: #f4f4f4; }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Gyro Worker</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="tetha" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1" />
+    <script type='text/javascript' src='the.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="css/3d.css">
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+  </head>
+  <body>
+    <div></div>
+    <p>lindaサーバーURL:
+    <select data-bind="options: availableServers,
+                       value: serverUrl,
+                       optionsCaption: '-Please select-'"></select></p>
+
+    <p>ハンドル名:<input data-bind="value: handleName"/></p>
+    <button id="start">START</button>
+    <div id="data">
+      <!--
+	  <p>tiltLR: <span data-bind="text: tiltLR"></span></p>
+	  <p>tiltFB: <span data-bind="text: tiltFB"></span></p>
+	  -->
+      <p>X: <span data-bind="text: gX"></span></p>
+      <p>Y: <span data-bind="text: gY"></span></p>
+      <p>Z: <span data-bind="text: gZ"></span></p>
+    </div>
+    <div id="box3d">
+      <img src="amslertest.gif" id="plane" width="275" height="275" data-bind="style: {WebkitTransform: rotateYX(), MozTransform: rotateYX(), transform: rotateYX()}" >
+    </div>
+    <ul id="output-list"></ul>
+
+
+    <script type='text/javascript'>
+      require(['app'], function (amber) {
+          amber.initialize({
+            //used for all new packages in IDE
+            'transport.defaultAmdNamespace': "amber-lindaclient"
+          });
+          require(["amber-ide-starter-dialog"], function (dlg) { dlg.start(); });
+          amber.globals.LindaGyroWorker._start();
+      });
+    </script>
+  </body>
+
+</html>

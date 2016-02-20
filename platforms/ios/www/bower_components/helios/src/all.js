@@ -1,0 +1,22 @@
+define([
+	'./Helios-Core',
+	'./Helios-Exceptions',
+	'./Helios-Helpers',
+	'./Helios-Commands-Core',
+	'./Helios-Commands-Tools',
+	'./Helios-Commands-Browser',
+	'./Helios-Commands-SUnit',
+	'./Helios-Layout',
+	'./Helios-KeyBindings',
+	'./Helios-Browser',
+	'./Helios-Browser-Tests',
+	'./Helios-Workspace',
+	'./Helios-Transcript',
+	'./Helios-SUnit',
+	'./Helios-SUnit-Tests',
+	'./Helios-Debugger',
+	'./Helios-Inspector',
+	'./Helios-References',
+	'./Helios-Announcements',
+	'./Helios-Workspace-Tests'
+]);

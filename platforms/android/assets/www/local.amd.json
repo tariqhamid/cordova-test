@@ -1,0 +1,12 @@
+{
+    "paths": {
+        "amber-ambercordova": "src",
+        "amber-timer": "src",
+        "amber-snapsvg": "src",
+        "amber-todolist": "src",
+        "amber-cornucopiascorecards": "src",
+        "amber-cornucopiascorecards/css": "css",
+        "amber-video": "src",
+        "WebSocket-Test": "src"
+    }
+}

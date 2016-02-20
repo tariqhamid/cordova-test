@@ -1,0 +1,37 @@
+body {
+    /* background-image: url("lotus_flower.png"); */
+    background-image: url("amber.png");
+    background-position: center top;
+}
+
+
+#picture-frame {
+    background: gold; /* for testing purposes */
+
+    position: relative;;
+
+    top: 10px;
+    width:90%;
+    min-height:100px;
+
+    margin: 10px auto;
+
+    border:1px solid #000;
+}
+
+
+#picture-frame2 {
+    background: blue; /* for testing purposes */
+    /*position: fixed;*/
+    top: 100px; left: 100px; height: 500px; width: 500px;
+    background-size: cover;
+    background-position: center;
+}
+
+
+#swipeBox {
+    background: purple; /* for testing purposes */
+
+    top: 900px; left: 100px;
+    height: 50px; width: 500px;
+}

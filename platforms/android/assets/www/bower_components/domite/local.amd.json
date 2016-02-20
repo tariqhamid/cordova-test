@@ -1,0 +1,11 @@
+{
+  "paths": {
+    "domite": "src"
+  },
+  "map": {
+    "*": {
+      "amber/domite/DOMite": "domite/DOMite",
+      "amber/domite/DOMite-Tests": "domite/DOMite-Tests"
+    }
+  }
+}

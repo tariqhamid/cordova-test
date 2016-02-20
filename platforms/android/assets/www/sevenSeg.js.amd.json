@@ -1,0 +1,10 @@
+{
+    "paths": {
+	"sevenSeg": "sevenSeg"
+    },
+    "shim": {
+	"sevenSeg": {
+	    "deps": ["jquery", "jquery-ui", "knockout"]
+	}
+    }
+}
