@@ -150,7 +150,7 @@
     overflow: scroll;
     resize: both;
     height: 280px;
-    width: 420px;
+    width: 520px;
 
     border-radius: .5rem;
     border-width: 15px;
@@ -575,13 +575,13 @@
               + parseInt(360 * Math.random()) + ","
               + parseInt(50 * Math.random() + 50) + "%," + parseInt(50 * Math.random() + 50 ) + "%)");
 
-
             y = ((i % 4) * 290) + 60;
             x = Math.floor(i/4) * 300 + 20;
-            i = i + 1;
 
             col.style.left= x + 'px';
-            col.style.top=  y + 'px';
+            col.style.top=  y + ((Math.floor(i/4) % 2) * 20) + 'px';
+
+            i = i + 1;
 
           });
           window.zIndex = 0;
