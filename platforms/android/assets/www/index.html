@@ -15,6 +15,7 @@
 
     <script type='text/javascript' src='swipesense.js'></script>
 
+    <script type='text/javascript' src='couch.js'></script>
 
     <style type="text/css">
 
@@ -328,18 +329,18 @@
 
     <div id="sean-denigris" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' class="cover-container" style="border: solid cyan;background-color: #0fc;">
       <div class="comment">
-         Sean DeNigris Cornucopia Cards
+         Sean DeNigris Cornucopia Cards <a href="http://seandenigris.com/eggscores/">http://seandenigris.com/eggscores/</a>
         <div><span><a href="https://github.com/seandenigris/cornucopia-scorecards">https://github.com/seandenigris/cornucopia-scorecards</a></span></div>
       </div>
 
       <div class="masthead clearfix">
         <div class="inner">
-          <h3 class="masthead-brand"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
+          <h3 class="masthead-brand"><a style="color: white" href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org Egg Ratings</a>... But Searchable!</h3>
         </div>
       </div>
       <div class="inner cover" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'>
         <h1 class="cover-heading">Find Clean Eggs</h1>
-        <p class="lead"><a href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org egg ratings</a> in an easily-searchable web UI.<br/>Just start typing a brand name and its rating will appear...</p>
+        <p class="lead"><a style="color: white" href="http://www.cornucopia.org/organic-egg-scorecard/">Cornucopia.org egg ratings</a> in an easily-searchable web UI.<br/>Just start typing a brand name and its rating will appear...</p>
         <p class="lead">
 <!--
           <comment>Set default keyboard focus in HTML5 via autofocus per http://stackoverflow.com/questions/4166423/default-html-form-focus-without-javascript </comment>
@@ -367,7 +368,14 @@
     </div>
 
     <div id="input-ranges" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid purple;background-color: green;">
+    </div>
 
+    <div id="couchdb-demo" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid purple;background-color: green;">
+      <div class="comment">
+        Couchdb Wiki
+        Getting_started_with_JavaScript
+        <div><span><a href="https://wiki.apache.org/couchdb/Getting_started_with_JavaScript">https://wiki.apache.org/couchdb/Getting_started_with_JavaScript</a></span></div>
+      </div>
     </div>
 
   </figure>
@@ -552,12 +560,11 @@
           var parent = document.getElementById("input-ranges");
           parent.appendChild(div1);
 
-          ////////////////////////////////////////////
-          // return a NodeList of div wrapped in a figure with attribute class "highlighted"
-          ///   <figure id="demo" class="flex-container">
-          ///
-          // var matches = document.body.querySelectorAll('figure.flex-container > div');
 
+        }
+
+        function tileWindows()
+        {
           window.dragItems = document.querySelectorAll('[draggable=true]');
           // alert(matches);
           var x = 50;
@@ -590,7 +597,17 @@
 
           });
           window.zIndex = 0;
+        }
 
+        function testCouchDb()
+        {
+          var nc = {_id:"NC", cities:["Charlotte", "Raleigh"]};
+          var ma = {_id:"MA", cities:["Boston", "Lowell", "Worcester", "Cambridge", "Springfield"]};
+          var fl = {_id:"FL", cities:["Miami", "Tampa", "Orlando", "Springfield"]};
+
+          db.save(nc);
+          db.save(ma);
+          db.save(fl);
         }
 /*
         function handleDrop(e) {
@@ -664,7 +681,9 @@
         }
 */
 
+        tileWindows();
         displayInputs();
+        testCouchDb();
     </script>
 
     <script>
