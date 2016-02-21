@@ -376,6 +376,10 @@
         Getting_started_with_JavaScript
         <div><span><a href="https://wiki.apache.org/couchdb/Getting_started_with_JavaScript">https://wiki.apache.org/couchdb/Getting_started_with_JavaScript</a></span></div>
       </div>
+      <code>
+              <li><a href="couch_tests.html?script/couch_tests.js">Test Suite</a></li>
+              To run tests: http://127.0.0.1:5984/_utils/couch_tests.html?script/couch_tests.js
+      </code>
     </div>
 
   </figure>
@@ -601,6 +605,33 @@
 
         function testCouchDb()
         {
+
+          // instantiate a new XMLHttpRequest object
+          var req = new XMLHttpRequest()
+          // Open a GET request to "/all_dbs"
+          req.open("GET", "http://127.0.0.1:5984" + "/_all_dbs")
+          // Send nothing as the request body
+          req.send("")
+          // Get the response
+          var res = req.responseText;
+
+          var div1 = document.createElement("div");
+          div1.id = "couchdb-alldbs";
+          div1.innerHTML = "_all_dbs = <b>" + res + "</b>";
+          var parent = document.getElementById("couchdb-demo");
+          parent.appendChild(div1);
+
+
+          CouchDB.urlPrefix= "http://127.0.0.1:5984";
+          var dbs = CouchDB.allDbs();
+
+          //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
+          var db = new CouchDB("test_suite_db");
+
+debugger;
+          db.deleteDb();
+          db.createDb();
+
           var nc = {_id:"NC", cities:["Charlotte", "Raleigh"]};
           var ma = {_id:"MA", cities:["Boston", "Lowell", "Worcester", "Cambridge", "Springfield"]};
           var fl = {_id:"FL", cities:["Miami", "Tampa", "Orlando", "Springfield"]};
@@ -608,6 +639,10 @@
           db.save(nc);
           db.save(ma);
           db.save(fl);
+
+          var nc_cities = db.open('NC').cities;
+
+          div1.innerHTML = div1.innerHTML + "<br/>db.open('NC').cities = " + nc_cities;
         }
 /*
         function handleDrop(e) {

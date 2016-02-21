@@ -16,6 +16,8 @@
 function CouchDB(name, httpHeaders) {
   this.name = name;
   this.uri = "/" + encodeURIComponent(name) + "/";
+  //this.uri = "http://127.0.0.1:5984/" + encodeURIComponent(name) + "/";
+
 
   // The XMLHttpRequest object from the most recent request. Callers can
   // use this to check result http status and headers.
