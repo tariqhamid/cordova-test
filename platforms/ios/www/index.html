@@ -208,6 +208,11 @@
     </div>
 
     <div id="old-example" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid darkgray;background-color: rgb(255, 255, 153);">
+      <div class="comment">
+        <a href="https://github.com/amber-smalltalk/amber/wiki/Packaging-Amber-code-in-a-PhoneGap-%28Cordova%29-app">https://github.com/amber-smalltalk/amber/wiki/Packaging-Amber-code-in-a-PhoneGap-%28Cordova%29-app</a>
+      </div>
+
+
       <article>
         <h1>My First Amber Project with PhoneGap</h1>
         <button onclick="require('amber/helpers').popupHelios()" style="background: red">class browser</button>
@@ -377,8 +382,10 @@
         <div><span><a href="https://wiki.apache.org/couchdb/Getting_started_with_JavaScript">https://wiki.apache.org/couchdb/Getting_started_with_JavaScript</a></span></div>
       </div>
       <code>
-              <li><a href="couch_tests.html?script/couch_tests.js">Test Suite</a></li>
+              <a href="http://127.0.0.1:5984/_utils/couch_tests.html?script/couch_tests.js">Local Test Suite</a>
               To run tests: http://127.0.0.1:5984/_utils/couch_tests.html?script/couch_tests.js
+              <p><a href="https://svn.apache.org/repos/asf/couchdb/trunk/share/www/couch_tests.html">Test Suite</a>
+              https://svn.apache.org/repos/asf/couchdb/trunk/share/www/couch_tests.html</p>
       </code>
     </div>
 
@@ -605,30 +612,47 @@
 
         function testCouchDb()
         {
+          var div1 = document.createElement("div");
+          div1.id = "couchdb-alldbs";
+          var parent = document.getElementById("couchdb-demo");
+          parent.appendChild(div1);
 
           // instantiate a new XMLHttpRequest object
           var req = new XMLHttpRequest()
           // Open a GET request to "/all_dbs"
           req.open("GET", "http://127.0.0.1:5984" + "/_all_dbs")
+
+          // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
+          // Asynchronous request
+          req.onload = function (e) {
+            if (req.readyState === 4) {
+              if (req.status === 200) {
+                //console.log(req.responseText);
+                div1.innerHTML = "_all_dbs = <b>" + req.responseText + "</b>";
+              } else {
+                //console.error(req.statusText);
+                div1.innerHTML = "_all_dbs = <b>" + req.statusText + "</b>";
+              }
+            }
+          };
+          req.onerror = function (e) {
+            console.error(req.statusText);
+          };
+
           // Send nothing as the request body
           req.send("")
           // Get the response
-          var res = req.responseText;
+          // var res = req.responseText; // !! synchronous version !! not so good
 
-          var div1 = document.createElement("div");
-          div1.id = "couchdb-alldbs";
-          div1.innerHTML = "_all_dbs = <b>" + res + "</b>";
-          var parent = document.getElementById("couchdb-demo");
-          parent.appendChild(div1);
-
-
+          //
+          // =======================================
+          //
           CouchDB.urlPrefix= "http://127.0.0.1:5984";
           var dbs = CouchDB.allDbs();
 
           //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
           var db = new CouchDB("test_suite_db");
 
-debugger;
           db.deleteDb();
           db.createDb();
 
