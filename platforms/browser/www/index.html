@@ -16,6 +16,7 @@
     <script type='text/javascript' src='swipesense.js'></script>
 
     <script type='text/javascript' src='couch.js'></script>
+    <script type='text/javascript' src='sha1.js'></script>
 
     <style type="text/css">
 
@@ -359,6 +360,9 @@
 
 
     <div id="twitter-wall" draggable="true" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="border: solid hotpink;background-color: #ff9;">
+      <div class="comment">
+        Stefan Krecher <a href="https://github.com/StefanKrecher/amber/tree/master/examples/twitterwall">https://github.com/StefanKrecher/amber/tree/master/examples/twitterwall</a>
+      </div>
       <center>
     		<h2>A simple Twitterwall made with Amber</h2>
     		<p>Shows the last 5 Tweets regarding your query</p>
@@ -610,49 +614,58 @@
           window.zIndex = 0;
         }
 
+
+        function adminBasicAuthHeaderValue() {
+          var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
+          return retval;
+        }
         function testCouchDb()
         {
           var div1 = document.createElement("div");
           div1.id = "couchdb-alldbs";
+          var div2 = document.createElement("div");
+          div2.id = "couchdb-cities";
           var parent = document.getElementById("couchdb-demo");
           parent.appendChild(div1);
-
+          parent.appendChild(div2);
           // instantiate a new XMLHttpRequest object
-          var req = new XMLHttpRequest()
+          var req = new XMLHttpRequest();
           // Open a GET request to "/all_dbs"
-          req.open("GET", "http://127.0.0.1:5984" + "/_all_dbs")
-
+          req.open("GET", "http://127.0.0.1:5984" + "/_all_dbs");
           // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
           // Asynchronous request
           req.onload = function (e) {
             if (req.readyState === 4) {
               if (req.status === 200) {
                 //console.log(req.responseText);
-                div1.innerHTML = "_all_dbs = <b>" + req.responseText + "</b>";
+                div1.innerHTML = div1.innerHTML + "<br/>_all_dbs = <b>" + req.responseText + "</b>";
               } else {
                 //console.error(req.statusText);
-                div1.innerHTML = "_all_dbs = <b>" + req.statusText + "</b>";
+                div1.innerHTML = div1.innerHTML + "<br/>_all_dbs = <b>" + req.statusText + "</b>";
               }
             }
           };
           req.onerror = function (e) {
             console.error(req.statusText);
           };
-
           // Send nothing as the request body
-          req.send("")
+          req.send("");
           // Get the response
           // var res = req.responseText; // !! synchronous version !! not so good
 
           //
           // =======================================
           //
+          //CouchDB.urlPrefix= "https://127.0.0.1:5984";
           CouchDB.urlPrefix= "http://127.0.0.1:5984";
           var dbs = CouchDB.allDbs();
 
-          //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
-          var db = new CouchDB("test_suite_db");
 
+          //  CouchDB.login("test", "test");
+          //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
+          var db = new CouchDB("test_suite_db_a", {
+                                "Authorization": adminBasicAuthHeaderValue()
+                              });
           db.deleteDb();
           db.createDb();
 
@@ -665,8 +678,8 @@
           db.save(fl);
 
           var nc_cities = db.open('NC').cities;
-
-          div1.innerHTML = div1.innerHTML + "<br/>db.open('NC').cities = " + nc_cities;
+          div2.innerHTML = "<br/>db.open('NC').cities = " + nc_cities;
+          CouchDB.logout();
         }
 /*
         function handleDrop(e) {
