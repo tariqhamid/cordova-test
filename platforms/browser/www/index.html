@@ -619,6 +619,13 @@
           var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
           return retval;
         }
+
+        //
+        // to avoid preflight OPTIONS request:
+        //     xhr.setRequestHeader("Authorization","Basic "+btoa("username:password"));
+        //          var db = new CouchDB("test_db", {"Authorization": adminBasicAuthHeaderValue()});
+        // http://grokbase.com/t/couchdb/dev/143bqn3y49/jira-commented-couchdb-2027-cors-should-not-require-authentication-on-preflight-options-request
+        //
         function testCouchDb()
         {
           var div1 = document.createElement("div");
@@ -648,8 +655,8 @@
           req.onerror = function (e) {
             console.error(req.statusText);
           };
-          // Send nothing as the request body
-          req.send("");
+
+          req.send(""); // Send nothing as the request body
           // Get the response
           // var res = req.responseText; // !! synchronous version !! not so good
 
