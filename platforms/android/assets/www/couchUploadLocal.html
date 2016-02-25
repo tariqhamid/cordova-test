@@ -1,0 +1,68 @@
+<!--
+http://stackoverflow.com/questions/11864257/how-to-upload-a-file-attachment-from-the-browser
+Alright, here's your pure JavaScript file upload implementation.
+
+The basic algorithm is like this:
+
+    Get the file from the file input element
+    Get the file name and type off the file object
+    Get the latest document revision of the document you want to attach the file to
+    Attach the file to document using the fetched revision
+
+The HTML part basically consists of a simple form with two elements, an input of type file and a button of type submit.
+-->
+<html>
+
+<script>
+window.onload = function() {
+    var app = function() {
+        var baseUrl = 'http://127.0.0.1:5984/playground/';
+        var fileInput = document.forms['upload'].elements['file'];
+        document.forms['upload'].onsubmit = function() {
+            uploadFile('foo', fileInput.files[0]);
+            return false;
+        };
+
+        var uploadFile = function(document, file) {
+            var name = encodeURIComponent(file.name),
+            type = file.type,
+            fileReader = new FileReader(),
+            getRequest = new XMLHttpRequest(),
+            putRequest = new XMLHttpRequest();
+
+            getRequest.open('GET',  baseUrl + encodeURIComponent(document),
+                true);
+            getRequest.send();
+            getRequest.onreadystatechange = function(response) {
+                if (getRequest.readyState == 4 && getRequest.status == 200) {
+                    var doc = JSON.parse(getRequest.responseText);
+                    putRequest.open('PUT', baseUrl +
+                        encodeURIComponent(document) + '/' +
+                        name + '?rev=' + doc._rev, true);
+                    putRequest.setRequestHeader('Content-Type', type);
+                    fileReader.readAsArrayBuffer(file);
+                    fileReader.onload = function (readerEvent) {
+                        putRequest.send(readerEvent.target.result);
+                    };
+                    putRequest.onreadystatechange = function(response) {
+                        if (putRequest.readyState == 4) {
+                            console.log(putRequest);
+                        }
+                    };
+                }
+            };
+        };
+    };
+    app();
+};
+</script>
+
+
+<body>
+  <form action="/" method="post" name="upload">
+    <input type="file" name="file" />
+    <button type="submit" name="submit">Upload</button>
+  </form>
+</body>
+
+</html>

@@ -12,6 +12,7 @@ Added the code below to cordova-lib/blob/master/cordova-lib/src/cordova/serve.js
 to enable writing back of source files from cordova project "platforms" directory
 to cordova project directory "www" :
 
+```javascript
 server.app.get('/' + platform + '/*', getPlatformHandler(platform, locations.www, locations.configXml));
 
 // https://github.com/apache/cordova-lib/blob/master/cordova-lib/src/cordova/serve.js
@@ -46,3 +47,4 @@ server.app.put('/' + platform + '/*', function (req, res, next) {
 
   ///next(); // pass control to the next handler
 })
+```

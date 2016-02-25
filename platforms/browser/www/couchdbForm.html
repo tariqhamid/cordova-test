@@ -1,0 +1,84 @@
+<!--
+    http://mark.the-fennells.org/wp-content/uploads/2014/11/couchdbForm.html
+
+    http://localhost:5984/test/test1/couchdbForm.html
+-->
+<!DOCTYPE html> 								<!-- html 5 -->
+<head>										<!-- head -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >		<!-- UTF-8 -->
+        <script src="/_utils/script/json2.js"></script>				<!-- couchDB js include -->
+        <script src="/_utils/script/jquery.js?1.2.6"></script>			<!-- ditto -->
+        <script src="/_utils/script/jquery.couch.js?0.8.0"></script>		<!-- ditto -->
+        <script src="/_utils/script/jquery.form.js?0.9.0"></script>		<!-- ditto -->
+        <script type="text/javascript">						/* <!-- code --> */
+$.fn.serializeObject = function()						/* <!-- serializeObject form => json --> */
+	{
+		var o = {};							/* <!-- json object --> */
+		var a = this.serializeArray();				/*	// <!-- form object as array --> */
+		$.each(a, function() {						/* <!-- for each array item --> */
+			if (o[this.name] !== undefined) {			/* <!-- if the value of this form field is undefined aka does not exist --> */
+				if (!o[this.name].push) {			/* <!-- push this form field into the json object --> */
+					o[this.name] = [o[this.name]];
+				}
+				o[this.name].push(this.value || '');		/* <!-- push the value into the json object --> */
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;							/* <!-- return json object --> */
+	};
+
+$(function() {
+	$('form').submit(function(e) {						/* <!-- ignore the default submit action --> */
+	e.preventDefault();
+		$.couch.db("test").saveDoc({}, {				/* <!-- change db name from "test" to your db name and */
+										    /*  use saveDoc to get id and rev --> */
+		success: function(data) {
+			$('#_id').val(data.id);					/* <!-- set id and rev in form --> */
+			$('#_rev').val(data.rev);
+			$("#result").html(data);
+			var doc=JSON.stringify($('form').serializeObject());	/* <!-- change the form into a json object --> */
+			$.couch.db("test").saveDoc( JSON.parse(doc) , {		/* <!-- save the form data into the couchDB doc --> */
+				success: function(udata) {
+					$("#result").html(udata);
+					$('#_rev').val(udata.rev);		/* <!-- update rev in form field --> */
+					$('#form').ajaxSubmit({			/* <!-- attach file in form to document in couchDB --> */
+						url: "/test/"+$('#_id').val() ,
+						success: function(response) {
+						$("#result").html(response);},
+						error: function(status) {
+						$("#result").html(response);}
+					});
+				},
+				error: function(status) {
+				$("#result").html(status);
+			}
+			});
+		},
+		error: function(status) {
+		$("#result").html(status);
+		}
+		});
+	});
+});
+
+</script>
+
+
+        <body>
+            <form method="post" id="form" name="form" action="" enctype="multipart/form-data">
+                <input type="text" name="_id" id="_id" placeholder="Document ID (read only)"  />
+                <br />
+                <input type="text" name="_rev" id="_rev" placeholder="Revision ID (read only)"  />
+                <br />
+                <input type="text" name="appName" id="appName" placeholder="Application Name" />
+                <br />
+                <input type="text" name="docId" id="docId" placeholder="Document ID" />
+                <br />
+                <input type="file" name="_attachments" id="_attachments" multiple="multiple" />
+                <br />
+                <input type="submit" class="Submit" value="Submit" />
+            </form>
+            <div id="result"></div>
+        </body>
+    </html>

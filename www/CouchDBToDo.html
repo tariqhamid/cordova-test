@@ -1,0 +1,137 @@
+<!--
+http://jan.prima.de/plok/archives/108-Programming-CouchDB-with-Javascript.html
+https://www.friendpaste.com/ZGASyFWVMIuvFlCYDkjfL/fork
+
+c.f.
+/Users/tariq/SPA/phonegap/couchdb-workshop/node_modules/couchapp/boiler/attachments/sammy/plugins/sammy.json.js
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8"/>
+        <title>My Todos</title>
+        <script src="script/couch/couch.js" type="text/javascript" charset="utf-8"></script>
+        <script src="script/couch/json2.js" type="text/javascript" charset="utf-8"></script>
+        <script type='text/javascript' src='script/couch/sha1.js'></script>
+
+        <script type="text/javascript" charset="utf-8">
+        function $(e)
+        {
+            return document.getElementById(e);
+        }
+
+        function adminBasicAuthHeaderValue() {
+          var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
+          return retval;
+        }
+
+        CouchDB.urlPrefix= "http://127.0.0.1:5984";
+
+
+        var Couch_Todo =
+        {
+            _todos:{},
+            db: new CouchDB("todo", {"Authorization": adminBasicAuthHeaderValue()} ),
+
+            insert: function(todo)
+            {
+                // DOM-fu
+                var list_item = document.createElement("li");
+                list_item.innerHTML = todo.text + ' <a href="#" onClick="Couch_Todo.remove(this.parentNode); return false;">X</a>';
+
+                $("todos").insertBefore(list_item, $("todos").firstChild);
+
+                this._todos[todo._id] = todo; // save todo object, so we can access the _rev when we want to delete.
+                list_item.id = todo._id; // save new id in DOM object
+
+                this.updateEmpty();
+            },
+
+            add: function(todo)
+            {
+                //automatically save time
+                todo.time = (new Date()).getTime();
+                this.db.save(todo);
+                this.insert(todo);
+            },
+
+            load:function()
+            {
+                var all_docs = this.db.view("todo/all");
+                //var all_docs = this.db("todo/_all_docs");
+                //var all_docs = this.db.allDocs();
+
+                if(all_docs && all_docs.total_rows > 0) {
+                    for(var idx = 0; idx < all_docs.total_rows; idx++) {
+                        var todo = all_docs.rows[idx];
+                        this.insert({
+                            _id:todo.id,
+                            _rev:todo.value.rev,
+                            text:todo.value.text
+                        });
+                    }
+                }
+            },
+
+            remove:function(li)
+            {
+                var doc = this._todos[li.id];
+                this.db.deleteDoc(doc);
+                this._todos[li.id] = null;
+
+                $("todos").removeChild($(li.id));
+                this.updateEmpty();
+
+                // focus the input field
+                $("todo").focus();
+            },
+
+            updateEmpty: function()
+            {
+                //if there are no todos, show a message
+                $("empty").style.display = (0 == $("todos").childNodes.length)?"block":"none";
+            }
+        }
+
+        window.onload = function()
+        {
+            // load saved todos
+            Couch_Todo.load();
+
+            // what to do when hitting enter in the input field
+            $("add").onsubmit = function()
+            {
+                var value = $("todo").value;
+                $("todo").value = ""; // reset input box
+                if(value) { // don't add empty todos
+                    Couch_Todo.add({text:value});
+                }
+
+                // don't submit the form
+                return false;
+            }
+
+            // focus the input field when the document loads
+            $("todo").focus();
+        }
+        </script>
+    </head>
+
+    <body id="index">
+        <p>N.B add the following code to the <b>todo</b> db  to make it work, make a view called <b>all</b></p>
+        <p><b>
+        function(doc)
+        {
+         	emit(doc._id, {"rev" : doc._rev, "text": doc.text});
+        }
+        </b></p>
+        <form id="add" action="">
+                <input type="text" name="todo" value="" id="todo"/>
+        </form>
+
+        <ul id="todos"></ul>
+
+        <div id="empty">Enter todo items in the box above and hit enter.</div>
+    </body>
+</html>
