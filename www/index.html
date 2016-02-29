@@ -646,6 +646,7 @@ myElement addEventListener: 'touchend' func: [:ev |
     </script>
 
     <script type="text/javascript">
+    // http://bowr.de/blog/?p=142
     /*
     <canvas
     ontouchstart="touchStart(event);"
@@ -654,10 +655,6 @@ myElement addEventListener: 'touchend' func: [:ev |
     ontouchcancel="touchCancel(event);"
     id="sketch" data-processing-sources="sketch/sketch.pde" width="320" height="480" autofocus></canvas>
     */
-/*
-onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'
-
-*/
 
     function setProcessingMouse(event, processingInstance){
       var x = event.touches[0].pageX;
@@ -679,7 +676,7 @@ onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.st
     };
 
     function touchMove(event) {
-      //event.preventDefault();
+      event.preventDefault();
 
       setProcessingMouse(event, this);
       processingInstance.mouseDragged();
