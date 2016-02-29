@@ -187,9 +187,16 @@
 
   </head>
 
+<!--
+col.addEventListener('touchstart',  touchStart, false);
+col.addEventListener('touchmove',  touchMove, false)
+col.addEventListener('touchend',  touchEnd, false);
+col.addEventListener('touchcancel',  touchCancel, false);
+-->
   <body id="container">
 
-    <div id="elem" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");' style="height: 50px;width: 1000px; border: solid black;background:hsl(86,10%,85%);">
+    <div id="elem" class="resizable" onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'
+         style="height: 50px;width: 1000px; border: solid black;background:hsl(86,10%,85%);">
     <p style="text-align:right;margin-right: 40%;"><a href="http://amber-lang.net/">Amber Website</a></p>
     <p style="text-align:right;margin-right: 40%;"><a href="https://groups.google.com/forum/#!forum/amber-lang">Newsgroup</a></p>
     <p style="border: solid lightgray;background:hsl(113,100%,85%);text-align:right;font-size:small"><a href="http://amber.confusedprogrammer.com">http://amber.confusedprogrammer.com</a> [source code for this demo mashup on Github <a href="https://github.com/tariqhamid/cordova-test">https://github.com/tariqhamid/cordova-test</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -233,6 +240,11 @@
       <button id="pause-track">pause track</button>
       <button id="show-image">showimage</button>
       <button id="geo-location">geo location</button>
+<!--
+myElement := '#picture-frame' asJQuery at: 0.
+myElement addEventListener: 'touchend' func: [:ev |
+  window touchEnd: ev myProcessing: [self processSwipe]].
+-->
       <div id="picture-frame" ontouchstart="touchStart(event,'picture-frame');" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);"></div>
     </div>
 
@@ -597,6 +609,21 @@
             col.addEventListener('drop', handleDrop, false);
             col.addEventListener('dragend', handleDragEnd, false);
             */
+            /*
+            ontouchstart="touchStart(event);"
+            ontouchmove="touchMove(event);"
+            ontouchend="touchEnd(event);"
+            ontouchcancel="touchCancel(event);"
+            */
+
+            if ("ontouchstart" in window)
+            {
+              col.addEventListener('touchstart',  touchStart, false);
+              col.addEventListener('touchmove',  touchMove, false)
+              col.addEventListener('touchend',  touchEnd, false);
+              col.addEventListener('touchcancel',  touchCancel, false);
+            }
+
 
             if ("sean-denigris" == col.id) // chicken background
               col.setAttribute("style", "position: absolute;border: solid yellow;");
@@ -616,8 +643,65 @@
           });
           window.zIndex = 0;
         }
+    </script>
 
+    <script type="text/javascript">
+    /*
+    <canvas
+    ontouchstart="touchStart(event);"
+    ontouchmove="touchMove(event);"
+    ontouchend="touchEnd(event);"
+    ontouchcancel="touchCancel(event);"
+    id="sketch" data-processing-sources="sketch/sketch.pde" width="320" height="480" autofocus></canvas>
+    */
+/*
+onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.stopMoving("container");'
 
+*/
+
+    function setProcessingMouse(event, processingInstance){
+      var x = event.touches[0].pageX;
+      var y = event.touches[0].pageY;
+
+      processingInstance.mouseX = x;
+      processingInstance.mouseY = y;
+
+      event.clientX = x;
+      event.clientY = y;
+    };
+
+    function touchStart(event) {
+      event.preventDefault();
+      setProcessingMouse(event, this);
+
+      mydragg.startMoving(this,"container",event);
+      //processingInstance.mousePressed();
+    };
+/*
+    function touchMove(event) {
+      event.preventDefault();
+
+      //setProcessingMouse(event, this);
+      //processingInstance.mouseDragged();
+    };
+*/
+    function touchEnd(event) {
+      event.preventDefault();
+      setProcessingMouse(event, this);
+
+      mydragg.stopMoving("container");
+      //processingInstance.mouseReleased();
+    };
+
+    function touchCancel(event) {
+      event.preventDefault();
+      setProcessingMouse(event, this);
+      processingInstance.mouseReleased();
+    };
+
+    </script>
+
+    <script>
         function adminBasicAuthHeaderValue() {
           var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
           return retval;
@@ -813,12 +897,27 @@
                             if (aX + eWi > cWi) aX = cWi - eWi;
                             if (aY + eHe > cHe) aY = cHe -eHe;
                         mydragg.move(divid,aX,aY);
+                    };
+                    //       var x = event.touches[0].pageX;
+                    //       var y = event.touches[0].pageY;
+                    document.ontouchmove = function(evt){
+                        evt = evt || window.event;
+                        var posX = evt.touches[0].pageX,
+                            posY = evt.touches[0].pageY,
+                            aX = posX - diffX,
+                            aY = posY - diffY;
+                            if (aX < 0) aX = 0;
+                            if (aY < 0) aY = 0;
+                            if (aX + eWi > cWi) aX = cWi - eWi;
+                            if (aY + eHe > cHe) aY = cHe -eHe;
+                        mydragg.move(divid,aX,aY);
                     }
                 },
                 stopMoving : function(container){
                     var a = document.createElement('script');
                     document.getElementById(container).style.cursor='default';
-                    document.onmousemove = function(){}
+                    document.onmousemove = function(){};
+                    document.ontouchmove = function(){}
                 },
             }
         }();
