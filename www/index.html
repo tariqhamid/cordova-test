@@ -671,30 +671,30 @@ onmousedown='mydragg.startMoving(this,"container",event);' onmouseup='mydragg.st
     };
 
     function touchStart(event) {
-      event.preventDefault();
+      //event.preventDefault();
       setProcessingMouse(event, this);
 
       mydragg.startMoving(this,"container",event);
-      //processingInstance.mousePressed();
+      processingInstance.mousePressed();
     };
-/*
-    function touchMove(event) {
-      event.preventDefault();
 
-      //setProcessingMouse(event, this);
-      //processingInstance.mouseDragged();
+    function touchMove(event) {
+      //event.preventDefault();
+
+      setProcessingMouse(event, this);
+      processingInstance.mouseDragged();
     };
-*/
+
     function touchEnd(event) {
-      event.preventDefault();
+      //event.preventDefault();
       setProcessingMouse(event, this);
 
       mydragg.stopMoving("container");
-      //processingInstance.mouseReleased();
+      processingInstance.mouseReleased();
     };
 
     function touchCancel(event) {
-      event.preventDefault();
+      //event.preventDefault();
       setProcessingMouse(event, this);
       processingInstance.mouseReleased();
     };
