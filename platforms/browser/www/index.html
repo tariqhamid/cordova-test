@@ -676,6 +676,7 @@ myElement addEventListener: 'touchend' func: [:ev |
     };
 
     function touchMove(event) {
+      //event.stopPropagation();
       event.preventDefault();
 
       setProcessingMouse(event, this);
