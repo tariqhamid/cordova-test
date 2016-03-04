@@ -408,7 +408,11 @@ myElement addEventListener: 'touchend' func: [:ev |
 
     </div>
 
+
   </figure>
+
+
+
 
     <script type='text/javascript'>
 
@@ -486,7 +490,10 @@ myElement addEventListener: 'touchend' func: [:ev |
                 // LindaClient
                 // LindaClientApp class >> start
                 //    self new augmentPage
-                amber.globals.LindaClientApp._start();
+                if (0)
+                {
+                  amber.globals.LindaClientApp._start();
+                }
 
 
                 amber.globals.Zendo._start();
@@ -701,6 +708,7 @@ myElement addEventListener: 'touchend' func: [:ev |
 
     <script>
         function adminBasicAuthHeaderValue() {
+          //var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
           var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
           return retval;
         }
@@ -720,6 +728,7 @@ myElement addEventListener: 'touchend' func: [:ev |
           var parent = document.getElementById("couchdb-demo");
           parent.appendChild(div1);
           parent.appendChild(div2);
+
           // instantiate a new XMLHttpRequest object
           var req = new XMLHttpRequest();
           // Open a GET request to "/all_dbs"
@@ -755,9 +764,7 @@ myElement addEventListener: 'touchend' func: [:ev |
 
           //  CouchDB.login("test", "test");
           //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
-          var db = new CouchDB("test_suite_db_a", {
-                                "Authorization": adminBasicAuthHeaderValue()
-                              });
+          var db = new CouchDB("test_suite_db_a", { "Authorization": adminBasicAuthHeaderValue() });
           db.deleteDb();
           db.createDb();
 
@@ -771,7 +778,8 @@ myElement addEventListener: 'touchend' func: [:ev |
 
           var nc_cities = db.open('NC').cities;
           div2.innerHTML = "<br/>db.open('NC').cities = " + nc_cities;
-          CouchDB.logout();
+          //CouchDB.logout();
+
         }
 /*
         function handleDrop(e) {
