@@ -372,9 +372,14 @@ CouchDB.replicate = function(source, target, rep_options) {
   return JSON.parse(CouchDB.last_req.responseText);
 };
 
+CouchDB.singletonXMLHttpRequest = null;
+
 CouchDB.newXhr = function() {
+  if (CouchDB.singletonXMLHttpRequest)
+    return CouchDB.singletonXMLHttpRequest;
   if (typeof(XMLHttpRequest) != "undefined") {
-    return new XMLHttpRequest();
+    CouchDB.singletonXMLHttpRequest = new XMLHttpRequest();
+    return CouchDB.singletonXMLHttpRequest;
   } else if (typeof(ActiveXObject) != "undefined") {
     return new ActiveXObject("Microsoft.XMLHTTP");
   } else {

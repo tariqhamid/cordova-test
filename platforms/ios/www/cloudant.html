@@ -14,14 +14,15 @@
   </head>
 
   <body>
+
     <div id="couchdb-demo" style="border: solid pink;background-color: #ff9;">
       <div class="comment">
         Cloudant
       </div>
 
-      <form onsubmit="testCouchDb(); return false;"  autocomplete="on">
-        <span>name<input id="username" type="text"></input></span>
-        <span>password<input id="password" type="password"  autocomplete="on">password</input></span>
+      <form onsubmit="submitToCloudant(this);return false;" autocomplete="on">
+        <label>name<input id="username" type="text" autocomplete="on"></input></span>
+        <label>password<input id="password" name="password" type="password" autocomplete="on"></input></label>
         <input type="submit">login</input>
       </form>
 
@@ -31,187 +32,201 @@
 
 
   <script>
+
+    function login(f){
+        var username = f.username.value;
+        var password = f.password.value;
+
+        /* Make your validation and ajax magic here. */
+
+        return false; //or the form will post your data to login.php
+    }
+
+    function submitToCloudant(fform)
+    {
+
+      try
+      {
+        testCouchDb(fform);
+      }
+      catch (e)
+      {
+        console.error('submitToCloudant(fform) failed:',e.name,';',e.message)
+      }
+      finally
+      {
+
+      }
+
+
+    }
+
+
     function adminBasicAuthHeaderValue(username, userpassword) {
       //var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
       var retval = 'Basic ' + binb2b64(str2binb(username + ":" + userpassword));
       return retval;
     }
 
-    function testCouchDb()
+    function testCouchDb(fform)
     {
-      var name = document.getElementById("username").value;
-      var password = document.getElementById("password").value;
+      var name = fform.username.value,
+          password = fform.password.value;
 
       var div1 = document.createElement("div");
       div1.id = "couchdb-alldbs";
-      var div2 = document.createElement("div");
+      div2 = document.createElement("div");
       div2.id = "couchdb-cities";
       var parent = document.getElementById("couchdb-demo");
       parent.appendChild(div1);
       parent.appendChild(div2);
-      if (0)
-      {
-        // instantiate a new XMLHttpRequest object
-        var req = new XMLHttpRequest();
-        // Open a GET request to "/all_dbs"
-        req.open("GET", "http://127.0.0.1:5984" + "/_all_dbs");
-        // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
-        // Asynchronous request
-        req.onload = function (e) {
-          if (req.readyState === 4) {
-            if (req.status === 200) {
-              //console.log(req.responseText);
-              div1.innerHTML = div1.innerHTML + "<br/>_all_dbs = <b>" + req.responseText + "</b>";
+
+
+      if (window.Promise) {
+        console.log('Promise found');
+
+        var promise = new Promise(function(resolve, reject) {
+          var request = new XMLHttpRequest();
+
+          request.open('GET', 'http://api.icndb.com/jokes/random');
+          request.onload = function() {
+            if (request.status == 200) {
+              resolve(request.response); // we got data here, so resolve the Promise
             } else {
-              //console.error(req.statusText);
-              div1.innerHTML = div1.innerHTML + "<br/>_all_dbs = <b>" + req.statusText + "</b>";
+              reject(Error(request.statusText)); // status is not 200 OK, so reject
             }
-          }
-        };
-        req.onerror = function (e) {
-          console.error(req.statusText);
-        };
+          };
 
-        req.send(""); // Send nothing as the request body
-        // Get the response
-        // var res = req.responseText; // !! synchronous version !! not so good
+          request.onerror = function() {
+            reject(Error('Error fetching data.')); // error occurred, reject the  Promise
+          };
 
-        //
-        // =======================================
-        //
-        //CouchDB.urlPrefix= "https://127.0.0.1:5984";
-        CouchDB.urlPrefix= "http://127.0.0.1:5984";
-        var dbs = CouchDB.allDbs();
+          request.send(); //send the request
+        });
 
+        console.log('Asynchronous request made.');
 
-        //  CouchDB.login("test", "test");
-        //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
-        var db = new CouchDB("test_suite_db_a", { "Authorization": adminBasicAuthHeaderValue(name, password) });
-        db.deleteDb();
-        db.createDb();
-
-        var nc = {_id:"NC", cities:["Charlotte", "Raleigh"]};
-        var ma = {_id:"MA", cities:["Boston", "Lowell", "Worcester", "Cambridge", "Springfield"]};
-        var fl = {_id:"FL", cities:["Miami", "Tampa", "Orlando", "Springfield"]};
-
-        db.save(nc);
-        db.save(ma);
-        db.save(fl);
-
-        var nc_cities = db.open('NC').cities;
-        div2.innerHTML = "<br/>db.open('NC').cities = " + nc_cities;
-        //CouchDB.logout();
+        promise.then(function(data) {
+          console.log('Got data! Promise fulfilled.');
+          document.getElementsByTagName('body')[0].appendChild = JSON.parse(data).value.joke;
+        }, function(error) {
+          console.log('Promise rejected.');
+          console.log(error.message);
+        });
+      } else {
+        console.log('Promise not available');
       }
 
 
 
-      if (0)
-      {
-        // instantiate a new XMLHttpRequest object
-        var req2 = new XMLHttpRequest();
-        // Open a GET request to "/all_dbs"
-        //req2.open("GET", "http://amber.cloudant.com", { "Authorization": adminBasicAuthHeaderValue(name,password) });
-        req2.open("GET", "https://amber.cloudant.com/");
-        // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
-        // Asynchronous request
-        req2.onload = function (e) {
-          if (req2.readyState === 4) {
-            if (req2.status === 200) {
-              //console.log(req2.responseText);
-              div1.innerHTML = div1.innerHTML + "<br/>http://amber.cloudant.com = <b>" + req2.responseText + "</b>";
-            } else {
-              //console.error(req2.statusText);
-              div1.innerHTML = div1.innerHTML + "<br/>http://amber.cloudant.com = <b>" + req2.statusText + "</b>";
-            }
-          }
-        };
-        req2.onerror = function (e) {
-          console.error(req2.statusText);
-        };
-
-        req2.send(""); // Send nothing as the request body
-
-      }
+      CouchDB.urlPrefix= "http://data.321star.com";
+      var req0 = CouchDB_login(name, password);
 
 
-      if (1)
-      {
-        //  CouchDB.login("test", "test");
-        //var db = new CouchDB("test_suite_db", {"X-Couch-Full-Commit":"false"});
-        CouchDB.urlPrefix= "https://amber.cloudant.com";
-        CouchDB.login(name, password);
-        //var db = new CouchDB("test_suite_db_a", { "Authorization": adminBasicAuthHeaderValue(name,password) });
-        //db.deleteDb();
-        //db.createDb();
-      }
 
+    }
 
-      var options = {
-                        headers: {"Content-Type": "application/x-www-form-urlencoded",
-                          "X-CouchDB-WWW-Authenticate": "Cookie"},
-                        body: "name=" + encodeURIComponent(name) + "&password="
-                          + encodeURIComponent(password)
-                    }
+    function allDbs(div1)
+    {
+      var xhr = CouchDB.newXhr();
 
-      //XMLHttpRequest.withCredentials = true;
-      var xhr = new XMLHttpRequest();
-      /*
-      void open(
-         DOMString method,
-         DOMString url,
-         optional boolean async,
-         optional DOMString user,
-         optional DOMString password
-      );
-      */
-      //xhr.open("GET", "https://amber.cloudant.com/_all_dbs", true, name, password);
-      xhr.open("GET", "https://" + name + ":" + password + "@amber.cloudant.com/_all_dbs", true);
+      xhr.open("GET", CouchDB.urlPrefix + "/_all_dbs", true);
       xhr.withCredentials = true;
-/*
+
+      xhr.onreadystatechange = function() {
+        if (xhr.status == 201) {
+            //console.log(xhr.getResponseHeader("location"));
+            console.log(xhr.getAllResponseHeaders());
+        }
+
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+
+            //console.log(req2.responseText);
+            div1.innerHTML = div1.innerHTML + "<br/>http://amber.cloudant.com = <b>" + xhr.responseText + "</b>";
+
+          } else {
+            //alert(xhr.statusText);
+            console.error(xhr.statusText);
+          }
+        }
+      }
+      xhr.send("");
+    }
+
+    function CouchDB_login(name, password)
+    {
+      //      //{ "Authorization": adminBasicAuthHeaderValue() }
+      var CouchDB_last_req = CouchDB_request("POST", "/_session",
+        {
+          headers: {"Content-Type": "application/x-www-form-urlencoded",
+            "X-CouchDB-WWW-Authenticate": "Cookie"},
+          body: "name=" + encodeURIComponent(name) + "&password="
+            + encodeURIComponent(password)
+        },
+        allDbs,[div2]
+      );
+      /*
+      var CouchDB_last_req = CouchDB_request("POST", "/_session", {
+        headers: {
+          "Authorization": adminBasicAuthHeaderValue(name, password)
+          }
+        });
+      */
+      ///return JSON.parse(CouchDB_last_req.responseText);
+
+      return CouchDB_last_req;
+    }
+
+    CouchDB_request = function(method, uri, options, nextFn, nextFnArgs) {
       options = typeof(options) == 'object' ? options : {};
       options.headers = typeof(options.headers) == 'object' ? options.headers : {};
       options.headers["Content-Type"] = options.headers["Content-Type"] || options.headers["content-type"] || "application/json";
       options.headers["Accept"] = options.headers["Accept"] || options.headers["accept"] || "application/json";
-
+      var req = CouchDB.newXhr();
+      uri = CouchDB.proxyUrl(uri);
+      req.open(method, uri, true);
+      req.withCredentials = true;
       if (options.headers) {
         var headers = options.headers;
         for (var headerName in headers) {
           if (!headers.hasOwnProperty(headerName)) { continue; }
-          xhr.setRequestHeader(headerName, headers[headerName]);
+          req.setRequestHeader(headerName, headers[headerName]);
         }
       }
-*/
-      xhr.onreadystatechange = function() {
-          if (xhr.status == 201) {
-              //console.log(xhr.getResponseHeader("location"));
-              console.log(xhr.getAllResponseHeaders());
+      ////////////////////////
+
+      req.onreadystatechange = function() {
+        if (req.status == 201) {
+            //console.log(xhr.getResponseHeader("location"));
+            console.log(req.getAllResponseHeaders());
+        }
+
+        if (req.readyState === 4) {
+          div2.innerHTML = "<b>" + adminBasicAuthHeaderValue(name,password) + "</b><br/>";
+          if (req.status === 200) {
+
+            //console.log(req2.responseText);
+            div2.innerHTML = div2.innerHTML + "<br/>http://amber.cloudant.com = <b>" + req.responseText + "</b>";
+
+            allDbs(div2)
+            //http://www.w3schools.com/js/js_function_invocation.asp
+            if (nextFn)
+              nextFn.apply(null,nextFnArgs)
+
+
+          } else {
+            //console.error(req2.statusText);
+            div2.innerHTML = div2.innerHTML + "<br/>http://amber.cloudant.com = <b>" + req.statusText + "</b>";
           }
-
-          if (xhr.readyState === 4) {
-            div1.innerHTML = "<b>" + adminBasicAuthHeaderValue(name,password) + "</b><br/>";
-            if (xhr.status === 200) {
-
-              //console.log(req2.responseText);
-              div1.innerHTML = div1.innerHTML + "<br/>http://amber.cloudant.com = <b>" + xhr.responseText + "</b>";
-            } else {
-              //console.error(req2.statusText);
-              div1.innerHTML = div1.innerHTML + "<br/>http://amber.cloudant.com = <b>" + xhr.statusText + "</b>";
-            }
-          }
-
-      }
-      //xhr.send("name="+ name + "&password="+password);
-      xhr.send("");
-
-      if (1)
-      {
-        //CouchDB.urlPrefix= "http://"+ name +":" + password + "@amber.cloudant.com";
-        CouchDB.urlPrefix= "https://amber.cloudant.com";
-        CouchDB.login(name, password);
-        //var dbs = CouchDB.allDbs();
+        }
       }
 
-    }
+      ///////////////////////
+
+      req.send(options.body || "");
+      return req;
+    };
 
 
   </script>
