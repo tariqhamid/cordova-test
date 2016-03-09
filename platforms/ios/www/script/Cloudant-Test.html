@@ -94,8 +94,7 @@
                       req.addEventListener("abort", callbackFn, false);
                       */
 
-                      function processQueue()
-                      {
+                      function processQueue() {
                           xmlHttpReqQueue.shift()
                           //send the next request if queue isn't empty
                           if (xmlHttpReqQueue.length > 0)
@@ -114,7 +113,9 @@
                           function () {
                             //console.log(name);
                             // see apache-couchdb-1.6.1/share/www/script/test/basics.js
-                            xhr = CouchDB_request("GET", "/" + dbName + "/_all_docs?limit=50", {body: "[]"},
+                            // Body of an _all_docs  multi-get is not a {"key": [...]} structure.
+                            //xhr = CouchDB_request("GET", "/" + name + "/_all_docs", {body: "[]"},
+                            xhr = CouchDB_request("GET", "/" + dbName + "/_all_docs?limit=5", {body: "[]"},
                                       function (req)
                                         {
                                           div.innerHTML = div.innerHTML + "<br/><b>" + dbName + "</b>"
