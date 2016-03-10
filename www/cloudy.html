@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cloudant-Test</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Tariq Hamid" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+    <script type='text/javascript' src='script/couch/couch.js'></script>
+<!-- c.f.
+/Users/tariq/SPA/FDA-demos/node_modules/hoodie-plugin-global-share/node_modules/hoodie-server/lib/utils/couch.js
+-->
+    <script type='text/javascript' src='script/couch/sha1.js'></script>
+  </head>
+  <body>
+
+    <!-- keep Safari setCookie CORS happy --->
+    <!--
+    <iframe src="http://data.321star.com"></iframe>
+    -->
+
+    <div id="couchdb-demo" style="border: solid pink;background-color: #ff9;">
+      <div class="comment">
+        Cloudant
+      </div>
+      <form onsubmit="submitToCloudant(this);return false;" autocomplete="on">
+        <label>name<input id="username" type="text" autocomplete="on"></input></span>
+        <label>password<input id="password" name="password" type="password" autocomplete="on"></input></label>
+        <input type="submit">login</input>
+      </form>
+
+    </div>
+  </body>
+
+
+  <script>
+
+    function submitToCloudant(fform)
+    {
+      try
+      {
+        testCouchDb(fform);
+      }
+      catch (e)
+      {
+        console.error('submitToCloudant(fform) failed:',e.name,';',e.message)
+      }
+    }
+
+
+    function adminBasicAuthHeaderValue(username, userpassword)
+    {
+      //var retval = 'Basic ' + binb2b64(str2binb("test:" + "test"));
+      var retval = 'Basic ' + binb2b64(str2binb(username + ":" + userpassword));
+      return retval;
+    }
+
+    function testCouchDb(fform)
+    {
+      var name = fform.username.value,
+          password = fform.password.value;
+
+      div2 = document.createElement("div");
+      div2.id = "couchdb-cities";
+      var parent = document.getElementById("couchdb-demo");
+      parent.appendChild(div2);
+
+      CouchDB.urlPrefix= "http://data.confusedprogrammer.com";
+
+      var xmlHttpReqQueue = [];
+      function processQueue()
+      {
+          xmlHttpReqQueue.shift()
+          //send the next request if queue isn't empty
+          if (xmlHttpReqQueue.length > 0)
+          {
+              xmlHttpReqQueue[0]()
+          }
+      }
+
+
+      xmlHttpReqQueue.push(
+        function()
+        {
+          console.log('++ CouchDB_login')
+          CouchDB_login(name, password,
+            function (req)
+            {
+              div2.innerHTML = div2.innerHTML + "<br/>1. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
+
+              processQueue()
+            },
+            function (req)
+            {
+              div2.innerHTML = div2.innerHTML + "<br/>2. http://amber.cloudant.com = <b>" + req.statusText + "</b>"
+
+              processQueue()
+            }
+          )
+        }
+      )
+
+
+      xmlHttpReqQueue.push(
+        function()
+          {
+                allDbs(function (req)
+                         {
+                            div2.innerHTML = div2.innerHTML + "<br/>3. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
+
+                            var req = CouchDB.newXhr();
+                            var dbNames = JSON.parse(req.responseText)
+                            dbNames.forEach(function callback(dbName) {
+                              var div = document.createElement("div");
+                              div.id = dbName;
+                              parent.appendChild(div);
+
+                              xmlHttpReqQueue.push(
+                                function () {
+                                  //console.log(name);
+                                  // see apache-couchdb-1.6.1/share/www/script/test/basics.js
+                                  xhr = CouchDB_request("GET", "/" + dbName + "/_all_docs?limit=50", {body: "[]"},
+                                            function (req)
+                                              {
+                                                div.innerHTML = div.innerHTML + "<br/><b>" + dbName + "</b>"
+                                                //console.log(name)
+
+                                                var items = JSON.parse(req.responseText)
+                                                div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(items)
+                                                items.rows.forEach(function callback(item)
+                                                {
+                                                    div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(item)
+                                                })
+                                                processQueue()
+                                              },
+                                            function (req)
+                                              {
+                                                //console.error(req.statusText)
+                                                div.innerHTML = div.innerHTML + '<br/><p color="red">' + req.statusText + "</p>"
+                                                processQueue()
+                                              }
+                                            );
+                              })
+                            }) // forEach
+
+                            processQueue()
+                         },
+                       function (req)
+                         {
+                            console.error(req.statusText)
+                            div2.innerHTML = div2.innerHTML + "<br/> allDbs error "+req.statusText
+                            processQueue()
+                         }
+                      )
+          }
+      )
+
+      // trigger the first request in the queue
+      if (xmlHttpReqQueue.length)
+          xmlHttpReqQueue[0]()
+
+    }
+
+    function allDbs(onSuccessFn,onErrorFn)
+    {
+      var xhr = CouchDB.newXhr();
+      xhr.open("GET", CouchDB.urlPrefix + "/_all_dbs", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.status == 201)
+        {
+            //console.log(xhr.getResponseHeader("location"));
+            //console.log(xhr.getAllResponseHeaders());
+        }
+        if (xhr.readyState === 4)
+        {
+          if (xhr.status === 200)
+          {
+            if (onSuccessFn)
+                onSuccessFn(xhr);
+          } else
+          {
+            if (onErrorFn)
+              onErrorFn(xhr)
+          }
+        }
+      }
+      xhr.send("");
+    }
+
+    function CouchDB_login(name, password, onSuccessFn, onErrorFn)
+    {
+      //      //{ "Authorization": adminBasicAuthHeaderValue() }
+      var CouchDB_last_req = CouchDB_request("POST", "/_session",
+        {
+          headers: {"Content-Type": "application/x-www-form-urlencoded",
+            "X-CouchDB-WWW-Authenticate": "Cookie"},
+          body: "name=" + encodeURIComponent(name) + "&password="
+            + encodeURIComponent(password)
+        },
+        onSuccessFn,
+        onErrorFn
+      );
+      /*
+      var CouchDB_last_req = CouchDB_request("POST", "/_session", {
+        headers: {
+          "Authorization": adminBasicAuthHeaderValue(name, password)
+          }
+        });
+      */
+      ///return JSON.parse(CouchDB_last_req.responseText);
+
+      return CouchDB_last_req;
+    }
+
+    CouchDB_request = function(method, uri, options, onSuccessFn, onErrorFn) {
+
+      var _ret = function(){
+          return {
+              success: function (callback) {
+                  callback();
+                  return this;
+              },
+              error: function (callback) {
+                  callback();
+                  return this;
+              }
+          };
+      };
+
+      ret = new _ret();
+
+      options = typeof(options) == 'object' ? options : {};
+      options.headers = typeof(options.headers) == 'object' ? options.headers : {};
+      options.headers["Content-Type"] = options.headers["Content-Type"] || options.headers["content-type"] || "application/json";
+      options.headers["Accept"] = options.headers["Accept"] || options.headers["accept"] || "application/json";
+      var req = CouchDB.newXhr();
+      uri = CouchDB.proxyUrl(uri);
+      req.open(method, uri, true);
+      req.withCredentials = true;
+      if (options.headers)
+      {
+        var headers = options.headers;
+        for (var headerName in headers)
+        {
+          if (!headers.hasOwnProperty(headerName)) { continue; }
+          req.setRequestHeader(headerName, headers[headerName]);
+        }
+      }
+      ////////////////////////
+      //req.onload = function() { alert("Connected!"); }
+      req.onerror = function() { console.error("Not Connected to ", uri); }
+      req.onreadystatechange = function() {
+        if (req.status == 201) {
+            //console.log(xhr.getResponseHeader("location"));
+            //console.log(req.getAllResponseHeaders());
+        }
+        if (req.readyState === 4) {
+          if (req.status === 200) {
+            if (onSuccessFn)
+              onSuccessFn(req)
+          } else
+          {
+            if (onErrorFn)
+              onErrorFn(req)
+          }
+        }
+      }
+      ///////////////////////
+      try
+      {
+        req.send(options.body || "");
+      } catch (e)
+      {
+        alert("there was a problem communicating with the server");
+        return;
+      }
+
+      return req;
+      /*
+      // addEventListener
+      function callbackFn(e) {
+	       // Handle each event
+         console.log('callbackFn ' + e.type)
+       }
+      req.addEventListener("progress", callbackFn, false);
+      req.addEventListener("load", callbackFn, false);
+      req.addEventListener("error", callbackFn, false);
+      req.addEventListener("abort", callbackFn, false);
+
+      return ret;
+      */
+    };
+  </script>
+</html>
