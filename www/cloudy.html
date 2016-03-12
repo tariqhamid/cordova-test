@@ -122,8 +122,8 @@
         function()
           {
 
-            var req = CouchDB.newXhr()
-            var dbNames = JSON.parse(req.responseText)
+            ///var req = CouchDB.newXhr()
+            var dbNames = JSON.parse(dbNamesString)
             dbNames.forEach(function callback(dbName) {
               var div = document.createElement("div")
               div.id = dbName
@@ -221,7 +221,7 @@
     }
 
     CouchDB_request = function(method, uri, options, onSuccessFn, onErrorFn) {
-
+/*
       var _ret = function(){
           return {
               success: function (callback) {
@@ -236,12 +236,13 @@
       }
 
       ret = new _ret()
+*/
 
       options = typeof(options) == 'object' ? options : {}
       options.headers = typeof(options.headers) == 'object' ? options.headers : {}
       options.headers["Content-Type"] = options.headers["Content-Type"] || options.headers["content-type"] || "application/json"
       options.headers["Accept"] = options.headers["Accept"] || options.headers["accept"] || "application/json"
-      var req = CouchDB.newXhr()
+      var req = new CouchDB.newXhr()
       uri = CouchDB.proxyUrl(uri)
       req.open(method, uri, true)
       req.withCredentials = true
