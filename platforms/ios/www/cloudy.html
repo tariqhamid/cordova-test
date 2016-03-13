@@ -6,9 +6,9 @@
     <meta name="author" content="Tariq Hamid" />
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <script type='text/javascript' src='script/couch/couch.js'></script>
-<!-- c.f.
-/Users/tariq/SPA/FDA-demos/node_modules/hoodie-plugin-global-share/node_modules/hoodie-server/lib/utils/couch.js
--->
+    <!-- c.f.
+    /Users/tariq/SPA/FDA-demos/node_modules/hoodie-plugin-global-share/node_modules/hoodie-server/lib/utils/couch.js
+    -->
     <script type='text/javascript' src='script/couch/sha1.js'></script>
   </head>
   <body>
@@ -25,7 +25,6 @@
 
     </div>
   </body>
-
 
   <script>
 
@@ -47,6 +46,43 @@
       return retval
     }
 
+    RequestQ =
+      {
+        xmlHttpReqQueue : [],
+        push: function (requestName, aRequest, insertAfter)
+        {
+          ///insertAfter = insertAfter || 0
+          if (insertAfter)
+          {
+            for(var i=0; i < this.xmlHttpReqQueue.length; i++)
+            {
+              if (insertAfter == this.xmlHttpReqQueue[i][0])
+              {
+                this.xmlHttpReqQueue.splice(i+1,0,[requestName,aRequest])
+                return
+              }
+            }
+          }
+
+          this.xmlHttpReqQueue.push([requestName,aRequest])
+        },
+        processQueue: function()
+        {
+            this.xmlHttpReqQueue.shift()
+            // process the next request if queue isn't empty
+            if (this.xmlHttpReqQueue.length > 0)
+            {
+                console.log(this.xmlHttpReqQueue[0][0])
+                this.xmlHttpReqQueue[0][1]()
+            }
+        },
+        start: function()
+        {
+            if (this.xmlHttpReqQueue.length)
+                this.xmlHttpReqQueue[0][1]()
+        }
+      }
+
     function testCouchDb(fform)
     {
       var name = fform.username.value,
@@ -59,18 +95,8 @@
 
       CouchDB.urlPrefix= "http://data.confusedprogrammer.com"
 
-      var xmlHttpReqQueue = []
-      function processQueue()
-      {
-          xmlHttpReqQueue.shift()
-          //send the next request if queue isn't empty
-          if (xmlHttpReqQueue.length > 0)
-          {
-              xmlHttpReqQueue[0]()
-          }
-      }
-
-      xmlHttpReqQueue.push(
+      RequestQ.push(
+        "login",
         function()
         {
           console.log('++ CouchDB_login')
@@ -78,87 +104,212 @@
             function (req)
             {
               div2.innerHTML = div2.innerHTML + "<br/>1. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
-
-              processQueue()
+              RequestQ.processQueue()
             },
             function (req)
             {
               div2.innerHTML = div2.innerHTML + "<br/>2. http://amber.cloudant.com = <b>" + req.statusText + "</b>"
-
-              processQueue()
-            }
+              RequestQ.processQueue()
+            }, true
           )
         }
       )
 
-      xmlHttpReqQueue.push(
+      RequestQ.push(
+        "allDbs",
         function()
           {
-                allDbs(function (req)
-                         {
-                            div2.innerHTML = div2.innerHTML + "<br/>3. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
-                            dbNamesString = req.responseText
-                            processQueue()
-                         },
-                       function (req)
-                         {
-                            console.error(req.statusText)
-                            div2.innerHTML = div2.innerHTML + "<br/> allDbs error "+req.statusText
-                            processQueue()
-                         }
-                      )
+            allDbs(function (req)
+                     {
+                        div2.innerHTML = div2.innerHTML + "<br/>3. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
+                        dbNamesString = req.responseText
+                        // pop this current function off the queue and process the above multiple requests
+                        RequestQ.processQueue()
+                     },
+                   function (req)
+                     {
+                        console.error(req.statusText)
+                        div2.innerHTML = div2.innerHTML + "<br/> allDbs error "+req.statusText
+                        // pop this current function off the queue and process the above multiple requests
+                        RequestQ.processQueue()
+                     },
+                  true
+                  )
           }
       )
 
+
+
       var dbNamesString = null
-      xmlHttpReqQueue.push(
+      var threadName = "multiple dbNames call"
+      RequestQ.push(
+        "multiple dbNames call",
         function()
           {
-            ///var req = CouchDB.newXhr()
             var dbNames = JSON.parse(dbNamesString)
             dbNames.forEach(function callback(dbName) {
               var div = document.createElement("div")
               div.id = dbName
               parent.appendChild(div)
 
-              xmlHttpReqQueue.push(
+              RequestQ.push(
+                "GET/" + dbName + "/_all_docs",
                 function () {
                   //console.log(name)
                   // see apache-couchdb-1.6.1/share/www/script/test/basics.js
                   xhr = CouchDB_request("GET", "/" + dbName + "/_all_docs?limit=50", {body: "[]"},
-                            function (req)
-                              {
-                                div.innerHTML = div.innerHTML + "<br/><b>" + dbName + "</b>"
-                                //console.log(name)
+                          function (req)
+                            {
+                              div.innerHTML = div.innerHTML + "<br/><b>" + dbName + "</b>"
+                              //console.log(name)
 
-                                var items = JSON.parse(req.responseText)
-                                div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(items)
-                                items.rows.forEach(function callback(item)
-                                {
-                                    div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(item)
-                                })
-                                processQueue()
-                              },
-                            function (req)
+                              var items = JSON.parse(req.responseText)
+                              div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(items)
+                              items.rows.forEach(function callback(item)
                               {
-                                //console.error(req.statusText)
-                                div.innerHTML = div.innerHTML + '<br/><p color="red">' + req.statusText + "</p>"
-                                processQueue()
-                              }
-                            )
-              })
+                                  div.innerHTML = div.innerHTML + "<br/>" + JSON.stringify(item)
+                              })
+                              RequestQ.processQueue()
+                            },
+                          function (req)
+                            {
+                              //console.error(req.statusText)
+                              div.innerHTML = div.innerHTML + '<br/><p color="red">' + req.statusText + "</p>"
+                              RequestQ.processQueue()
+                            },
+                          true
+                          )
+              }, threadName)
+              threadName = "GET/" + dbName + "/_all_docs"
             }) // forEach
-            // pop this current function off the queue
-            processQueue()
 
+            RequestQ.processQueue()
           }
       )
+
+      // CouchDB login for Cloudant https://www.grobmeier.de/couchdb-login-for-cloudant-23022016.html
+      /*
+      curl -X PUT -d '{
+        "couchdb_auth_only": true
+      }' "https://name:password@amber.cloudant.com/songblog/_security"
+      */
+
+      RequestQ.push(
+        "PUT/songblog/_security",
+        function () {
+          var div = document.createElement("div")
+          div.id = "security-put"
+          parent.appendChild(div)
+          xhr = CouchDB_request("PUT", "/songblog/_security", {body: '{"couchdb_auth_only": true}'},
+                  function (req)
+                    {
+                      div.innerHTML = div.innerHTML + "<br/><b>" + req.responseText + "</b>"
+                      RequestQ.processQueue()
+                    },
+                  function (req)
+                    {
+                      //console.error(req.statusText)
+                      div.innerHTML = div.innerHTML + '<br/><p color="red">' + req.statusText + "</p>"
+                      RequestQ.processQueue()
+                    },
+                  true
+                  )
+      })
+
+      RequestQ.push(
+        "GET/songblog/_security",
+        function () {
+          var div = document.createElement("div")
+          div.id = "security-get"
+          parent.appendChild(div)
+          xhr = CouchDB_request("GET", "/songblog/_security", {body: '[]'},
+                  function (req)
+                    {
+                      div.innerHTML = div.innerHTML + "<br/><b>" + req.responseText + "</b>"
+                      RequestQ.processQueue()
+                    },
+                  function (req)
+                    {
+                      //console.error(req.statusText)
+                      div.innerHTML = div.innerHTML + '<br/><p color="red">' + req.statusText + "</p>"
+                      RequestQ.processQueue()
+                    },
+                  true
+                  )
+      })
+
+
+/*
+      curl -X PUT -H "Content-Type: application/json" -d '{
+      "password_sha": "329983971fc5dc8d157ccb10f2c0e71d5725cfff",
+      "salt": "638769a280f1c46b18707e9db3edf844",
+      "roles": ["my-role"],
+      "type": "user"
+      }' "https://amber:raison12@amber.cloudant.com/_users/org.couchdb.user:test5"
+*/
+/*
+      curl -X POST https://amber.cloudant.com/_session -d 'name=test5&password=test4'
+*/
+/*
+      setTimeout(function(){
+*/
+      RequestQ.push(
+        "login-test5",
+        function()
+        {
+          var div = document.createElement("div")
+          div.id = "login-test5"
+          parent.appendChild(div)
+
+          console.log('++ CouchDB_login as test5')
+          CouchDB_login("test5", "test4",
+            function (req)
+            {
+              div.innerHTML = div.innerHTML + "<br/>1. http://test5@amber.cloudant.com = <b>" + req.responseText + "</b>"
+              RequestQ.processQueue()
+            },
+            function (req)
+            {
+              div.innerHTML = div.innerHTML + "<br/>2. http://test5@amber.cloudant.com = <b>" + req.statusText + "</b>"
+              RequestQ.processQueue()
+            }, true
+          )
+        }
+      )
+
+      // CouchDB_logout
+      RequestQ.push(
+        "logout-test5",
+        function()
+        {
+          var div = document.createElement("div")
+          div.id = "logout-test5"
+          parent.appendChild(div)
+
+          console.log('++ CouchDB_logout as test5')
+          CouchDB_logout(
+            function (req)
+            {
+              div.innerHTML = div.innerHTML + "<br/>1. http://test5@amber.cloudant.com = <b>" + req.responseText + "</b>"
+              RequestQ.processQueue()
+            },
+            function (req)
+            {
+              div.innerHTML = div.innerHTML + "<br/>2. http://test5@amber.cloudant.com = <b>" + req.statusText + "</b>"
+              RequestQ.processQueue()
+            }, true
+          )
+        }
+      )
+/*
+      }, 200);
+*/
+
       // trigger the first request in the queue
-      if (xmlHttpReqQueue.length)
-          xmlHttpReqQueue[0]()
+      RequestQ.start()
     }
 
-    function allDbs(onSuccessFn,onErrorFn)
+    function allDbs(onSuccessFn,onErrorFn,isOnQueueFlag)
     {
       var xhr = CouchDB.newXhr()
       xhr.open("GET", CouchDB.urlPrefix + "/_all_dbs", true)
@@ -174,10 +325,18 @@
           {
             if (onSuccessFn)
                 onSuccessFn(xhr)
+            if (isOnQueueFlag)
+            {
+              //RequestQ.processQueue()
+            }
           } else
           {
             if (onErrorFn)
               onErrorFn(xhr)
+            if (isOnQueueFlag)
+            {
+              //RequestQ.processQueue()
+            }
           }
         }
       }
@@ -186,6 +345,7 @@
 
     function CouchDB_login(name, password, onSuccessFn, onErrorFn)
     {
+      CouchDB.singletonXMLHttpRequest = null
       //      //{ "Authorization": adminBasicAuthHeaderValue() }
       var CouchDB_last_req = CouchDB_request("POST", "/_session",
         {
@@ -195,13 +355,41 @@
             + encodeURIComponent(password)
         },
         onSuccessFn,
-        onErrorFn
+        onErrorFn,
+        true
       )
 
       return CouchDB_last_req
     }
 
-    CouchDB_request = function(method, uri, options, onSuccessFn, onErrorFn) {
+/*
+CouchDB.logout = function() {
+  CouchDB.last_req = CouchDB.request("DELETE", "/_session", {
+    headers: {"Content-Type": "application/x-www-form-urlencoded",
+      "X-CouchDB-WWW-Authenticate": "Cookie"}
+  });
+  return JSON.parse(CouchDB.last_req.responseText);
+};
+*/
+
+    function CouchDB_logout(onSuccessFn, onErrorFn)
+    {
+      CouchDB.singletonXMLHttpRequest = null
+      //      //{ "Authorization": adminBasicAuthHeaderValue() }
+      var CouchDB_last_req = CouchDB_request("DELETE", "/_session",
+        {
+          headers: {"Content-Type": "application/x-www-form-urlencoded",
+            "X-CouchDB-WWW-Authenticate": "Cookie"}
+        },
+        onSuccessFn,
+        onErrorFn,
+        true
+      )
+
+      return CouchDB_last_req
+    }
+
+    CouchDB_request = function(method, uri, options, onSuccessFn, onErrorFn,isOnQueueFlag) {
       options = typeof(options) == 'object' ? options : {}
       options.headers = typeof(options.headers) == 'object' ? options.headers : {}
       options.headers["Content-Type"] = options.headers["Content-Type"] || options.headers["content-type"] || "application/json"
@@ -230,10 +418,14 @@
           if (req.status === 200) {
             if (onSuccessFn)
               onSuccessFn(req)
+            //if (isOnQueueFlag)
+            //  RequestQ.processQueue()
           } else
           {
             if (onErrorFn)
               onErrorFn(req)
+            //if (isOnQueueFlag)
+            //  RequestQ.processQueue()
           }
         }
       }
