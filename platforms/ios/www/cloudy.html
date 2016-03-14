@@ -12,7 +12,6 @@
     <script type='text/javascript' src='script/couch/sha1.js'></script>
   </head>
   <body>
-
     <div id="couchdb-demo" style="border: solid pink;background-color: #ff9">
       <div class="comment">
         Cloudant
@@ -22,7 +21,6 @@
         <label>password<input id="password" name="password" type="password" autocomplete="on"></input></label>
         <input type="submit">login</input>
       </form>
-
     </div>
   </body>
 
@@ -357,7 +355,13 @@
   {
     xmlHttpReqQueue : [],
     result : null,
-    wait : null,
+    waitingThreads : [],
+    //state : 0, // are we processing?
+    wait : function(aThread)
+    {
+      //console.log('this.waitingThreads.unshift(aThread)')
+      this.waitingThreads.push(aThread)
+    },
     push: function (requestName, aRequest, insertAfter)
     {
       ///insertAfter = insertAfter || 0
@@ -379,26 +383,43 @@
     {
         this.result = result
         var lastThread = this.xmlHttpReqQueue.shift()
-        // process the next request if queue isn't empty
-        if (this.xmlHttpReqQueue.length > 0)
-        {
-            console.log(this.xmlHttpReqQueue[0][0])
-            this.xmlHttpReqQueue[0][1]()
-        }
-        else
-        {
-          if (this.wait)
+        //if (!this.state)
+          // process the next request if queue isn't empty
+          if (this.xmlHttpReqQueue.length > 0)
           {
-            var callbackFn = this.wait
-            this.wait = null;
-            callbackFn()
+              console.log(this.xmlHttpReqQueue[0][0])
+              //this.state = 1
+              this.xmlHttpReqQueue[0][1]()
+              //this.state = 0
           }
-        }
+          else
+              this.processWait()
+
+    },
+    processWait : function()
+    {
+      if (this.waitingThreads.length)
+      {
+        var callbackFn = this.waitingThreads.shift()
+        callbackFn()
+      }
+    },
+    removeWaiter : function(waitId)
+    {
+      this.waitingThreads.splice(waitId, 1)
     },
     start: function()
     {
-        if (this.xmlHttpReqQueue.length)
+      //if (!this.state)
+        if (this.xmlHttpReqQueue.length > 0)
+        {
+            //this.state = 1
             this.xmlHttpReqQueue[0][1]()
+            //this.state = 0
+        }
+        else
+            this.processWait()
+
     }
   }
   //////////////////////////////////////////////////////////////////////////////
@@ -471,7 +492,6 @@
     return JSON.parse(CouchDB.last_req.responseText);
   };
   */
-
   function CouchDB_logout(onSuccessFn, onErrorFn)
   {
     //CouchDB.singletonXMLHttpRequest = null
@@ -561,6 +581,7 @@
           function (req)
           {
             div.innerHTML = div.innerHTML + "<br/>A. http://alice@amber.cloudant.com = <b>" + req.responseText + "</b>"
+            RequestQ.removeWaiter(waitIdx)
             RequestQ.processQueue(req.responseText)
           },
           function (req)
@@ -572,38 +593,38 @@
       }
     )
 
-    RequestQ.wait =
+    RequestQ.wait
+    (
       function()
       {
-        console.log('finished ' + RequestQ.result)
-        var err = JSON.parse(RequestQ.result)
-        console.log(err)
-        if (err && err.error === "not_found")
+        if (RequestQ.result)
         {
-          var hashAndSalt = generatePasswordHash2(password)
-          db_save("/_users/" + "org.couchdb.user:" + name,
-            JSON.stringify(
-              {
-                name: name,
-                password_sha: hashAndSalt[0],
-                salt: hashAndSalt[1],
-                password_scheme: 'simple',
-                type: 'user'
-              }
+          var err = JSON.parse(RequestQ.result)
+          if (err && err.error === "not_found")
+          {
+            var hashAndSalt = generatePasswordHash2(password)
+            db_save("/_users/" + "org.couchdb.user:" + name,
+              JSON.stringify(
+                {
+                  name: name,
+                  password_sha: hashAndSalt[0],
+                  salt: hashAndSalt[1],
+                  password_scheme: 'simple',
+                  type: 'user'
+                }
+              )
             )
-          )
+          }
         }
-
       }
+    )
+
+    var waitIdx = RequestQ.waitingThreads.length -1
+
     RequestQ.start()
   }
 
   //////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
   function submitToCloudant(fform)
   {
     try
@@ -641,7 +662,7 @@
           function (req)
           {
             div2.innerHTML = div2.innerHTML + "<br/>2. http://amber.cloudant.com = <b>" + req.statusText + "</b>"
-            RequestQ.processQueue()
+//            RequestQ.processQueue()
           }, true
         )
       }
@@ -669,8 +690,6 @@
                 )
         }
     )
-
-
 
     var dbNamesString = null
     var threadName = "multiple dbNames call"
@@ -725,7 +744,6 @@
       "couchdb_auth_only": true
     }' "https://name:password@amber.cloudant.com/songblog/_security"
     */
-
     RequestQ.push(
       "PUT/songblog/_security",
       function () {
@@ -770,7 +788,6 @@
                 )
     })
 
-
   /*
     curl -X PUT -H "Content-Type: application/json" -d '{
     "password_sha": "329983971fc5dc8d157ccb10f2c0e71d5725cfff",
@@ -806,7 +823,6 @@
       }
     )
 
-
     // CouchDB_logout
     RequestQ.push(
       "logout-test5",
@@ -831,11 +847,8 @@
         )
       }
     )
-
     // trigger the first request in the queue
     RequestQ.start()
-
-
 
     RequestQ.push(
       "login-test7",
@@ -861,19 +874,81 @@
       }
     )
 
-
-    RequestQ.wait =
+    RequestQ.wait
+    (
       function()
       {
-        createUser('alice','123')
+        createUser('alice2','123')
       }
+    )
+
+    //RequestQ.start()
+    RequestQ.wait
+    (
+      function()
+      {
+        console.log('last logout')
+        //CouchDB_logout()  // logout admin
+
+        RequestQ.push(
+          "logout-admin",
+          function()
+          {
+            var div = document.createElement("div")
+            div.id = "logout-admin"
+            parent.appendChild(div)
+
+            console.log('++ CouchDB_logout as admin')
+            CouchDB_logout(
+              function (req)
+              {
+                div.innerHTML = div.innerHTML + "<br/>logout http://admin@amber.cloudant.com = <b>" + req.responseText + "</b>"
+                RequestQ.processQueue()
+              },
+              function (req)
+              {
+                div.innerHTML = div.innerHTML + "<br/>logout http://admin@amber.cloudant.com = <b>" + req.statusText + "</b>"
+                RequestQ.processQueue()
+              }, true
+            )
+          }
+        )
+
+        RequestQ.start()
+
+
+      }
+    )
+
+    RequestQ.wait
+    (
+      function()
+      {
+        var div = document.createElement("div")
+        div.id = "login-alice"
+        parent.appendChild(div)
+
+        console.log('++ CouchDB_login as alice')
+        CouchDB_login('alice', '123',
+          function (req)
+          {
+            div.innerHTML = div.innerHTML + "<br/>login http://alice@amber.cloudant.com = <b>" + req.responseText + "</b>"
+            RequestQ.processQueue()
+          },
+          function (req)
+          {
+            div.innerHTML = div.innerHTML + "<br/>error login http://alice@amber.cloudant.com = <b>" + req.statusText + "</b>"
+            RequestQ.processQueue()
+          }, true
+        )
+      }
+
+    )
 
   }
 
-
   function db_save(docPath, data)
   {
-
     RequestQ.push(
       "PUT/songblog/_security",
       function () {
@@ -896,17 +971,10 @@
                 )
     })
 
-    RequestQ.start()
+    //RequestQ.start()
   }
 
 //////////////////////////////////////////////////////////////////////////////
-  function generatePasswordHash(password)
-  {
-    var salt = crypto.randomBytes(16).toString('hex');
-    var hash = crypto.createHash('sha1');
-    hash.update(password + salt);
-    return [hash.digest('hex'), salt];
-  }
   function generatePasswordHash2(password)
   {
     var randVal = rand()
@@ -924,7 +992,6 @@
       return rand() + rand(); // to make it longer
   };
   //token();
-
 //////////////////////////////////////////////////////////////////////////////
 
 </script>
