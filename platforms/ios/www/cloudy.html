@@ -541,7 +541,7 @@
     return req
   }
 
-  function createUser(name)
+  function createUser(name,password)
   {
     var parent = document.getElementById("couchdb-demo")
 
@@ -571,6 +571,31 @@
         )
       }
     )
+
+    RequestQ.wait =
+      function()
+      {
+        console.log('finished ' + RequestQ.result)
+        var err = JSON.parse(RequestQ.result)
+        console.log(err)
+        if (err && err.error === "not_found")
+        {
+          var hashAndSalt = generatePasswordHash2(password)
+          db_save("/_users/" + "org.couchdb.user:" + name,
+            JSON.stringify(
+              {
+                name: name,
+                password_sha: hashAndSalt[0],
+                salt: hashAndSalt[1],
+                password_scheme: 'simple',
+                type: 'user'
+              }
+            )
+          )
+        }
+
+      }
+    RequestQ.start()
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -840,33 +865,7 @@
     RequestQ.wait =
       function()
       {
-        var name = 'alice'
-        var password = '123'
-        createUser('alice')
-        RequestQ.wait =
-          function()
-          {
-            console.log('finished ' + RequestQ.result)
-            var err = JSON.parse(RequestQ.result)
-            console.log(err)
-            if (err && err.error === "not_found")
-            {
-              var hashAndSalt = generatePasswordHash2(password)
-              db_save("/_users/" + "org.couchdb.user:" + name,
-                JSON.stringify(
-                  {
-                    name: name,
-                    password_sha: hashAndSalt[0],
-                    salt: hashAndSalt[1],
-                    password_scheme: 'simple',
-                    type: 'user'
-                  }
-                )
-              )
-            }
-
-          }
-        RequestQ.start()
+        createUser('alice','123')
       }
 
   }
