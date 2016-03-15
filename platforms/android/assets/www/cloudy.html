@@ -5,11 +5,13 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="Tariq Hamid" />
     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+<!--
     <script type='text/javascript' src='script/couch/couch.js'></script>
-    <!-- c.f.
-    /Users/tariq/SPA/FDA-demos/node_modules/hoodie-plugin-global-share/node_modules/hoodie-server/lib/utils/couch.js
-    -->
+-->
+
+<!--
     <script type='text/javascript' src='script/couch/sha1.js'></script>
+-->
   </head>
   <body>
     <div id="couchdb-demo" style="border: solid pink;background-color: #ff9">
@@ -430,102 +432,64 @@
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  Cushion = {}
-  Cushion.login = function(name,password)
+  function generatePasswordHash2(password)
   {
-    var div = document.createElement("div")
-    div.id = "login-" + name
-    document.body.appendChild(div)
-    CouchDB_login(name, password,
-      function (req)
-      {
-        div.innerHTML = div.innerHTML + "<br/>login http://" + name + "@amber.cloudant.com = <b>" + req.responseText + "</b>"
-        RequestQ.processQueue()
-      },
-      function (req)
-      {
-        div.innerHTML = div.innerHTML + "<br/>error login http://" + name + "@amber.cloudant.com = <b>" + req.statusText + "</b>"
-        //RequestQ.processQueue() // should pop the first request, which resulted in login error
-      }, true
-    )
+    var randVal = rand()
+    var salt = calcMD5(randVal)
+    var result = sha1(password + salt)
+    return [result, salt]
   }
 
-  Cushion.logout = function()
-  {
-    var div = document.createElement("div")
-    div.id = "logout"
-    document.body.appendChild(div)
+  var rand = function() {
+      return Math.random().toString(36).substr(2); // remove `0.`
+  };
 
-    console.log('++ CouchDB_logout ')
-    CouchDB_logout(
-      function (req)
-      {
-        div.innerHTML = div.innerHTML + "<br/>logout http://amber.cloudant.com = <b>" + req.responseText + "</b>"
-        RequestQ.processQueue()
-      },
-      function (req)
-      {
-        div.innerHTML = div.innerHTML + "<br/>error logout http://amber.cloudant.com = <b>" + req.statusText + "</b>"
-        RequestQ.processQueue()
-      }, true
-    )
-  }
-
-  Cushion.get = function(docPath)
-  {
-    var div = document.createElement("div")
-    div.id = "security-get"
-    document.body.appendChild(div)
-    xhr = CouchDB_request("GET", docPath, {body: '[]'},
-            function (req)
-              {
-                div.innerHTML = div.innerHTML + "<br/><b>GET " + docPath + " " + req.responseText + "</b>"
-                //RequestQ.result = req.responseText
-                RequestQ.processQueue(req.responseText)
-              },
-            function (req)
-              {
-                //console.error(req.statusText)
-                div.innerHTML = div.innerHTML + '<br/><p color="red">error GET ' + docPath + " " + req.statusText + "</p>"
-                //RequestQ.result = req.responseText
-                RequestQ.processQueue(req.responseText)
-              },
-            true
-            )
-  }
-
-  Cushion.put = function(docPath, data)
-  {
-    var div = document.createElement("div")
-    div.id = "security-put"
-    document.body.appendChild(div)
-    CouchDB_request("PUT", docPath, {body: data},
-            function (req)
-              {
-                div.innerHTML = div.innerHTML + "<br/><b>PUT " + docPath + " " + data + " " + req.responseText + "</b>"
-                RequestQ.processQueue()
-              },
-            function (req)
-              {
-                //console.error(req.statusText)
-                div.innerHTML = div.innerHTML + '<br/><p color="red">PUT ' + docPath + " " + data + " "  + req.statusText + "</p>"
-                RequestQ.processQueue()
-              },
-            true
-            )
-  }
+  var token = function() {
+      return rand() + rand(); // to make it longer
+  };
+  //token();
   //////////////////////////////////////////////////////////////////////////////
 
-  function adminBasicAuthHeaderValue(username, userpassword)
+//////////////////////////////////////////////////////////////////////////////
+//-- c.f.  /Users/tariq/SPA/FDA-demos/node_modules/hoodie-plugin-global-share/node_modules/hoodie-server/lib/utils/couch.js
+//////////////////////////////////////////////////////////////////////////////
+  _Cushion = {}
+
+  _Cushion.last_req = null
+  _Cushion.urlPrefix = ''
+  _Cushion.singletonXMLHttpRequest = null
+  _Cushion.protocol = window.location.protocol + "//"
+
+  _Cushion.proxyUrl = function(uri) {
+    if(uri.substr(0, _Cushion.protocol.length) != _Cushion.protocol) {
+      uri = _Cushion.urlPrefix + uri;
+    }
+    return uri;
+  }
+
+  _Cushion.newXhr = function() {
+    if (_Cushion.singletonXMLHttpRequest)
+      return _Cushion.singletonXMLHttpRequest;
+    if (typeof(XMLHttpRequest) != "undefined") {
+      _Cushion.singletonXMLHttpRequest = new XMLHttpRequest();
+      return _Cushion.singletonXMLHttpRequest;
+    } else if (typeof(ActiveXObject) != "undefined") {
+      return new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+      throw new Error("No XMLHTTPRequest support detected");
+    }
+  };
+
+  _Cushion.adminBasicAuthHeaderValue = function(username, userpassword)
   {
     var retval = 'Basic ' + binb2b64(str2binb(username + ":" + userpassword))
     return retval
   }
 
-  function allDbs(onSuccessFn,onErrorFn,isOnQueueFlag)
+  _Cushion.allDbs = function(onSuccessFn,onErrorFn,isOnQueueFlag)
   {
-    var xhr = CouchDB.newXhr()
-    xhr.open("GET", CouchDB.urlPrefix + "/_all_dbs", true)
+    var xhr = _Cushion.newXhr()
+    xhr.open("GET", _Cushion.urlPrefix + "/_all_dbs", true)
     xhr.onreadystatechange = function() {
       if (xhr.status == 201)
       {
@@ -538,29 +502,29 @@
         {
           if (onSuccessFn)
               onSuccessFn(xhr)
-          if (isOnQueueFlag)
-          {
+          //if (isOnQueueFlag)
+          //{
             //RequestQ.processQueue()
-          }
+          //}
         } else
         {
           if (onErrorFn)
             onErrorFn(xhr)
-          if (isOnQueueFlag)
-          {
+          //if (isOnQueueFlag)
+          //{
             //RequestQ.processQueue()
-          }
+          //}
         }
       }
     }
     xhr.send("")
   }
 
-  function CouchDB_login(name, password, onSuccessFn, onErrorFn)
+  _Cushion.login = function(name, password, onSuccessFn, onErrorFn)
   {
-    CouchDB.singletonXMLHttpRequest = null
+    _Cushion.singletonXMLHttpRequest = null
     //      //{ "Authorization": adminBasicAuthHeaderValue() }
-    var CouchDB_last_req = CouchDB_request("POST", "/_session",
+    var last_req = _Cushion.request("POST", "/_session",
       {
         headers: {"Content-Type": "application/x-www-form-urlencoded",
           "X-CouchDB-WWW-Authenticate": "Cookie"},
@@ -572,23 +536,12 @@
       true
     )
 
-    return CouchDB_last_req
+    return last_req
   }
 
-  /*
-  CouchDB.logout = function() {
-    CouchDB.last_req = CouchDB.request("DELETE", "/_session", {
-      headers: {"Content-Type": "application/x-www-form-urlencoded",
-        "X-CouchDB-WWW-Authenticate": "Cookie"}
-    });
-    return JSON.parse(CouchDB.last_req.responseText);
-  };
-  */
-  function CouchDB_logout(onSuccessFn, onErrorFn)
+  _Cushion.logout = function(onSuccessFn, onErrorFn)
   {
-    //CouchDB.singletonXMLHttpRequest = null
-    //      //{ "Authorization": adminBasicAuthHeaderValue() }
-    var CouchDB_last_req = CouchDB_request("DELETE", "/_session",
+    var last_req = _Cushion.request("DELETE", "/_session",
       {
         headers: {"Content-Type": "application/x-www-form-urlencoded",
           "X-CouchDB-WWW-Authenticate": "Cookie"}
@@ -597,17 +550,16 @@
       onErrorFn,
       true
     )
-
-    return CouchDB_last_req
+    return last_req
   }
 
-  CouchDB_request = function(method, uri, options, onSuccessFn, onErrorFn,isOnQueueFlag) {
+  _Cushion.request = function(method, uri, options, onSuccessFn, onErrorFn,isOnQueueFlag) {
     options = typeof(options) == 'object' ? options : {}
     options.headers = typeof(options.headers) == 'object' ? options.headers : {}
     options.headers["Content-Type"] = options.headers["Content-Type"] || options.headers["content-type"] || "application/json"
     options.headers["Accept"] = options.headers["Accept"] || options.headers["accept"] || "application/json"
-    var req = new CouchDB.newXhr()
-    uri = CouchDB.proxyUrl(uri)
+    var req = new _Cushion.newXhr()
+    uri = _Cushion.proxyUrl(uri)
     req.open(method, uri, true)
     req.withCredentials = true
     if (options.headers)
@@ -640,7 +592,6 @@
         }
       }
     }
-    ///////////////////////
     try
     {
       req.send(options.body || "")
@@ -652,8 +603,112 @@
 
     return req
   }
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+  Cushion = {}
+  Cushion.login = function(name,password)
+  {
+    var div = document.createElement("div")
+    div.id = "login-" + name
+    document.body.appendChild(div)
+    _Cushion.login(name, password,
+      function (req)
+      {
+        div.innerHTML = div.innerHTML + "<br/>login http://" + name + "@amber.cloudant.com = <b>" + req.responseText + "</b>"
+        RequestQ.processQueue()
+      },
+      function (req)
+      {
+        div.innerHTML = div.innerHTML + "<br/>error login http://" + name + "@amber.cloudant.com = <b>" + req.statusText + "</b>"
+        //RequestQ.processQueue() // should pop the first request, which resulted in login error
+      }, true
+    )
+  }
 
-  function createUser(name,password)
+  Cushion.logout = function()
+  {
+    var div = document.createElement("div")
+    div.id = "logout"
+    document.body.appendChild(div)
+
+    console.log('++ CouchDB logout ')
+    _Cushion.logout(
+      function (req)
+      {
+        div.innerHTML = div.innerHTML + "<br/>logout http://amber.cloudant.com = <b>" + req.responseText + "</b>"
+        RequestQ.processQueue()
+      },
+      function (req)
+      {
+        div.innerHTML = div.innerHTML + "<br/>error logout http://amber.cloudant.com = <b>" + req.statusText + "</b>"
+        RequestQ.processQueue()
+      }, true
+    )
+  }
+
+  Cushion.get = function(docPath)
+  {
+    var div = document.createElement("div")
+    div.id = "security-get"
+    document.body.appendChild(div)
+    xhr = _Cushion.request("GET", docPath, {body: '[]'},
+            function (req)
+              {
+                div.innerHTML = div.innerHTML + "<br/><b>GET " + docPath + " " + req.responseText + "</b>"
+                RequestQ.processQueue(req.responseText)
+              },
+            function (req)
+              {
+                div.innerHTML = div.innerHTML + '<br/><p color="red">error GET ' + docPath + " " + req.statusText + "</p>"
+                RequestQ.processQueue(req.responseText)
+              },
+            true
+            )
+  }
+
+  Cushion.put = function(docPath, data)
+  {
+    var div = document.createElement("div")
+    div.id = "security-put"
+    document.body.appendChild(div)
+    _Cushion.request("PUT", docPath, {body: data},
+            function (req)
+              {
+                div.innerHTML = div.innerHTML + "<br/><b>PUT " + docPath + " " + data + " " + req.responseText + "</b>"
+                RequestQ.processQueue()
+              },
+            function (req)
+              {
+                //console.error(req.statusText)
+                div.innerHTML = div.innerHTML + '<br/><p color="red">PUT ' + docPath + " " + data + " "  + req.statusText + "</p>"
+                RequestQ.processQueue()
+              },
+            true
+            )
+  }
+  Cushion.allDbs = function()
+  {
+    var div = document.createElement("div")
+    div.id = "allDbs-response"
+    document.body.appendChild(div)
+    _Cushion.allDbs(function (req)
+             {
+                div.innerHTML = div.innerHTML + "<br/>3. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
+                // pop this current function off the queue and process the above multiple requests
+                RequestQ.processQueue(req.responseText) //dbNamesString = req.responseText
+             },
+           function (req)
+             {
+                console.error(req.statusText)
+                div.innerHTML = div.innerHTML + "<br/> allDbs error "+req.statusText
+                // pop this current function off the queue and process the above multiple requests
+                RequestQ.processQueue()
+             },
+          true
+          )
+  }
+
+  Cushion.createUser = function(name,password)
   {
     var div = document.createElement("div")
     div.id = "createUser"
@@ -679,21 +734,15 @@
                       salt: hashAndSalt[1],
                       password_scheme: 'simple',
                       type: 'user'
-                    }) // JSON.stringify
-                ) // Cushion.put
-              } // function
+                    })
+                )
+              }
             )
-
-          } // if
-        } // if
-        RequestQ.start()
-        //RequestQ.processQueue()
+          }
+        }
+        RequestQ.start()  // TC ?? length > 0 ??
       }
     )
-
-    var waitIdx = RequestQ.waitingThreads.length -1
-
-    ///RequestQ.start()
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -714,55 +763,27 @@
     var name = fform.username.value,
         password = fform.password.value
 
-    div2 = document.createElement("div")
-    div2.id = "couchdb-cities"
-    document.body.appendChild(div2)
-
-    CouchDB.urlPrefix= "http://data.confusedprogrammer.com"
+    _Cushion.urlPrefix= "http://data.confusedprogrammer.com"
 
     RequestQ.push("login", function(){  Cushion.login(name,password) })
+    RequestQ.push("allDbs",  function(){ Cushion.allDbs() } )
 
-    RequestQ.push(
-      "allDbs",
-      function()
-        {
-          allDbs(function (req)
-                   {
-                      div2.innerHTML = div2.innerHTML + "<br/>3. http://amber.cloudant.com = <b>" + req.responseText + "</b>"
-                      dbNamesString = req.responseText
-                      // pop this current function off the queue and process the above multiple requests
-                      RequestQ.processQueue()
-                   },
-                 function (req)
-                   {
-                      console.error(req.statusText)
-                      div2.innerHTML = div2.innerHTML + "<br/> allDbs error "+req.statusText
-                      // pop this current function off the queue and process the above multiple requests
-                      RequestQ.processQueue()
-                   },
-                true
-                )
-        }
-    )
-
-    var dbNamesString = null
     var threadName = "multiple dbNames call"
     RequestQ.push(
-      "multiple dbNames call",
+      threadName,
       function()
         {
-          var dbNames = JSON.parse(dbNamesString)
+          var dbNames = JSON.parse(RequestQ.result) //var dbNames = JSON.parse(dbNamesString)
           dbNames.forEach(function callback(dbName) {
             var div = document.createElement("div")
             div.id = dbName
             document.body.appendChild(div)
 
             RequestQ.push(
-              "GET/" + dbName + "/_all_docs",
+              "GET /" + dbName + "/_all_docs",
               function () {
-                //console.log(name)
                 // see apache-couchdb-1.6.1/share/www/script/test/basics.js
-                xhr = CouchDB_request("GET", "/" + dbName + "/_all_docs?limit=50", {body: "[]"},
+                xhr = _Cushion.request("GET", "/" + dbName + "/_all_docs?limit=20", {body: "[]"},
                         function (req)
                           {
                             div.innerHTML = div.innerHTML + "<br/><b>" + dbName + "</b>"
@@ -785,7 +806,7 @@
                         true
                         )
             }, threadName)
-            threadName = "GET/" + dbName + "/_all_docs"
+            threadName = "GET /" + dbName + "/_all_docs"
           }) // forEach
 
           RequestQ.processQueue()
@@ -793,14 +814,8 @@
     )
 
     // CouchDB login for Cloudant https://www.grobmeier.de/couchdb-login-for-cloudant-23022016.html
-    /*
-    curl -X PUT -d '{
-      "couchdb_auth_only": true
-    }' "https://name:password@amber.cloudant.com/songblog/_security"
-    */
-    RequestQ.push("PUT/songblog/_security", function() { Cushion.put("/songblog/_security", '{"couchdb_auth_only": true}') })
-
-    RequestQ.push("GET/songblog/_security", function () { Cushion.get('/songblog/_security') })
+    RequestQ.push("PUT /songblog/_security", function() { Cushion.put("/songblog/_security", '{"couchdb_auth_only": true}') })
+    RequestQ.push("GET /songblog/_security", function () { Cushion.get('/songblog/_security') })
 
   /*
     curl -X PUT -H "Content-Type: application/json" -d '{
@@ -814,18 +829,14 @@
     curl -X POST https://amber.cloudant.com/_session -d 'name=test5&password=test4'
   */
     RequestQ.push("login-test5", function() { Cushion.login('test5','test4') })
-
-    // CouchDB_logout
     RequestQ.push("logout-test5", function(){ Cushion.logout() })
-    // trigger the first request in the queue
 
+    // login back in as admin to create new user alice
     RequestQ.push("login-test7", function(){ Cushion.login(name,password) })
-
-
     RequestQ.wait(
       function()
       {
-        createUser('alice4','123')
+        Cushion.createUser('alice4','123')
         RequestQ.start()
       }
     )
@@ -834,55 +845,24 @@
     (
       function()
       {
-        RequestQ.push("logout",
-          function()
-          {
-            Cushion.logout()
-          }
-        )
-
-        RequestQ.push("login-alice",
-          function()
-          {
-            Cushion.login('alice','123')
-          }
-        )
-
+        RequestQ.push("logout",function(){ Cushion.logout() })
+        RequestQ.push("login-alice", function() { Cushion.login('alice','123')})
         RequestQ.start()
       }
-
     )
 
-    //RequestQ.start()
+    RequestQ.wait // see if there are any remaining threads 
+    (
+      function()
+      {
+        console.log('RequestQ Diagnostics')
+        console.log('RequestQ.xmlHttpReqQueue.length = ' + RequestQ.xmlHttpReqQueue.length)
+        console.log('RequestQ.waitingThreads.length = ' + RequestQ.waitingThreads.length)
+      }
+    )
 
-
-
-
-
-  //  RequestQ.start()
     RequestQ.start()
   }
-
-
-//////////////////////////////////////////////////////////////////////////////
-  function generatePasswordHash2(password)
-  {
-    var randVal = rand()
-    var salt = calcMD5(randVal)
-    //var hash = hex_sha1("sha1")
-    var result = sha1(password + salt)
-    return [result, salt]
-  }
-
-  var rand = function() {
-      return Math.random().toString(36).substr(2); // remove `0.`
-  };
-
-  var token = function() {
-      return rand() + rand(); // to make it longer
-  };
-  //token();
-//////////////////////////////////////////////////////////////////////////////
 
 </script>
 </html>
