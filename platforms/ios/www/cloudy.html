@@ -364,7 +364,7 @@
       //console.log('this.waitingThreads.unshift(aThread)')
       this.waitingThreads.push(aThread)
     },
-    push: function (requestName, aRequest, insertAfter)
+    push: function (aRequest, requestName, insertAfter)
     {
       ///insertAfter = insertAfter || 0
       if (insertAfter)
@@ -578,7 +578,7 @@
           //console.log(req.getAllResponseHeaders())
       }
       if (req.readyState === 4) {
-        if (req.status === 200) {
+        if (req.status === 200) { // OK
           if (onSuccessFn)
             onSuccessFn(req)
           //if (isOnQueueFlag)
@@ -646,46 +646,54 @@
     )
   }
 
-  Cushion.get = function(docPath)
+  // requestType = PUT, POST, HEAD
+  Cushion.rest = function(requestType,docPath, data)
   {
     var div = document.createElement("div")
-    div.id = "security-get"
     document.body.appendChild(div)
-    xhr = _Cushion.request("GET", docPath, {body: '[]'},
+    if (!data)
+      data ='[]'
+    _Cushion.request(requestType, docPath, {body: data},
             function (req)
               {
-                div.innerHTML = div.innerHTML + "<br/><b>GET " + docPath + " " + req.responseText + "</b>"
+                div.innerHTML = div.innerHTML + "<br/><b>" + requestType + " " + docPath + " " + data + " " + req.responseText + "</b>"
                 RequestQ.processQueue(req.responseText)
               },
             function (req)
               {
-                div.innerHTML = div.innerHTML + '<br/><p color="red">error GET ' + docPath + " " + req.statusText + "</p>"
+                var colour = "teal"
+                if (201 == req.status) // created
+                  colour = "green"
+                else if (403 == req.status) // forbidden
+                  colour = "red"
+                //console.error(req.statusText)
+                div.innerHTML = div.innerHTML + '<br/><p style="color:' + colour + '""> ' + requestType + ' ' + docPath + " " + data + " "  + req.statusText + "</p>"
                 RequestQ.processQueue(req.responseText)
               },
             true
             )
   }
 
+  Cushion.get = function(docPath)
+  {
+    Cushion.rest("GET",docPath)
+  }
+
   Cushion.put = function(docPath, data)
   {
-    var div = document.createElement("div")
-    div.id = "security-put"
-    document.body.appendChild(div)
-    _Cushion.request("PUT", docPath, {body: data},
-            function (req)
-              {
-                div.innerHTML = div.innerHTML + "<br/><b>PUT " + docPath + " " + data + " " + req.responseText + "</b>"
-                RequestQ.processQueue()
-              },
-            function (req)
-              {
-                //console.error(req.statusText)
-                div.innerHTML = div.innerHTML + '<br/><p color="red">PUT ' + docPath + " " + data + " "  + req.statusText + "</p>"
-                RequestQ.processQueue()
-              },
-            true
-            )
+    Cushion.rest("PUT",docPath, data)
   }
+
+  Cushion.post = function(docPath, data)
+  {
+    Cushion.rest("POST",docPath, data)
+  }
+
+  Cushion.head = function(docPath)
+  {
+    Cushion.rest("HEAD",docPath)
+  }
+
   Cushion.allDbs = function()
   {
     var div = document.createElement("div")
@@ -714,7 +722,7 @@
     div.id = "createUser"
     document.body.appendChild(div)
 
-    RequestQ.push("GET" + '/_users/' + name, function() { Cushion.get('/_users/org.couchdb.user:' + name) })
+    RequestQ.push(function() { Cushion.get('/_users/org.couchdb.user:' + name) }, "GET" + '/_users/org.couchdb.user:' + name)
 
     RequestQ.waitFirst(
       function()
@@ -725,7 +733,7 @@
           if (err && err.error === "not_found")
           {
             var hashAndSalt = generatePasswordHash2(password)
-            RequestQ.push("PUT /_users/org.couchdb.user:",
+            RequestQ.push(
               function() {
                 Cushion.put("/_users/org.couchdb.user:" + name,
                   JSON.stringify({
@@ -736,7 +744,8 @@
                       type: 'user'
                     })
                 )
-              }
+              },
+              "PUT /_users/org.couchdb.user:"
             )
           }
         }
@@ -765,12 +774,11 @@
 
     _Cushion.urlPrefix= "http://data.confusedprogrammer.com"
 
-    RequestQ.push("login", function(){  Cushion.login(name,password) })
-    RequestQ.push("allDbs",  function(){ Cushion.allDbs() } )
+    RequestQ.push(function(){  Cushion.login(name,password) }, "login")
+    RequestQ.push(function(){ Cushion.allDbs() }, "allDbs")
 
     var threadName = "multiple dbNames call"
     RequestQ.push(
-      threadName,
       function()
         {
           var dbNames = JSON.parse(RequestQ.result) //var dbNames = JSON.parse(dbNamesString)
@@ -780,7 +788,6 @@
             document.body.appendChild(div)
 
             RequestQ.push(
-              "GET /" + dbName + "/_all_docs",
               function () {
                 // see apache-couchdb-1.6.1/share/www/script/test/basics.js
                 xhr = _Cushion.request("GET", "/" + dbName + "/_all_docs?limit=20", {body: "[]"},
@@ -805,17 +812,18 @@
                           },
                         true
                         )
-            }, threadName)
+            },
+            "GET /" + dbName + "/_all_docs",threadName)
             threadName = "GET /" + dbName + "/_all_docs"
           }) // forEach
 
           RequestQ.processQueue()
-        }
-    )
+        },
+    threadName) // RequestQ.push
 
     // CouchDB login for Cloudant https://www.grobmeier.de/couchdb-login-for-cloudant-23022016.html
-    RequestQ.push("PUT /songblog/_security", function() { Cushion.put("/songblog/_security", '{"couchdb_auth_only": true}') })
-    RequestQ.push("GET /songblog/_security", function () { Cushion.get('/songblog/_security') })
+    RequestQ.push(function() { Cushion.put("/songblog/_security", '{"couchdb_auth_only": true}') }, "PUT /songblog/_security")
+    RequestQ.push(function () { Cushion.get('/songblog/_security') }, "GET /songblog/_security")
 
   /*
     curl -X PUT -H "Content-Type: application/json" -d '{
@@ -828,15 +836,16 @@
   /*
     curl -X POST https://amber.cloudant.com/_session -d 'name=test5&password=test4'
   */
-    RequestQ.push("login-test5", function() { Cushion.login('test5','test4') })
-    RequestQ.push("logout-test5", function(){ Cushion.logout() })
+    RequestQ.push(function(){ Cushion.login('test5','test4') }, "login-test5")
+    RequestQ.push(function(){ Cushion.logout() }, "logout-test5")
 
     // login back in as admin to create new user alice
-    RequestQ.push("login-test7", function(){ Cushion.login(name,password) })
+    RequestQ.push(function(){ Cushion.login(name,password) }, "login-test7")
     RequestQ.wait(
       function()
       {
         Cushion.createUser('alice4','123')
+
         RequestQ.start()
       }
     )
@@ -845,13 +854,45 @@
     (
       function()
       {
-        RequestQ.push("logout",function(){ Cushion.logout() })
-        RequestQ.push("login-alice", function() { Cushion.login('alice','123')})
+        // this GET will succeed, we are logged in as admin
+        RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
+        RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
+        var dataWithId = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo"}'
+        // curl -d '{"season": "summer", "weather": "usually warm and sunny"}' -X PUT https://[username].cloudant.com/crud/bar -H "Content-Type:application/json"
+        RequestQ.push(function() { Cushion.put("/crud/foo4", '{"season": "summer", "weather": "very warm and sunny"}') }, "PUT 2 /crud/")
+        RequestQ.push(function()
+          {
+            Cushion.head("/crud/welcome")
+          }
+        )
+        RequestQ.waitFirst(
+          function()
+          {
+            if (RequestQ.result)
+            {
+              var headResponse = JSON.parse(RequestQ.result)
+
+              RequestQ.push(function(){ Cushion.logout() }, "logout")
+              RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
+
+              // this GET will fail, we are logged in as alice
+              RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
+              RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
+              RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
+              var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
+              RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
+
+              RequestQ.start()
+            }
+          }
+        )
         RequestQ.start()
       }
     )
 
-    RequestQ.wait // see if there are any remaining threads 
+
+
+    RequestQ.wait // see if there are any remaining threads
     (
       function()
       {
