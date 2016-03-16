@@ -871,6 +871,7 @@
             if (RequestQ.result)
             {
               var headResponse = JSON.parse(RequestQ.result)
+              console.log('headResponse._rev = ' + headResponse._rev)
 
               RequestQ.push(function(){ Cushion.logout() }, "logout")
               RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
