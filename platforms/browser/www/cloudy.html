@@ -858,6 +858,7 @@
       }
     )
 
+    var dataWithId = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo"}'
     RequestQ.wait
     (
       function()
@@ -865,7 +866,6 @@
         // this GET will succeed, we are logged in as admin
         RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
         RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
-        var dataWithId = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo"}'
         // curl -d '{"season": "summer", "weather": "usually warm and sunny"}' -X PUT https://[username].cloudant.com/crud/bar -H "Content-Type:application/json"
         RequestQ.push(function() { Cushion.put("/crud/foo6", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 3 /crud/")
         RequestQ.push(function() { Cushion.put("/crud/foo5", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 4 /crud/")
@@ -930,20 +930,8 @@
                     // curl -d '{"_rev":"[doc_rev]", "_deleted":true}' -X PUT https://[username].cloudant.com/crud/[doc_id]
                     RequestQ.push(function() { Cushion.put("/crud/foo6", '{"_rev":"' + doc_rev + '", "_deleted":true}') }, "PUT 5 /crud/")
                     RequestQ.push(function() { Cushion.get("/crud/foo6") } , "GET 5 /crud/foo6" )
+                    RequestQ.start()
                   }
-
-
-                  RequestQ.push(function(){ Cushion.logout() }, "logout")
-                  RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
-
-                  // this GET will fail, we are logged in as alice
-                  RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
-                  RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
-                  RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
-                  var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
-                  RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
-
-                  RequestQ.start()
                 }
             )
 
@@ -955,6 +943,25 @@
       }
     )
 
+    RequestQ.wait(
+      function()
+      {
+
+        // {"docs":[{"season":"summer","weather":"usually warm and sunny"},{"season":"winter","weather":"usually cold and snowy"},{"season":"spring","weather":"cool with rain and sun"},{"season":"autumn","weather":"breezes"}]}
+
+        RequestQ.push(function(){ Cushion.logout() }, "logout")
+        RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
+
+        // this GET will fail, we are logged in as alice
+        RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
+        RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
+        RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
+        var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
+        RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
+
+        RequestQ.start()
+      }
+    )
 
 
     RequestQ.wait // see if there are any remaining threads
