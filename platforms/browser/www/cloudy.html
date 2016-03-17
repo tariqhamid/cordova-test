@@ -359,10 +359,10 @@
     result : null,
     waitingThreads : [],
     //state : 0, // are we processing?
-    wait : function(aThread)
+    wait : function(aThread, threadName)
     {
       //console.log('this.waitingThreads.unshift(aThread)')
-      this.waitingThreads.push(aThread)
+      this.waitingThreads.push([aThread, threadName])
     },
     push: function (aRequest, requestName, insertAfter)
     {
@@ -405,16 +405,12 @@
         //alert('processWait')
         //var callbackFn = this.waitingThreads.shift()
         var callbackFn = this.waitingThreads.shift()
-        callbackFn()
+        callbackFn[0]()
       }
     },
-    waitFirst : function(aThread)
+    waitFirst : function(aThread, threadName)
     {
-      this.waitingThreads.unshift(aThread)
-    },
-    removeWaiter : function(waitId)
-    {
-      this.waitingThreads.splice(waitId, 1)
+      this.waitingThreads.unshift([aThread, threadName])
     },
     start: function()
     {
@@ -676,6 +672,36 @@
             )
   }
 
+  // requestType = PUT, POST, HEAD
+  Cushion.rest2 = function(requestType,docPath, data)
+  {
+    var div = document.createElement("div")
+    document.body.appendChild(div)
+    if (!data)
+      data ='[]'
+    _Cushion.request(requestType, docPath, {body: data},
+            function (req)
+              {
+                div.innerHTML = div.innerHTML + "<br/><b>" + requestType + " " + docPath + " " + data + " " + req.responseText + "</b>"
+                _Cushion.last_req = req
+                RequestQ.processQueue(req.responseText)
+              },
+            function (req)
+              {
+                var colour = "purple"
+                if (201 == req.status) // created
+                  colour = "green"
+                else if (403 == req.status) // forbidden
+                  colour = "red"
+                //console.error(req.statusText)
+                div.innerHTML = div.innerHTML + '<br/><p style="color:' + colour + '""> ' + requestType + ' ' + docPath + " " + data + " "  + req.statusText + "</p>"
+                _Cushion.last_req = req
+                RequestQ.processQueue(req.responseText)
+              },
+            true
+            )
+  }
+
   Cushion.get = function(docPath)
   {
     Cushion.rest("GET",docPath)
@@ -693,7 +719,7 @@
 
   Cushion.head = function(docPath)
   {
-    Cushion.rest("HEAD",docPath)
+    Cushion.rest2("HEAD",docPath)
   }
 
   Cushion.delete = function(docPath)
@@ -756,8 +782,10 @@
             )
           }
         }
-        RequestQ.start()  // TC ?? length > 0 ??
-      }
+        //RequestQ.start()  // TC ?? length > 0 ??
+        RequestQ.processQueue()
+      },
+      "Cushion.createUser->waitFirst"
     )
   }
 
@@ -855,7 +883,8 @@
         Cushion.createUser('alice4','123')
 
         RequestQ.start()
-      }
+      },
+      "createUser->"
     )
 
     var dataWithId = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo"}'
@@ -867,11 +896,11 @@
         RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
         RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
         // curl -d '{"season": "summer", "weather": "usually warm and sunny"}' -X PUT https://[username].cloudant.com/crud/bar -H "Content-Type:application/json"
-        RequestQ.push(function() { Cushion.put("/crud/foo6", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 3 /crud/")
-        RequestQ.push(function() { Cushion.put("/crud/foo5", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 4 /crud/")
+        RequestQ.push(function() { Cushion.put("/crud/foo7", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 3 /crud/")
+        RequestQ.push(function() { Cushion.put("/crud/foo8", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 4 /crud/")
         RequestQ.push(function()
           {
-            Cushion.head("/crud/foo5")
+            Cushion.head("/crud/foo8")
           }
         )
         RequestQ.waitFirst(
@@ -895,60 +924,88 @@
             if (doc_rev)
             {
               // curl -X DELETE https://[username].cloudant.com/crud/[doc_id]\?rev\=[doc_rev]
-              RequestQ.push(function() { Cushion.delete("/crud/foo5\?rev\=" + doc_rev) }, "DELETE /crud/foo5/")
+              RequestQ.push(function() { Cushion.delete("/crud/foo8\?rev\=" + doc_rev) }, "DELETE /crud/foo8/")
               //Verify deletion:      curl  https://[username].cloudant.com/crud/[doc_id]
-              RequestQ.push(function() { Cushion.get("/crud/foo5") }, "GET /crud/foo5/")
+              RequestQ.push(function() { Cushion.get("/crud/foo8") }, "GET /crud/foo8/")
+
+              RequestQ.start()
             }
 
-            RequestQ.push(function()
-              {
-                Cushion.head("/crud/foo6")
-              }
-            )
-
-            RequestQ.waitFirst(
-              function()
-                {
-                  var doc_rev = 0
-                  if (RequestQ.result)
-                  {
-                    var headResponse = JSON.parse(RequestQ.result)
-                    doc_rev = headResponse._rev
-                    console.log('headResponse._rev = ' + doc_rev)
-                  }
-                  if (_Cushion.last_req)
-                  {
-                    //_Cushion.last_req.getAllResponseHeaders()
-                    // etag is _rev
-                    doc_rev = _Cushion.last_req.getResponseHeader('etag')
-                    doc_rev = doc_rev.replace(/^"(.*)"$/, '$1')  // replace(/^"(.+(?="$))"$/, '$1') // .replace(/^"(.*)"$/, '$1')
-                    console.log('_Cushion.last_req.getResponseHeader("etag") = ' + doc_rev)
-                  }
-                  if (doc_rev)
-                  {
-                    // Delete via PUT
-                    // curl -d '{"_rev":"[doc_rev]", "_deleted":true}' -X PUT https://[username].cloudant.com/crud/[doc_id]
-                    RequestQ.push(function() { Cushion.put("/crud/foo6", '{"_rev":"' + doc_rev + '", "_deleted":true}') }, "PUT 5 /crud/")
-                    RequestQ.push(function() { Cushion.get("/crud/foo6") } , "GET 5 /crud/foo6" )
-                    RequestQ.start()
-                  }
-                }
-            )
-
-            RequestQ.start()
-          }
+          },
+          "waitFirst->foo8"
         )
 
         RequestQ.start()
-      }
+      },
+      "wait->season"
     )
 
     RequestQ.wait(
       function()
       {
+        var bulkDocs = {"docs":[
+          {"season":"summer","weather":"usually warm and sunny"},
+          {"season":"winter","weather":"usually cold and snowy"},
+          {"season":"spring","weather":"cool with rain and sun"},
+          {"season":"autumn","weather":"breezes"}]}
+        //https://cloudant.com/db/amber/crud/_bulk_docs?successStatus=201
+        RequestQ.push(function() { Cushion.post("/crud/_bulk_docs?successStatus=201", JSON.stringify(bulkDocs)) }, "POST /crud/_bulk_docs")
 
-        // {"docs":[{"season":"summer","weather":"usually warm and sunny"},{"season":"winter","weather":"usually cold and snowy"},{"season":"spring","weather":"cool with rain and sun"},{"season":"autumn","weather":"breezes"}]}
+        var bulkDocs2 = {"docs":[
+          {_id:"summer","weather":"very warm and sunny", _deleted:true},
+          {"season":"winter","weather":"usually cold and snowy"},
+          {"season":"spring","weather":"cool with rain and sun"},
+          {"season":"autumn","weather":"breezes"}]}
+        RequestQ.push(function() { Cushion.post("/crud/_bulk_docs?successStatus=201", JSON.stringify(bulkDocs2)) }, "POST /crud/_bulk_docs2")
 
+
+        ////////////////////////////////////////////////////////
+        RequestQ.push(function() { Cushion.head("/crud/summer") }, "head /crud/summer")
+
+        RequestQ.waitFirst(
+          function()
+            {
+              var doc_rev = 0
+              if (RequestQ.result)
+              {
+                var headResponse = JSON.parse(RequestQ.result)
+                doc_rev = headResponse._rev
+                console.log('headResponse._rev = ' + doc_rev)
+              }
+              if (_Cushion.last_req)
+              {
+                //_Cushion.last_req.getAllResponseHeaders()
+                // etag is _rev
+                doc_rev = _Cushion.last_req.getResponseHeader('etag')
+                if (doc_rev)
+                {
+                  doc_rev = doc_rev.replace(/^"(.*)"$/, '$1')  // replace(/^"(.+(?="$))"$/, '$1') // .replace(/^"(.*)"$/, '$1')
+                  console.log('_Cushion.last_req.getResponseHeader("etag") = ' + doc_rev)
+                }
+              }
+              if (doc_rev)
+              {
+                // Delete via PUT
+                // curl -d '{"_rev":"[doc_rev]", "_deleted":true}' -X PUT https://[username].cloudant.com/crud/[doc_id]
+                RequestQ.push(function() { Cushion.put("/crud/summer", '{"_rev":"' + doc_rev + '", "_deleted":true}') }, "PUT /crud/summer")
+                RequestQ.push(function() { Cushion.get("/crud/summer") } , "GET 5 /crud/summer" )
+              }
+              RequestQ.start()
+            },
+            "waitFirst->summer"
+        )
+        ////////////////////////////////////////////////////////
+
+
+        RequestQ.start()
+      },
+      "wait->season2"
+    )
+
+    RequestQ.wait // see if there are any remaining threads
+    (
+      function()
+      {
         RequestQ.push(function(){ Cushion.logout() }, "logout")
         RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
 
@@ -958,10 +1015,11 @@
         RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
         var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
         RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
-
         RequestQ.start()
-      }
+      },
+      "login as alice"
     )
+
 
 
     RequestQ.wait // see if there are any remaining threads
@@ -971,7 +1029,8 @@
         console.log('RequestQ Diagnostics')
         console.log('RequestQ.xmlHttpReqQueue.length = ' + RequestQ.xmlHttpReqQueue.length)
         console.log('RequestQ.waitingThreads.length = ' + RequestQ.waitingThreads.length)
-      }
+      },
+      "wait->RequestQ Diagnostics"
     )
 
     RequestQ.start()
