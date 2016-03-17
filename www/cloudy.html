@@ -662,7 +662,7 @@
               },
             function (req)
               {
-                var colour = "teal"
+                var colour = "purple"
                 if (201 == req.status) // created
                   colour = "green"
                 else if (403 == req.status) // forbidden
@@ -867,48 +867,90 @@
         RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
         var dataWithId = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo"}'
         // curl -d '{"season": "summer", "weather": "usually warm and sunny"}' -X PUT https://[username].cloudant.com/crud/bar -H "Content-Type:application/json"
-        RequestQ.push(function() { Cushion.put("/crud/foo4", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 2 /crud/")
+        RequestQ.push(function() { Cushion.put("/crud/foo6", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 3 /crud/")
+        RequestQ.push(function() { Cushion.put("/crud/foo5", '{"season": "summer", "weather": "wet, warm and sunny"}') }, "PUT 4 /crud/")
         RequestQ.push(function()
           {
-            Cushion.head("/crud/foo4")
+            Cushion.head("/crud/foo5")
           }
         )
         RequestQ.waitFirst(
           function()
           {
-            var rev = 0
+            var doc_rev = 0
             if (RequestQ.result)
             {
               var headResponse = JSON.parse(RequestQ.result)
-              rev = headResponse._rev
-              console.log('headResponse._rev = ' + headResponse._rev)
+              doc_rev = headResponse._rev
+              console.log('headResponse._rev = ' + doc_rev)
             }
             if (_Cushion.last_req)
             {
               //_Cushion.last_req.getAllResponseHeaders()
               // etag is _rev
-              rev = _Cushion.last_req.getResponseHeader('etag')
-              rev = rev.replace(/^"(.*)"$/, '$1')  // replace(/^"(.+(?="$))"$/, '$1') // .replace(/^"(.*)"$/, '$1')
-              console.log('_Cushion.last_req.getResponseHeader("etag") = ' + rev)
+              doc_rev = _Cushion.last_req.getResponseHeader('etag')
+              doc_rev = doc_rev.replace(/^"(.*)"$/, '$1')  // replace(/^"(.+(?="$))"$/, '$1') // .replace(/^"(.*)"$/, '$1')
+              console.log('_Cushion.last_req.getResponseHeader("etag") = ' + doc_rev)
             }
-            if (rev)
+            if (doc_rev)
+            {
               // curl -X DELETE https://[username].cloudant.com/crud/[doc_id]\?rev\=[doc_rev]
-              RequestQ.push(function() { Cushion.delete("/crud/foo4\?rev\=" + rev) }, "DELETE  /crudfoo4/")
+              RequestQ.push(function() { Cushion.delete("/crud/foo5\?rev\=" + doc_rev) }, "DELETE /crud/foo5/")
+              //Verify deletion:      curl  https://[username].cloudant.com/crud/[doc_id]
+              RequestQ.push(function() { Cushion.get("/crud/foo5") }, "GET /crud/foo5/")
+            }
 
-            RequestQ.push(function(){ Cushion.logout() }, "logout")
-            RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
+            RequestQ.push(function()
+              {
+                Cushion.head("/crud/foo6")
+              }
+            )
 
-            // this GET will fail, we are logged in as alice
-            RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
-            RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
-            RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
-            var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
-            RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
+            RequestQ.waitFirst(
+              function()
+                {
+                  var doc_rev = 0
+                  if (RequestQ.result)
+                  {
+                    var headResponse = JSON.parse(RequestQ.result)
+                    doc_rev = headResponse._rev
+                    console.log('headResponse._rev = ' + doc_rev)
+                  }
+                  if (_Cushion.last_req)
+                  {
+                    //_Cushion.last_req.getAllResponseHeaders()
+                    // etag is _rev
+                    doc_rev = _Cushion.last_req.getResponseHeader('etag')
+                    doc_rev = doc_rev.replace(/^"(.*)"$/, '$1')  // replace(/^"(.+(?="$))"$/, '$1') // .replace(/^"(.*)"$/, '$1')
+                    console.log('_Cushion.last_req.getResponseHeader("etag") = ' + doc_rev)
+                  }
+                  if (doc_rev)
+                  {
+                    // Delete via PUT
+                    // curl -d '{"_rev":"[doc_rev]", "_deleted":true}' -X PUT https://[username].cloudant.com/crud/[doc_id]
+                    RequestQ.push(function() { Cushion.put("/crud/foo6", '{"_rev":"' + doc_rev + '", "_deleted":true}') }, "PUT 5 /crud/")
+                    RequestQ.push(function() { Cushion.get("/crud/foo6") } , "GET 5 /crud/foo6" )
+                  }
+
+
+                  RequestQ.push(function(){ Cushion.logout() }, "logout")
+                  RequestQ.push(function() { Cushion.login('alice','123')}, "login-alice")
+
+                  // this GET will fail, we are logged in as alice
+                  RequestQ.push(function () { Cushion.get('/crud/welcome') }, "GET /crud/welcome")
+                  RequestQ.push(function() { Cushion.post("/crud/", '{"season":"summer","weather":"usually warm and sunny"}') }, "POST /crud/")
+                  RequestQ.push(function() { Cushion.post("/crud/", dataWithId) }, "POST with Id /crud/")
+                  var dataWithId2 = '{"season": "summer", "weather": "usually warm and sunny", "_id":"foo2"}'
+                  RequestQ.push(function() { Cushion.post("/crud/", dataWithId2) }, "POST with Id /crud/")
+
+                  RequestQ.start()
+                }
+            )
 
             RequestQ.start()
-
           }
         )
+
         RequestQ.start()
       }
     )
